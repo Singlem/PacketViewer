@@ -6,7 +6,8 @@ namespace WowTools.Core
     {
         public Direction Direction { get; private set; }
 
-        public OpCodes Code { get; private set; }
+        private uint OpcodeNumber;
+        public OpCodes Code { get { return OpcodeDB.GetOpcode(OpcodeNumber); } }
 
         public byte[] Data { get; private set; }
 
@@ -14,10 +15,10 @@ namespace WowTools.Core
 
         public uint TicksCount { get; private set; }
 
-        public Packet(Direction direction, OpCodes opcode, byte[] data, uint unixtime, uint tickscount)
+        public Packet(Direction direction, uint opcode, byte[] data, uint unixtime, uint tickscount)
         {
             Direction = direction;
-            Code = opcode;
+            OpcodeNumber = opcode;
             Data = data;
             UnixTime = unixtime;
             TicksCount = tickscount;
@@ -31,7 +32,7 @@ namespace WowTools.Core
         public void DecompressDataAndSetOpcode(OpCodes opcode)
         {
             Data = Data.Decompress();
-            Code = opcode;
+            OpcodeNumber = OpcodeDB.GetOpcode(opcode);
         }
     }
 }

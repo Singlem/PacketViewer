@@ -52,7 +52,7 @@ namespace WoWPacketViewer
                         uint unixtime = gr.ReadUInt32();
                         uint tickcount = gr.ReadUInt32();
                         uint size = gr.ReadUInt32();
-                        OpCodes opcode = (direction == Direction.Client) ? (OpCodes)gr.ReadUInt32() : (OpCodes)gr.ReadUInt16();
+                        var opcode = (direction == Direction.Client) ? (uint)gr.ReadUInt32() : (uint)gr.ReadUInt16();
                         byte[] data = gr.ReadBytes((int)size - ((direction == Direction.Client) ? 4 : 2));
 
                         packets.Add(new Packet(direction, opcode, data, unixtime, tickcount));
@@ -68,7 +68,7 @@ namespace WoWPacketViewer
                         int optionalSize = gr.ReadInt32();
                         int dataSize = gr.ReadInt32();
                         gr.ReadBytes(optionalSize);
-                        OpCodes opcode = (OpCodes)gr.ReadUInt32();
+                        var opcode = gr.ReadUInt32();
                         byte[] data = gr.ReadBytes(dataSize - 4);
                         packets.Add(new Packet(direction, opcode, data, unixtime, tickcount));
                     }

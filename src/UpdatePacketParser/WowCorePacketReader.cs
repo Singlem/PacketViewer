@@ -58,7 +58,7 @@ namespace UpdatePacketParser
 
                 var packet = new Packet();
                 packet.Size = _reader.ReadInt32() - (direction == 0xFF ? 2 : 4);
-                packet.Code = (OpCodes)(direction == 0xFF ? _reader.ReadInt16() : _reader.ReadInt32());
+                packet.OpcodeNumber = (uint)(direction == 0xFF ? _reader.ReadInt16() : _reader.ReadInt32());
                 packet.Data = _reader.ReadBytes(packet.Size);
                 return packet;
             }
@@ -72,7 +72,7 @@ namespace UpdatePacketParser
                 var optSize = _reader.ReadInt32();
                 packet.Size = _reader.ReadInt32() - 4;
                 _reader.ReadBytes(optSize);
-                packet.Code = (OpCodes)_reader.ReadInt32();
+                packet.OpcodeNumber = (uint)_reader.ReadInt32();
                 packet.Data = _reader.ReadBytes(packet.Size);
                 return packet;
             }

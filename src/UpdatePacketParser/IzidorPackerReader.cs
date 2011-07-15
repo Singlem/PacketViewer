@@ -27,7 +27,7 @@ namespace UpdatePacketParser
                     Packet p = new Packet();
                     string line = tr.ReadLine();
                     string[] data = line.Split('<', '>', '"');
-                    p.Code = (OpCodes)UInt16.Parse(data[6]);
+                    p.OpcodeNumber = UInt16.Parse(data[6]);
                     string directdata = data[8];
                     p.Data = ParseHex(directdata);
                     p.Size = p.Data.Length;

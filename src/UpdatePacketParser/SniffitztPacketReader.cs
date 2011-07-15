@@ -48,7 +48,7 @@ namespace UpdatePacketParser
 
             var packet = new Packet();
             packet.Size = len;
-            packet.Code = (OpCodes)Convert.ToInt32(element.Attributes["opcode"].Value);
+            packet.OpcodeNumber = Convert.ToUInt32(element.Attributes["opcode"].Value);
             packet.Data = bytes;
 
             _readPackets++;

@@ -85,10 +85,15 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.3.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libs\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -103,6 +108,7 @@
     <Compile Include="MovementFlags.cs" />
     <Compile Include="MovementBlock.cs" />
     <Compile Include="MovementInfo.cs" />
+    <Compile Include="OpcodeDB.cs" />
     <Compile Include="Opcodes.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="Parser.cs" />

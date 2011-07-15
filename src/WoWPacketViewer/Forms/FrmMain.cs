@@ -321,5 +321,10 @@ namespace WoWPacketViewer
             Settings.Default[name + "BackColor"] = colorChooser.Color;
             Settings.Default.Save();
         }
+
+        private void reloadOpcodesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpcodeDB.Reload();
+        }
     }
 }

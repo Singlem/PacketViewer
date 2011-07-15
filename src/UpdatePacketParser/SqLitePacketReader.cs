@@ -36,7 +36,7 @@ namespace UpdatePacketParser
             }
 
             var packet = new Packet();
-            packet.Code = (OpCodes)_reader.GetInt32(0);
+            packet.OpcodeNumber = (uint)_reader.GetInt32(0);
             packet.Data = (byte[])_reader.GetValue(1);
             packet.Size = packet.Data.Length;
             return packet;

@@ -6,7 +6,11 @@ namespace UpdatePacketParser
     public class Packet
     {
         public int Size { get; set; }
-        public OpCodes Code { get; set; }
+        public uint OpcodeNumber;
+        public OpCodes Code
+        {
+            get { return OpcodeDB.GetOpcode(OpcodeNumber); }
+        }
         public byte[] Data { get; set; }
 
         public BinaryReader CreateReader()

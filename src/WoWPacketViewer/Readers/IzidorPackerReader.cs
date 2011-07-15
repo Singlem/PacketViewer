@@ -23,7 +23,7 @@ namespace WoWPacketViewer
                     uint unixtime = 0; // not stored
                     uint tickcount = UInt32.Parse(data[2]);
                     var direction = data[4] == "StoC" ? Direction.Server : Direction.Client;
-                    var opcode = (OpCodes)UInt16.Parse(data[6]);
+                    var opcode = UInt16.Parse(data[6]);
                     string directdata = data[8];
                     byte[] byteData = ParseHex(directdata);
                     packets.Add(new Packet(direction, opcode, byteData, unixtime, tickcount));
