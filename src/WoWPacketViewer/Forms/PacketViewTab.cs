@@ -190,7 +190,7 @@ namespace WoWPacketViewer
             return p.Direction == Direction.Client
                 ? new ListViewItem(new[]
                     {
-                        Extensions.GetDateTimeFromUnixTime(p.UnixTime).ToString("H:mm:ss"),
+                        p.UnixTime.AsUnixTime().ToString("H:mm:ss"),
                         (p.TicksCount - startTick).ToString(),
                         p.Code.ToString(),
                         String.Empty,
@@ -199,7 +199,7 @@ namespace WoWPacketViewer
                     })
                 : new ListViewItem(new[]
                     {
-                        Extensions.GetDateTimeFromUnixTime(p.UnixTime).ToString("H:mm:ss"),
+                        p.UnixTime.AsUnixTime().ToString("H:mm:ss"),
                         (p.TicksCount - startTick).ToString(),
                         String.Empty,
                         p.Code.ToString(), 

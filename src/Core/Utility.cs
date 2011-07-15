@@ -110,9 +110,34 @@ namespace WowTools.Core
             return result.ToString();
         }
 
-        public static DateTime GetDateTimeFromUnixTime(uint unixTime)
+        static DateTime s_unixEpochReference = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+
+        /// <summary>
+        /// Converts the number of seconds passed since UTC Unix Epoch to local time.
+        /// </summary>
+        /// <param name="unixTimeUtc">
+        /// Number of seconds passed since UTC Unix Epoch.
+        /// </param>
+        /// <returns>
+        /// <see cref="System.DateTime"/> converted from UTC Unix Epoch.
+        /// </returns>
+        public static DateTime AsUnixTime(this uint unixTimeUtc)
         {
-            return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTime);
+            return AsUnixTime((long)unixTimeUtc);
+        }
+
+        /// <summary>
+        /// Converts the number of seconds passed since UTC Unix Epoch to local time.
+        /// </summary>
+        /// <param name="unixTimeUtc">
+        /// Number of seconds passed since UTC Unix Epoch.
+        /// </param>
+        /// <returns>
+        /// <see cref="System.DateTime"/> converted from UTC Unix Epoch.
+        /// </returns>
+        public static DateTime AsUnixTime(this long unixTimeUtc)
+        {
+            return TimeZone.CurrentTimeZone.ToLocalTime(s_unixEpochReference.AddSeconds(unixTimeUtc));
         }
     }
 }

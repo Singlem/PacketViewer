@@ -245,7 +245,7 @@ namespace WowTools.Core
 
         public DateTime ReadTime()
         {
-            return Extensions.GetDateTimeFromUnixTime(Reader.ReadUInt32());
+            return Reader.ReadUInt32().AsUnixTime();
         }
 
         public DateTime ReadTime(string name)
