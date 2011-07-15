@@ -3,8 +3,8 @@ using WowTools.Core;
 
 namespace WoWPacketViewer
 {
-    [Parser(OpCodes.SMSG_UPDATE_OBJECT)]
-    [Parser(OpCodes.SMSG_COMPRESSED_UPDATE_OBJECT)]
+    //[Parser(OpCodes.SMSG_UPDATE_OBJECT)]
+    //[Parser(OpCodes.SMSG_COMPRESSED_UPDATE_OBJECT)]
     class UpdatePacketParser : Parser
     {
         private readonly Dictionary<ulong, WoWObject> objects = new Dictionary<ulong, WoWObject>();

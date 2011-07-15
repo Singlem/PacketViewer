@@ -1,6 +1,6 @@
 ﻿using WowTools.Core;
 
-[Parser(OpCodes.SMSG_CHAR_ENUM)]
+//[Parser(OpCodes.SMSG_CHAR_ENUM)]
 class SMSG_CHAR_ENUM : Parser
 {
     public override void Parse()

@@ -22,7 +22,7 @@ namespace WoWPacketViewer
         DAMAGE = 8
     };
 
-    [Parser(OpCodes.SMSG_LFG_SEARCH_RESULTS)]
+    //[Parser(OpCodes.SMSG_LFG_SEARCH_RESULTS)]
     class LookingForGroupParser : Parser
     {
         public override void Parse()

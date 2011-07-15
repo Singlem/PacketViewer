@@ -2,7 +2,7 @@
 
 namespace WoWPacketViewer
 {
-    [Parser(OpCodes.SMSG_INSPECT_RESULTS)]
+    //[Parser(OpCodes.SMSG_INSPECT_RESULTS)]
     class InspectTalentParser : Parser
     {
         public override void Parse()

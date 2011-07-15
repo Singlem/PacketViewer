@@ -2,7 +2,7 @@
 
 namespace WoWPacketViewer
 {
-    [Parser(OpCodes.SMSG_LOAD_EQUIPMENT_SET)]
+    //[Parser(OpCodes.SMSG_LOAD_EQUIPMENT_SET)]
     class EquipmentSetListParser : Parser
     {
         public override void Parse()

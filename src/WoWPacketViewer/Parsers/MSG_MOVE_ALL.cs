@@ -1,6 +1,6 @@
 ﻿using WowTools.Core;
 
-[Parser(OpCodes.MSG_MOVE_START_FORWARD)]
+/*[Parser(OpCodes.MSG_MOVE_START_FORWARD)]
 [Parser(OpCodes.MSG_MOVE_START_BACKWARD)]
 [Parser(OpCodes.MSG_MOVE_STOP)]
 [Parser(OpCodes.MSG_MOVE_START_STRAFE_LEFT)]
@@ -26,7 +26,7 @@
 [Parser(OpCodes.MSG_MOVE_START_ASCEND)]
 [Parser(OpCodes.MSG_MOVE_STOP_ASCEND)]
 [Parser(OpCodes.CMSG_MOVE_CHNG_TRANSPORT)]
-[Parser(OpCodes.MSG_MOVE_START_DESCEND)]
+[Parser(OpCodes.MSG_MOVE_START_DESCEND)]*/
 class MovementOpcodes : Parser
 {
     public override void Parse()
