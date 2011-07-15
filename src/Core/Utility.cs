@@ -109,5 +109,10 @@ namespace WowTools.Core
 
             return result.ToString();
         }
+
+        public static DateTime GetDateTimeFromUnixTime(uint unixTime)
+        {
+            return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTime);
+        }
     }
 }

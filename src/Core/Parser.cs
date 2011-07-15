@@ -48,7 +48,16 @@ namespace WowTools.Core
 
         protected BinaryReader Reader { get; private set; }
 
-        protected Parser() { }
+        protected Parser packet;
+
+        private byte _currentByte;
+        // position of the next bit in _currentByte to be read
+        private sbyte _bitPos = -1;
+
+        protected Parser()
+        {
+            packet = this;  // an alias for parser compatibility with SilinoronParser
+        }
 
         public virtual void Initialize(Packet packet)
         {
@@ -72,14 +81,23 @@ namespace WowTools.Core
         public byte ReadUInt8(string format, params object[] args)
         {
             var ret = Reader.ReadByte();
+            if (args.Length == 0 && !format.Contains("{0"))
+                format += ": {0}";
             AppendFormatLine(format, MergeArguments(args, ret));
             return ret;
+        }
+
+        public byte ReadByte(string format, params object[] args)
+        {
+            return ReadUInt8(format, args); // alias
         }
 
         // for enums
         public T ReadUInt8<T>(string format, params object[] args)
         {
             var obj = Enum.ToObject(typeof(T), Reader.ReadByte());
+            if (args.Length == 0 && !format.Contains("{0"))
+                format += ": {0}";
             AppendFormatLine(format, MergeArguments(args, obj));
             return (T)obj;
         }
@@ -87,6 +105,8 @@ namespace WowTools.Core
         public uint ReadUInt16(string format, params object[] args)
         {
             var ret = Reader.ReadUInt16();
+            if (args.Length == 0 && !format.Contains("{0"))
+                format += ": {0}";
             AppendFormatLine(format, MergeArguments(args, ret));
             return ret;
         }
@@ -94,6 +114,8 @@ namespace WowTools.Core
         public int ReadInt32(string format, params object[] args)
         {
             var ret = Reader.ReadInt32();
+            if(args.Length == 0 && !format.Contains("{0"))
+                format += ": {0}";
             AppendFormatLine(format, MergeArguments(args, ret));
             return ret;
         }
@@ -101,6 +123,8 @@ namespace WowTools.Core
         public uint ReadUInt32(string format, params object[] args)
         {
             var ret = Reader.ReadUInt32();
+            if (args.Length == 0 && !format.Contains("{0"))
+                format += ": {0}";
             AppendFormatLine(format, MergeArguments(args, ret));
             return ret;
         }
@@ -108,6 +132,8 @@ namespace WowTools.Core
         public ulong ReadUInt64(string format, params object[] args)
         {
             var ret = Reader.ReadUInt64();
+            if (args.Length == 0 && !format.Contains("{0"))
+                format += ": {0}";
             AppendFormatLine(format, MergeArguments(args, ret));
             return ret;
         }
@@ -115,6 +141,8 @@ namespace WowTools.Core
         public string ReadCString(string format, params object[] args)
         {
             var ret = Reader.ReadCString();
+            if (args.Length == 0 && !format.Contains("{0"))
+                format += ": {0}";
             AppendFormatLine(format, MergeArguments(args, ret));
             return ret;
         }
@@ -122,6 +150,8 @@ namespace WowTools.Core
         public float ReadSingle(string format, params object[] args)
         {
             var ret = Reader.ReadSingle();
+            if (args.Length == 0 && !format.Contains("{0"))
+                format += ": {0}";
             AppendFormatLine(format, MergeArguments(args, ret));
             return ret;
         }
@@ -129,6 +159,8 @@ namespace WowTools.Core
         public ulong ReadPackedGuid(string format, params object[] args)
         {
             var ret = Reader.ReadPackedGuid();
+            if (args.Length == 0 && !format.Contains("{0"))
+                format += ": {0}";
             AppendFormatLine(format, MergeArguments(args, ret));
             return ret;
         }
@@ -158,6 +190,106 @@ namespace WowTools.Core
         {
             for (var i = 0; i < count; ++i)
                 func(i);
+        }
+
+        private KeyValuePair<long, T> ReadEnum<T>(TypeCode code, byte bitsCount = (byte)0)
+        {
+            var type = typeof(T);
+            object value = null;
+            long rawVal = 0;
+
+            if (code == TypeCode.Empty)
+                code = Type.GetTypeCode(type.GetEnumUnderlyingType());
+
+            switch (code)
+            {
+                case TypeCode.SByte:
+                    rawVal = Reader.ReadSByte();
+                    break;
+                case TypeCode.Byte:
+                    rawVal = Reader.ReadByte();
+                    break;
+                case TypeCode.Int16:
+                    rawVal = Reader.ReadInt16();
+                    break;
+                case TypeCode.UInt16:
+                    rawVal = Reader.ReadUInt16();
+                    break;
+                case TypeCode.Int32:
+                    rawVal = Reader.ReadInt32();
+                    break;
+                case TypeCode.UInt32:
+                    rawVal = Reader.ReadUInt32();
+                    break;
+                case TypeCode.Int64:
+                    rawVal = Reader.ReadInt64();
+                    break;
+                case TypeCode.UInt64:
+                    rawVal = (long)Reader.ReadUInt64();
+                    break;
+                case TypeCode.DBNull:
+                    rawVal = ReadBits(bitsCount);
+                    break;
+            }
+            value = System.Enum.ToObject(type, rawVal);
+
+            return new KeyValuePair<long, T>(rawVal, (T)value);
+        }
+
+        public T ReadEnum<T>(string name, TypeCode code = TypeCode.Empty)
+        {
+            KeyValuePair<long, T> val = ReadEnum<T>(code);
+            AppendFormatLine("{0}: {1} ({2})", name, val.Value, val.Key);
+            return val.Value;
+        }
+
+        public DateTime ReadTime()
+        {
+            return Extensions.GetDateTimeFromUnixTime(Reader.ReadUInt32());
+        }
+
+        public DateTime ReadTime(string name)
+        {
+            var val = ReadTime();
+            AppendFormatLine("{0}: {1}", name, val);
+            return val;
+        }
+
+        /* TODO: port GUID stuff
+        public Guid ReadGuid()
+        {
+            return new Guid(Reader.ReadUInt64());
+        }*/
+
+        public bool ReadBit()
+        {
+            if (_bitPos < 0)
+            {
+                _currentByte = Reader.ReadByte();
+                _bitPos = 7;
+            }
+            return ((_currentByte >> _bitPos--) & 1) != 0;
+        }
+
+        /// <summary>
+        /// Reads an integer stored in bitsCount bits inside the bit stream.
+        /// </summary>
+        public uint ReadBits(byte bitsCount)
+        {
+            uint value = 0;
+            for (int i = bitsCount - 1; i >= 0; i--)
+            {
+                if (ReadBit())
+                    value |= (uint)1 << i;
+            }
+            return value;
+        }
+
+        public T ReadEnum<T>(string name, byte bitsCount)
+        {
+            KeyValuePair<long, T> val = ReadEnum<T>(TypeCode.DBNull, bitsCount);
+            AppendFormatLine("{0}: {1} ({2})", name, val.Value, val.Key);
+            return val.Value;
         }
     }
 }
