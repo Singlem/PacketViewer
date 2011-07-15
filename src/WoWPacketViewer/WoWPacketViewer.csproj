@@ -123,6 +123,7 @@
     <Compile Include="Forms\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Parsers\ACCOUNT_DATA.cs" />
     <Compile Include="Parsers\MSG_MOVE_ALL.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

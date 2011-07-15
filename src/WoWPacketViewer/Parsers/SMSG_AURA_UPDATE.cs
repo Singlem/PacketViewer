@@ -8,7 +8,7 @@ namespace WoWPacketViewer
     class AuraUpdateParser : Parser
     {
         [Flags]
-        private enum AuraFlags : byte
+        private enum AuraFlags : ushort
         {
             None = 0x00,
             Index1 = 0x01,
@@ -33,7 +33,7 @@ namespace WoWPacketViewer
 
                 if (spellId != 0)
                 {
-                    var af = ReadUInt8<AuraFlags>("Flags: {0}");
+                    var af = ReadEnum<AuraFlags>("Flags");
 
                     ReadUInt8("Level: {0:X2}");
                     ReadUInt8("Charges: {0:X2}");
