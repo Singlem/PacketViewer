@@ -30,6 +30,7 @@ namespace WoWPacketViewer
             PacketView.VirtualMode = true;
             PacketView.VirtualListSize = packets.Count;
             PacketView.EnsureVisible(0);
+            PacketView.GridLines = false;
         }
 
         public void SetColors(Color listFore, Color listBack, Color hexFore, Color hexBack, Color parsedFore, Color parsedBack)
@@ -184,12 +185,13 @@ namespace WoWPacketViewer
         private ListViewItem CreateListViewItemByIndex(int index)
         {
             var p = packets[index];
+            uint startTick = packets[0].TicksCount;
 
             return p.Direction == Direction.Client
                 ? new ListViewItem(new[]
                     {
-                        p.UnixTime.ToString("X8"), 
-                        p.TicksCount.ToString("X8"), 
+                        Extensions.GetDateTimeFromUnixTime(p.UnixTime).ToString("H:mm:ss"),
+                        (p.TicksCount - startTick).ToString(),
                         p.Code.ToString(),
                         String.Empty,
                         p.Data.Length.ToString(),
@@ -197,8 +199,8 @@ namespace WoWPacketViewer
                     })
                 : new ListViewItem(new[]
                     {
-                        p.UnixTime.ToString("X8"), 
-                        p.TicksCount.ToString("X8"), 
+                        Extensions.GetDateTimeFromUnixTime(p.UnixTime).ToString("H:mm:ss"),
+                        (p.TicksCount - startTick).ToString(),
                         String.Empty,
                         p.Code.ToString(), 
                         p.Data.Length.ToString(),
