@@ -233,7 +233,7 @@
             // 
             // _openDialog
             // 
-            this._openDialog.Filter = "WoW Binary Files|*.bin;*.pkt|SQLite Files|*.sqlite|Sniffitzt XML Files|*.xml";
+            this._openDialog.Filter = "WoW Binary Files|*.bin;*.pkt|SQLite Files|*.sqlite|Sniffitzt XML Files|*.xml|Izidor Files|*.izi;*";
             // 
             // _saveDialog
             // 

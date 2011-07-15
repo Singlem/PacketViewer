@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="Readers\IPacketReader.cs" />
     <Compile Include="ISupportFind.cs" />
+    <Compile Include="Readers\IzidorPackerReader.cs" />
     <Compile Include="Readers\PacketReaderFactory.cs" />
     <Compile Include="Forms\PacketViewTab.cs">
       <SubType>UserControl</SubType>

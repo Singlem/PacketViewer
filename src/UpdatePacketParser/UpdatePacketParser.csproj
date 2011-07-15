@@ -120,6 +120,7 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="IzidorPackerReader.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="PacketReader.cs" />
     <Compile Include="Parser.cs" />

@@ -13,6 +13,9 @@ namespace WoWPacketViewer
                     return new SqLitePacketReader();
                 case ".xml":
                     return new SniffitztPacketReader();
+                case ".izi":
+                case "":    // Noname sniffer outputs files in Izi format with no extension
+                    return new IzidorPacketReader();
                 default:
                     return null;
             }
