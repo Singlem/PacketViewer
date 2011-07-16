@@ -6,7 +6,7 @@ namespace WowTools.Core
     {
         public Direction Direction { get; private set; }
 
-        private uint OpcodeNumber;
+        public uint OpcodeNumber { get; private set; }
         public OpCodes Code { get { return OpcodeDB.GetOpcode(OpcodeNumber); } }
 
         public byte[] Data { get; private set; }

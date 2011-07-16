@@ -11,7 +11,7 @@ namespace WoWPacketViewer
 {
     public class ParserFactory
     {
-        private static readonly Dictionary<int, Type> Parsers = new Dictionary<int, Type>();
+        private static readonly Dictionary<OpCodes, Type> Parsers = new Dictionary<OpCodes, Type>();
         private static readonly Parser UnknownParser = new UnknownPacketParser();
 
         public static void ReInit()
@@ -111,7 +111,7 @@ namespace WoWPacketViewer
                 {
                     var attributes = (ParserAttribute[])type.GetCustomAttributes(typeof(ParserAttribute), true);
                     foreach (ParserAttribute attribute in attributes)
-                        Parsers[(int)attribute.Code] = type;
+                        Parsers[attribute.Code] = type;
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace WoWPacketViewer
         public static Parser CreateParser(Packet packet)
         {
             Type type;
-            if (!Parsers.TryGetValue((int)packet.Code, out type))
+            if (!Parsers.TryGetValue(packet.Code, out type))
                 return UnknownParser;
 
             var parser = (Parser)Activator.CreateInstance(type);
@@ -129,7 +129,7 @@ namespace WoWPacketViewer
 
         public static bool HasParser(OpCodes opcode)
         {
-            return Parsers.ContainsKey((int)opcode);
+            return Parsers.ContainsKey(opcode);
         }
     }
 }

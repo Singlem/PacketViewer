@@ -12,7 +12,8 @@ namespace WowTools.Core
         /// If set to false the DB is not used and OpCodes enum values are assumed to equal real opcode values
         /// </summary>
         public static bool Enabled = true;
-        static Dictionary<uint, OpCodes> NumberToEnum = new Dictionary<uint, OpCodes>();
+        //static Dictionary<uint, OpCodes> NumberToEnum = new Dictionary<uint, OpCodes>();
+        static OpCodes[] NumberToEnum = new OpCodes[0xFFFF];
         static Dictionary<OpCodes, uint> EnumToNumber = new Dictionary<OpCodes, uint>();
 
         private static uint BuildLoaded = 0;
@@ -61,7 +62,8 @@ namespace WowTools.Core
         {
             var curBuild = BuildLoaded;
             BuildLoaded = 0;
-            NumberToEnum.Clear();
+            
+            Array.Clear(NumberToEnum, 0, NumberToEnum.Length);
             EnumToNumber.Clear();
             Load(curBuild, ConnectionString);
         }
@@ -72,7 +74,7 @@ namespace WowTools.Core
             {
                 return (OpCodes)number; // cast it to an appropriate OpCodes member
             }
-            if(!NumberToEnum.ContainsKey(number))
+            if(number > 0xFFFF || NumberToEnum[number] == 0)//!NumberToEnum.ContainsKey(number))
             {
                 return (OpCodes)number; // it will be left as a number to display
             }

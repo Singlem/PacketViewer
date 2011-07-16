@@ -177,6 +177,7 @@ namespace WoWPacketViewer
             this.DoubleBuffered = true;
             this.Name = "PacketViewTab";
             this.Size = new System.Drawing.Size(947, 588);
+            this.Load += new System.EventHandler(this.PacketViewTab_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

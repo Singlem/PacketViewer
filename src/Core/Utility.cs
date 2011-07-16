@@ -69,7 +69,7 @@ namespace WowTools.Core
             var dir = (packet.Direction == Direction.Client) ? "C->S" : "S->C";
 
             var result = new StringBuilder();
-            result.AppendFormat("Packet {0}, {1} ({2}), len {3}", dir, packet.Code, (ushort)packet.Code, length);
+            result.AppendFormat("Packet {0}, {1} ({2}), len {3}", dir, packet.Code, packet.OpcodeNumber, length);
             result.AppendLine();
 
             if (length == 0)

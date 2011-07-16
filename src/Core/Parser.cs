@@ -255,6 +255,17 @@ namespace WowTools.Core
             return val;
         }
 
+        public Coords3 ReadCoords3(string name = null)
+        {
+            Coords3 val;
+            val.X = Reader.ReadSingle();
+            val.Y = Reader.ReadSingle();
+            val.Z = Reader.ReadSingle();
+            if (name != null)
+                AppendFormatLine("{0}: {1}", name, val);
+            return val;
+        }
+
         /* TODO: port GUID stuff
         public Guid ReadGuid()
         {
