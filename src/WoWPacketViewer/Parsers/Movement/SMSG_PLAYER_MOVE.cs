@@ -2,7 +2,7 @@
 
 namespace WoWPacketViewer.Parsers.Movement
 {
-    //[Parser(OpCodes.MSG_MOVE_HEARTBEAT)]
+    [Parser(OpCodes.SMSG_PLAYER_MOVE)]
     class MovementPlayerParser : RegularMovementPacket
     {
         protected override MovementStatusElements[] Elements
