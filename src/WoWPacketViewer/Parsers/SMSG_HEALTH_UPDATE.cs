@@ -9,7 +9,7 @@ namespace WoWPacketViewer
 
         public override void Parse()
         {
-            ReadUInt64("GUID: {0:X16}");
+            ReadPackedGuid("GUID: {0:X16}");
             ReadUInt16("Value");
         }
     }
