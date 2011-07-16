@@ -114,6 +114,7 @@
     <Compile Include="Parser.cs" />
     <Compile Include="ParserAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegularMovementPacket.cs" />
     <Compile Include="SplineFlags.cs" />
     <Compile Include="SplineInfo.cs" />
     <Compile Include="TransportInfo.cs" />

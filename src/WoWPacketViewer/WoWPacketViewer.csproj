@@ -124,9 +124,20 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Parsers\ACCOUNT_DATA.cs" />
-    <Compile Include="Parsers\MSG_MOVE_ALL.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Parsers\Movement\MSG_MOVE_START_STRAFE_RIGHT.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_STOP_STRAFE.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_SET_FACING.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_STOP_TURN.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_STOP.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_START_TURN_RIGHT.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_START_STRAFE_LEFT.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_START_TURN_LEFT.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_JUMP.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_FALL_LAND.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_START_FORWARD.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_START_BACKWARD.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_HEARTBEAT.cs" />
+    <Compile Include="Parsers\Movement\SMSG_PLAYER_MOVE.cs" />
     <Compile Include="Parsers\SMSG_MOTD.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
