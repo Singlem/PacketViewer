@@ -57,7 +57,7 @@ namespace WoWPacketViewer
             get
             {
                 var sic = PacketView.SelectedIndices;
-                return sic.Count > 0 ? sic[0] : 0;
+                return sic.Count > 0 ? sic[0] : -1;
             }
         }
 
@@ -94,7 +94,11 @@ namespace WoWPacketViewer
             _searchUp = searchUp;
             _ignoreCase = ignoreCase;
 
-            var item = PacketView.FindItemWithText(text, true, SelectedIndex, true);
+            int startIndex = SelectedIndex;
+            if (startIndex < 0)
+                startIndex = 0;
+
+            var item = PacketView.FindItemWithText(text, true, startIndex, true);
             if (item != null)
             {
                 PacketView.BeginUpdate();
@@ -113,6 +117,8 @@ namespace WoWPacketViewer
 
         private void _list_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (SelectedIndex < 0)
+                return;
             var packet = packets[SelectedIndex];
 
             HexView.Text = packet.HexLike();
@@ -236,6 +242,18 @@ namespace WoWPacketViewer
         public Control GetControlByName(string name)
         {
             return ControlsLoop(name, this);
+        }
+
+        public void ClearCache()
+        {
+            _listCache.Clear();
+            Invalidate(true);
+            Update();
+        }
+
+        private void PacketViewTab_Load(object sender, EventArgs e)
+        {
+            PacketView.Focus();
         }
     }
 }

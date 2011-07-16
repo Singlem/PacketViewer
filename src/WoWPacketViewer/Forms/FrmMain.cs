@@ -212,7 +212,7 @@ namespace WoWPacketViewer
 
         private void tabControl1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button != System.Windows.Forms.MouseButtons.Right)
+            if (e.Button != MouseButtons.Right && e.Button != MouseButtons.Middle)
                 return;
 
             for (int i = 0; i < tabControl1.TabCount; i++)
@@ -220,6 +220,11 @@ namespace WoWPacketViewer
                 var r = tabControl1.GetTabRect(i);
                 if (r.Contains(e.Location))
                 {
+                    if (e.Button == MouseButtons.Middle)
+                    {
+                        tabControl1.TabPages[i].Dispose();
+                        return;
+                    }
                     closeTabToolStripMenuItem.Tag = tabControl1.TabPages[i];
                     closeAllButThisToolStripMenuItem.Tag = tabControl1.TabPages[i];
                     contextMenuStrip1.Show(tabControl1, e.Location);
@@ -325,6 +330,13 @@ namespace WoWPacketViewer
         private void reloadOpcodesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpcodeDB.Reload();
+            foreach(TabPage tab in tabControl1.TabPages)
+            {
+                if (tab.Controls.Count > 0 && tab.Controls[0] is PacketViewTab)
+                {
+                    ((PacketViewTab)tab.Controls[0]).ClearCache();
+                }
+            }
         }
     }
 }
