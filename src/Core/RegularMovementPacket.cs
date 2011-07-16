@@ -235,7 +235,7 @@ namespace WowTools.Core
                         break;
                     case MovementStatusElements.PositionY:
                     case MovementStatusElements.PositionZ:
-                        break;  // assume they alwasys go as vector of 3
+                        break;  // assume they always go as vector of 3
                     case MovementStatusElements.PositionO:
                         ReadSingle(element.ToString());
                         break;
@@ -281,7 +281,7 @@ namespace WowTools.Core
                         break;
                     case MovementStatusElements.TransportPositionY:
                     case MovementStatusElements.TransportPositionZ:
-                        break;  // assume they alwasys go as vector of 3
+                        break;  // assume they always go as vector of 3
                     case MovementStatusElements.TransportTime:
                         if (HaveTransportData)
                             ReadUInt32(element.ToString());

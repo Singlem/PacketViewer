@@ -124,6 +124,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Parsers\ACCOUNT_DATA.cs" />
+    <Compile Include="Parsers\SMSG_HEALTH_UPDATE.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Parsers\Movement\MSG_MOVE_START_STRAFE_RIGHT.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_STOP_STRAFE.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_SET_FACING.cs" />
