@@ -111,6 +111,7 @@ namespace WowTools.Core
             TransportTime,
             TransportTime2,
             TransportTime3,
+            Speed0,
         }
 
         /// <summary>
@@ -293,6 +294,9 @@ namespace WowTools.Core
                     case MovementStatusElements.TransportTime3:
                         if (HaveTransportTime3)
                             ReadUInt32(element.ToString());
+                        break;
+                    case MovementStatusElements.Speed0: // ?
+                        ReadUInt32(element.ToString());
                         break;
                     default:
                         throw new InvalidOperationException("Unknown element: " + element);
