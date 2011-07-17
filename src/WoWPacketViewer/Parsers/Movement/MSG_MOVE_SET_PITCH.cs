@@ -3,7 +3,7 @@
 namespace WoWPacketViewer.Parsers.Movement
 {
     [Parser(OpCodes.MSG_MOVE_SET_PITCH)]
-    class Movement47201 : RegularMovementPacket
+    class MovementSetPitchParser : RegularMovementPacket
     {
             protected override MovementStatusElements[] Elements
             {

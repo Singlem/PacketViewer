@@ -124,12 +124,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Parsers\ACCOUNT_DATA.cs" />
-    <Compile Include="Parsers\Movement\MSG_MOVE_2121.cs" />
-    <Compile Include="Parsers\Movement\MSG_MOVE_6249.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_START_DESCEND.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_STOP_ASCEND.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_SET_PITCH.cs" />
-    <Compile Include="Parsers\Movement\MSG_MOVE_6378.cs" />
-    <Compile Include="Parsers\Movement\MSG_MOVE_47169.cs" />
-    <Compile Include="Parsers\Movement\MSG_MOVE_2283.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_START_ASCEND.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_START_SWIM.cs" />
+    <Compile Include="Parsers\Movement\MSG_MOVE_ROOT.cs" />
     <None Include="Parsers\Movement\MSG_MOVE_.cs" />
     <Compile Include="Parsers\SMSG_HEALTH_UPDATE.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -2,8 +2,8 @@
 
 namespace WoWPacketViewer.Parsers.Movement
 {
-    [Parser((OpCodes)2283)]
-    class Movement1 : RegularMovementPacket
+    [Parser(OpCodes.MSG_MOVE_ROOT)]
+    class MovementRootParser : RegularMovementPacket
     {
             protected override MovementStatusElements[] Elements
             {

@@ -2,29 +2,29 @@
 
 namespace WoWPacketViewer.Parsers.Movement
 {
-    [Parser((OpCodes)6249)]
-    class Movement6249 : RegularMovementPacket
+    [Parser(OpCodes.MSG_MOVE_START_DESCEND)]
+    class MovementStartDescendParser : RegularMovementPacket
     {
             protected override MovementStatusElements[] Elements
             {
                 get
                 {
                     return new MovementStatusElements[] {
-MovementStatusElements.HaveSpline,
-MovementStatusElements.GuidByte5,
-MovementStatusElements.GuidByte3,
-MovementStatusElements.GuidByte1,
-MovementStatusElements.Flags,
-MovementStatusElements.GuidByte4,
 MovementStatusElements.GuidByte7,
-MovementStatusElements.GuidByte2,
-MovementStatusElements.Flags2,
-MovementStatusElements.GuidByte6,
 MovementStatusElements.GuidByte0,
-MovementStatusElements.HavePitch,
-MovementStatusElements.HaveSplineElev,
+MovementStatusElements.GuidByte2,
+MovementStatusElements.GuidByte1,
+MovementStatusElements.GuidByte6,
+MovementStatusElements.GuidByte4,
+MovementStatusElements.GuidByte5,
+MovementStatusElements.HaveSpline,
+MovementStatusElements.GuidByte3,
+MovementStatusElements.Flags2,
+MovementStatusElements.Flags,
 MovementStatusElements.HaveFallData,
 MovementStatusElements.HaveFallDirection,
+MovementStatusElements.HavePitch,
+MovementStatusElements.HaveSplineElev,
 MovementStatusElements.HaveTransportData,
 MovementStatusElements.TransportGuidByte6,
 MovementStatusElements.TransportGuidByte3,
@@ -41,21 +41,17 @@ MovementStatusElements.PositionX,
 MovementStatusElements.PositionY,
 MovementStatusElements.PositionZ,
 MovementStatusElements.PositionO,
-MovementStatusElements.GuidByte5_2,
-MovementStatusElements.GuidByte2_2,
-MovementStatusElements.GuidByte0_2,
-MovementStatusElements.GuidByte7_2,
-MovementStatusElements.Pitch,
 MovementStatusElements.GuidByte3_2,
 MovementStatusElements.GuidByte4_2,
-MovementStatusElements.GuidByte1_2,
-MovementStatusElements.SplineElev,
+MovementStatusElements.GuidByte2_2,
 MovementStatusElements.FallVerticalSpeed,
 MovementStatusElements.FallTime,
 MovementStatusElements.FallHorizontalSpeed,
 MovementStatusElements.FallCosAngle,
 MovementStatusElements.FallSinAngle,
-MovementStatusElements.GuidByte6_2,
+MovementStatusElements.Pitch,
+MovementStatusElements.GuidByte5_2,
+MovementStatusElements.SplineElev,
 MovementStatusElements.TransportTime,
 MovementStatusElements.TransportPositionX,
 MovementStatusElements.TransportPositionY,
@@ -72,6 +68,10 @@ MovementStatusElements.TransportTime2,
 MovementStatusElements.TransportGuidByte7_2,
 MovementStatusElements.TransportGuidByte4_2,
 MovementStatusElements.TransportGuidByte2_2,
+MovementStatusElements.GuidByte1_2,
+MovementStatusElements.GuidByte0_2,
+MovementStatusElements.GuidByte7_2,
+MovementStatusElements.GuidByte6_2,
                 };
                 }
             }
