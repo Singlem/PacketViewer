@@ -36,6 +36,7 @@
             this.saveWardenAsTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsParsedTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadDefinitionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reloadOpcodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,7 +61,6 @@
             this.closeAllButThisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.colorChooser = new System.Windows.Forms.ColorDialog();
-            this.reloadOpcodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -130,6 +130,14 @@
             this.reloadDefinitionsToolStripMenuItem.Text = "Reload definitions";
             this.reloadDefinitionsToolStripMenuItem.Click += new System.EventHandler(this.reloadDefinitionsToolStripMenuItem_Click);
             // 
+            // reloadOpcodesToolStripMenuItem
+            // 
+            this.reloadOpcodesToolStripMenuItem.Name = "reloadOpcodesToolStripMenuItem";
+            this.reloadOpcodesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.reloadOpcodesToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.reloadOpcodesToolStripMenuItem.Text = "Reload opcodes";
+            this.reloadOpcodesToolStripMenuItem.Click += new System.EventHandler(this.reloadOpcodesToolStripMenuItem_Click);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
@@ -182,7 +190,7 @@
             this.parsedTextToolStripMenuItem,
             this.parsedBackgroundToolStripMenuItem});
             this.colorsToolStripMenuItem.Name = "colorsToolStripMenuItem";
-            this.colorsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.colorsToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.colorsToolStripMenuItem.Text = "Colors";
             // 
             // listViewTextToolStripMenuItem
@@ -321,14 +329,6 @@
             // 
             this.colorChooser.FullOpen = true;
             // 
-            // reloadOpcodesToolStripMenuItem
-            // 
-            this.reloadOpcodesToolStripMenuItem.Name = "reloadOpcodesToolStripMenuItem";
-            this.reloadOpcodesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.reloadOpcodesToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.reloadOpcodesToolStripMenuItem.Text = "Reload opcodes";
-            this.reloadOpcodesToolStripMenuItem.Click += new System.EventHandler(this.reloadOpcodesToolStripMenuItem_Click);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -341,6 +341,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FrmMain";
             this.Text = "Packet Viewer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyDown);
             this.menuStrip1.ResumeLayout(false);

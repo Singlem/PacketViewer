@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Windows.Forms;
 using WoWPacketViewer.Properties;
@@ -34,9 +36,20 @@ namespace WoWPacketViewer
         {
             if (_openDialog.ShowDialog() != DialogResult.OK)
                 return;
-
-            _statusLabel.Text = "Loading...";
             var file = _openDialog.FileName;
+
+            OpenFile(file);
+
+            if (Settings.Default.LastFiles == null)
+            {
+                Settings.Default.LastFiles = new StringCollection();
+            }
+            Settings.Default.LastFiles.Add(file);
+        }
+
+        private void OpenFile(string file)
+        {
+            _statusLabel.Text = "Loading...";
 
             CreateTab(file);
 
@@ -196,6 +209,13 @@ namespace WoWPacketViewer
         private void FrmMain_Load(object sender, EventArgs e)
         {
             ParserFactory.Init();
+            if (Settings.Default.AutoOpenLast && Settings.Default.LastFiles != null)
+            {
+                foreach (string filePath in Settings.Default.LastFiles)
+                {
+                    OpenFile(filePath);
+                }
+            }
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -337,6 +357,33 @@ namespace WoWPacketViewer
                     ((PacketViewTab)tab.Controls[0]).ClearCache();
                 }
             }
+        }
+
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Settings.Default.LastFiles == null)
+                return;
+            // Save the list of files currently opened as tabs to the Settings file
+            List<string> filesList = new List<string>();
+            foreach (TabPage tab in tabControl1.TabPages)
+            {
+                if (tab.Controls.Count > 0)
+                {
+                    string fileName = tab.Controls[0].Text;
+                    
+                    foreach(string filePath in Settings.Default.LastFiles)
+                    {
+                        if(Path.GetFileName(filePath) == fileName)
+                        {
+                            filesList.Add(filePath);
+                            break;
+                        }
+                    }
+                }
+            }
+            Settings.Default.LastFiles.Clear();
+            Settings.Default.LastFiles.AddRange(filesList.ToArray());
+            Settings.Default.Save();
         }
     }
 }

@@ -166,5 +166,28 @@ namespace WoWPacketViewer.Properties {
                 this["ShowGridLines"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection LastFiles {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["LastFiles"]));
+            }
+            set {
+                this["LastFiles"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoOpenLast {
+            get {
+                return ((bool)(this["AutoOpenLast"]));
+            }
+            set {
+                this["AutoOpenLast"] = value;
+            }
+        }
     }
 }
