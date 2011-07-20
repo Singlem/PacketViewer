@@ -35,8 +35,8 @@ namespace WoWPacketViewer
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
-                Hide();
                 Owner.Activate();
+                Hide();
             }
         }
     }

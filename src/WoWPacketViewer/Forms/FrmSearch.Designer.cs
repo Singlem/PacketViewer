@@ -139,7 +139,6 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Find";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmSearch_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

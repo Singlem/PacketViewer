@@ -39,7 +39,6 @@ namespace WoWPacketViewer
             PacketView.VirtualMode = true;
             PacketView.VirtualListSize = packets.Count;
             PacketView.EnsureVisible(0);
-            PacketView.GridLines = false;
         }
 
         public void SetColors(Color listFore, Color listBack, Color hexFore, Color hexBack, Color parsedFore, Color parsedBack)
@@ -102,10 +101,11 @@ namespace WoWPacketViewer
             if (item != null)
             {
                 PacketView.BeginUpdate();
-                PacketView.GridLines = false;
+                // hack to avoid redrawing bug
+                PacketView.GridLines = !PacketView.GridLines;
                 item.Selected = true;
                 item.EnsureVisible();
-                PacketView.GridLines = true;
+                PacketView.GridLines = !PacketView.GridLines;
                 PacketView.EndUpdate();
                 return;
             }
