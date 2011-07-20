@@ -2,7 +2,7 @@
 
 namespace WowTools.Core
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
     public class ParserAttribute : Attribute
     {
         public ParserAttribute(OpCodes code)

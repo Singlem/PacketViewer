@@ -22,7 +22,7 @@ namespace WoWPacketViewer
         {
             For(ReadInt32("Objects count: {0}"), i =>
                 {
-                    var updateType = ReadUInt8<UpdateTypes>("UpdateType: {0}");
+                    var updateType = ReadEnum<UpdateTypes>("UpdateType");
 
                     switch (updateType)
                     {
@@ -73,7 +73,7 @@ namespace WoWPacketViewer
         {
             var guid = ReadPackedGuid("Object guid: {0:X16}");
 
-            var objectTypeId = ReadUInt8<ObjectTypes>("Object Type: {0}");
+            var objectTypeId = ReadEnum<ObjectTypes>("Object Type");
 
             var movement = MovementBlock.Read(Reader);
 

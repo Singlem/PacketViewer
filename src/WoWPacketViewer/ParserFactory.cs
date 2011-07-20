@@ -11,12 +11,15 @@ namespace WoWPacketViewer
 {
     public class ParserFactory
     {
+        private static DateTime LastUpdated = DateTime.Now;
         private static readonly Dictionary<OpCodes, Type> Parsers = new Dictionary<OpCodes, Type>();
+        private static readonly Dictionary<OpCodes, MethodInfo> MethodParsers = new Dictionary<OpCodes, MethodInfo>();
         private static readonly Parser UnknownParser = new UnknownPacketParser();
 
         public static void ReInit()
         {
             Parsers.Clear();
+            MethodParsers.Clear();
             Init();
         }
 
@@ -30,6 +33,8 @@ namespace WoWPacketViewer
                 {
                     try
                     {
+                        if (File.GetLastWriteTime(file) < LastUpdated)
+                            continue;
                         Assembly assembly = Assembly.LoadFile(Path.GetFullPath(file));
                         LoadAssembly(assembly);
                     }
@@ -69,6 +74,7 @@ namespace WoWPacketViewer
                     }
                 }
             }
+            LastUpdated = DateTime.Now;
         }
 
         private static string GetLanguageFromExtension(string file)
@@ -112,6 +118,17 @@ namespace WoWPacketViewer
                     var attributes = (ParserAttribute[])type.GetCustomAttributes(typeof(ParserAttribute), true);
                     foreach (ParserAttribute attribute in attributes)
                         Parsers[attribute.Code] = type;
+
+                    foreach(MethodInfo mi in type.GetMethods())
+                    {
+                        attributes = (ParserAttribute[])mi.GetCustomAttributes(typeof(ParserAttribute), true);
+                        foreach (ParserAttribute attribute in attributes)
+                            MethodParsers[attribute.Code] = mi;
+
+                        OpCodes opcode;
+                        if (Enum.TryParse(mi.Name, true, out opcode))
+                            MethodParsers[opcode] = mi;
+                    }
                 }
             }
         }
@@ -119,17 +136,32 @@ namespace WoWPacketViewer
         public static Parser CreateParser(Packet packet)
         {
             Type type;
-            if (!Parsers.TryGetValue(packet.Code, out type))
-                return UnknownParser;
-
-            var parser = (Parser)Activator.CreateInstance(type);
-            parser.Initialize(packet);
-            return parser;
+            if (Parsers.TryGetValue(packet.Code, out type))
+            {
+                var parser = (Parser) Activator.CreateInstance(type);
+                parser.Initialize(packet);
+                parser.Parse();
+                parser.CheckPacket();
+                return parser;
+            }
+            MethodInfo mi;
+            if(MethodParsers.TryGetValue(packet.Code, out mi))
+            {
+                var parserObj = (Parser)Activator.CreateInstance(mi.DeclaringType);
+                parserObj.Initialize(packet);
+                var args = new object[mi.GetParameters().Length];
+                if(args.Length > 0)
+                    args[0] = parserObj;
+                mi.Invoke(parserObj, args);
+                parserObj.CheckPacket();
+                return parserObj;
+            }
+            return UnknownParser;
         }
 
         public static bool HasParser(OpCodes opcode)
         {
-            return Parsers.ContainsKey(opcode);
+            return Parsers.ContainsKey(opcode) || MethodParsers.ContainsKey(opcode);
         }
     }
 }

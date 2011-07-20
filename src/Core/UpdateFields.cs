@@ -9,7 +9,7 @@ namespace WowTools.Core
     /// <summary>
     /// WoW Update Types.
     /// </summary>
-    public enum UpdateTypes
+    public enum UpdateTypes : byte
     {
         /// <summary>
         /// Update type that update only object field values.

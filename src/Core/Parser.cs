@@ -10,9 +10,9 @@ namespace WowTools.Core
     {
         private readonly StringBuilder stringBuilder = new StringBuilder();
 
-        public void Append(string str)
+        public void Append(string format, params object[] args)
         {
-            stringBuilder.Append(str);
+            stringBuilder.AppendFormat(format, args);
         }
 
         public void AppendLine()
@@ -20,10 +20,12 @@ namespace WowTools.Core
             stringBuilder.AppendLine();
         }
 
-        public void AppendLine(string str)
+        public void AppendLine(string format, params object[] args)
         {
-            stringBuilder.AppendLine(str);
+            stringBuilder.AppendFormat(format, args).AppendLine();
         }
+
+        public void WriteLine(string format, params object[] args) { AppendLine(format, args); }
 
         public void AppendFormat(string format, params object[] args)
         {
@@ -66,102 +68,25 @@ namespace WowTools.Core
             if (packet != null)
             {
                 Reader = Packet.CreateReader();
-                Parse();
-                CheckPacket();
             }
         }
 
-        public abstract void Parse();
+        public virtual void Parse() { }
 
         public override string ToString()
         {
             return stringBuilder.ToString();
         }
 
-        public byte ReadUInt8(string format, params object[] args)
-        {
-            var ret = Reader.ReadByte();
-            if (args.Length == 0 && !format.Contains("{0"))
-                format += ": {0}";
-            AppendFormatLine(format, MergeArguments(args, ret));
-            return ret;
-        }
-
-        public byte ReadByte(string format, params object[] args)
-        {
-            return ReadUInt8(format, args); // alias
-        }
-
-        // for enums
-        public T ReadUInt8<T>(string format, params object[] args)
-        {
-            var obj = Enum.ToObject(typeof(T), Reader.ReadByte());
-            if (args.Length == 0 && !format.Contains("{0"))
-                format += ": {0}";
-            AppendFormatLine(format, MergeArguments(args, obj));
-            return (T)obj;
-        }
-
-        public uint ReadUInt16(string format, params object[] args)
-        {
-            var ret = Reader.ReadUInt16();
-            if (args.Length == 0 && !format.Contains("{0"))
-                format += ": {0}";
-            AppendFormatLine(format, MergeArguments(args, ret));
-            return ret;
-        }
-
-        public int ReadInt32(string format, params object[] args)
-        {
-            var ret = Reader.ReadInt32();
-            if(args.Length == 0 && !format.Contains("{0"))
-                format += ": {0}";
-            AppendFormatLine(format, MergeArguments(args, ret));
-            return ret;
-        }
-
-        public uint ReadUInt32(string format, params object[] args)
-        {
-            var ret = Reader.ReadUInt32();
-            if (args.Length == 0 && !format.Contains("{0"))
-                format += ": {0}";
-            AppendFormatLine(format, MergeArguments(args, ret));
-            return ret;
-        }
-
-        public ulong ReadUInt64(string format, params object[] args)
-        {
-            var ret = Reader.ReadUInt64();
-            if (args.Length == 0 && !format.Contains("{0"))
-                format += ": {0}";
-            AppendFormatLine(format, MergeArguments(args, ret));
-            return ret;
-        }
-
-        public string ReadCString(string format, params object[] args)
-        {
-            var ret = Reader.ReadCString();
-            if (args.Length == 0 && !format.Contains("{0"))
-                format += ": {0}";
-            AppendFormatLine(format, MergeArguments(args, ret));
-            return ret;
-        }
-
-        public float ReadSingle(string format, params object[] args)
-        {
-            var ret = Reader.ReadSingle();
-            if (args.Length == 0 && !format.Contains("{0"))
-                format += ": {0}";
-            AppendFormatLine(format, MergeArguments(args, ret));
-            return ret;
-        }
-
-        public ulong ReadPackedGuid(string format, params object[] args)
+        public ulong ReadPackedGuid(string format = null, params object[] args)
         {
             var ret = Reader.ReadPackedGuid();
-            if (args.Length == 0 && !format.Contains("{0"))
-                format += ": {0}";
-            AppendFormatLine(format, MergeArguments(args, ret));
+            if (format != null)
+            {
+                if (args.Length == 0 && !format.Contains("{0"))
+                    format += ": {0}";
+                AppendFormatLine(format, MergeArguments(args, ret));
+            }
             return ret;
         }
 
@@ -174,10 +99,10 @@ namespace WowTools.Core
 
         private object[] MergeArguments(object[] args, object arg)
         {
-            var newArgs = new List<object>();
-            newArgs.AddRange(args);
-            newArgs.Add(arg);
-            return newArgs.ToArray();
+            var newArgs = new object[args.Length + 1];
+            Array.Copy(args, newArgs, args.Length);
+            newArgs[args.Length] = arg;
+            return newArgs;
         }
 
         public void For(int count, Action func)
@@ -236,23 +161,19 @@ namespace WowTools.Core
             return new KeyValuePair<long, T>(rawVal, (T)value);
         }
 
-        public T ReadEnum<T>(string name, TypeCode code = TypeCode.Empty)
+        public T ReadEnum<T>(string name = null, TypeCode code = TypeCode.Empty)
         {
             KeyValuePair<long, T> val = ReadEnum<T>(code);
-            AppendFormatLine("{0}: {1} ({2})", name, val.Value, val.Key);
+            if(name != null)
+                AppendFormatLine("{0}: {1} ({2})", name, val.Value, val.Key);
             return val.Value;
         }
 
-        public DateTime ReadTime()
+        public T ReadEnum<T>(string name, byte bitsCount)
         {
-            return Reader.ReadUInt32().AsUnixTime();
-        }
-
-        public DateTime ReadTime(string name)
-        {
-            var val = ReadTime();
-            AppendFormatLine("{0}: {1}", name, val);
-            return val;
+            KeyValuePair<long, T> val = ReadEnum<T>(TypeCode.DBNull, bitsCount);
+            AppendFormatLine("{0}: {1} ({2})", name, val.Value, val.Key);
+            return val.Value;
         }
 
         public Coords3 ReadCoords3(string name = null)
@@ -271,7 +192,7 @@ namespace WowTools.Core
         {
             return new Guid(Reader.ReadUInt64());
         }*/
-
+        public bool Bit() { return ReadBit(); }
         public bool ReadBit()
         {
             if (_bitPos < 0)
@@ -295,12 +216,54 @@ namespace WowTools.Core
             }
             return value;
         }
+        public uint Bits(byte bitsCount) { return ReadBits(bitsCount); }
 
-        public T ReadEnum<T>(string name, byte bitsCount)
+        public bool IsRead()
         {
-            KeyValuePair<long, T> val = ReadEnum<T>(TypeCode.DBNull, bitsCount);
-            AppendFormatLine("{0}: {1} ({2})", name, val.Value, val.Key);
-            return val.Value;
+            return Reader.BaseStream.Position == Reader.BaseStream.Length;
         }
+
+        private T Print<T>(T value, string format = null, params object[] args)
+        {
+            if (format != null)
+            {
+                if (args.Length == 0 && !format.Contains("{0"))
+                    format += ": {0}";
+                AppendFormatLine(format, MergeArguments(args, value));
+            }
+            return value;
+        }
+
+        public Byte[] ReadBytes(int count) { return Reader.ReadBytes(count); }
+        public DateTime ReadPackedTime(string fmt = null, params object[] args) { return Print(Reader.ReadInt32().AsGameTime(), fmt, args); }
+        public DateTime ReadTime(string fmt = null, params object[] args) { return Print(Reader.ReadUInt32().AsUnixTime(), fmt, args); }
+        public string ReadString(string fmt = null, params object[] args) { return Print(Reader.ReadCString(), fmt, args); }
+        public string ReadCString(string fmt = null, params object[] args) { return Print(Reader.ReadCString(), fmt, args); }
+        public float ReadSingle(string fmt = null, params object[] args) { return Print(Reader.ReadSingle(), fmt, args); }
+        public float ReadFloat(string fmt = null, params object[] args) { return Print(Reader.ReadSingle(), fmt, args); }
+        public long ReadInt64(string fmt = null, params object[] args) { return Print(Reader.ReadInt64(), fmt, args); }
+        public int ReadInt32(string fmt = null, params object[] args) { return Print(Reader.ReadInt32(), fmt, args); }
+        public short ReadInt16(string fmt = null, params object[] args) { return Print(Reader.ReadInt16(), fmt, args); }
+        public sbyte ReadInt8(string fmt = null, params object[] args) { return Print(Reader.ReadSByte(), fmt, args); }
+        public ulong ReadUInt64(string fmt = null, params object[] args) { return Print(Reader.ReadUInt64(), fmt, args); }
+        public uint ReadUInt32(string fmt = null, params object[] args) { return Print(Reader.ReadUInt32(), fmt, args); }
+        public ushort ReadUInt16(string fmt = null, params object[] args) { return Print(Reader.ReadUInt16(), fmt, args); }
+        public byte ReadUInt8(string fmt = null, params object[] args) { return Print(Reader.ReadByte(), fmt, args); }
+        public byte ReadByte(string fmt = null, params object[] args) { return Print(Reader.ReadByte(), fmt, args); }
+
+        public Byte[] Bytes(int count) { return Reader.ReadBytes(count); }
+        public DateTime PackedTime(string fmt = null, params object[] args) { return ReadPackedTime(fmt, args); }
+        public DateTime Time(string fmt = null, params object[] args) { return ReadTime(fmt, args); }
+        public string CString(string fmt = null, params object[] args) { return ReadCString(fmt, args); }
+        public float Float(string fmt = null, params object[] args) { return ReadFloat(fmt, args); }
+        public long Int64(string fmt = null, params object[] args) { return ReadInt64(fmt, args); }
+        public int Int32(string fmt = null, params object[] args) { return ReadInt32(fmt, args); }
+        public short Int16(string fmt = null, params object[] args) { return ReadInt16(fmt, args); }
+        public sbyte Int8(string fmt = null, params object[] args) { return ReadInt8(fmt, args); }
+        public ulong UInt64(string fmt = null, params object[] args) { return ReadUInt64(fmt, args); }
+        public uint UInt32(string fmt = null, params object[] args) { return ReadUInt32(fmt, args); }
+        public ushort UInt16(string fmt = null, params object[] args) { return ReadUInt16(fmt, args); }
+        public byte UInt8(string fmt = null, params object[] args) { return ReadByte(fmt, args); }
+        public byte Byte(string fmt = null, params object[] args) { return ReadByte(fmt, args); }
     }
 }
