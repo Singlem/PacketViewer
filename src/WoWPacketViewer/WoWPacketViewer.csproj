@@ -142,6 +142,7 @@
     <Compile Include="Parsers\Movement\MSG_MOVE_ROOT.cs" />
     <None Include="Parsers\Movement\MSG_MOVE_.cs" />
     <Compile Include="Parsers\Other\CMSG_PING.cs" />
+    <Compile Include="Parsers\Other\CRITERIA_UPDATE.cs" />
     <Compile Include="Parsers\Other\EmptyPackets.cs" />
     <Compile Include="Parsers\Other\WORLD_LOGIN.cs" />
     <Compile Include="Parsers\SMSG_HEALTH_UPDATE.cs">
