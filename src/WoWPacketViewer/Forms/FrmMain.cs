@@ -30,6 +30,9 @@ namespace WoWPacketViewer
         public FrmMain()
         {
             InitializeComponent();
+
+            FrmSettings SettingsForm = new FrmSettings();
+            SettingsForm.ShowDialog(this);
         }
 
         private void OpenMenu_Click(object sender, EventArgs e)
