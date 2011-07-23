@@ -124,6 +124,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Parsers\ACCOUNT_DATA.cs" />
+    <Compile Include="Parsers\Calendar\CalendarHandler.cs" />
     <Compile Include="Parsers\Grouped\WorldStateHandler.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -134,6 +135,9 @@
     <Compile Include="Parsers\Movement\MSG_MOVE_START_SWIM.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_ROOT.cs" />
     <None Include="Parsers\Movement\MSG_MOVE_.cs" />
+    <Compile Include="Parsers\Other\CMSG_PING.cs" />
+    <Compile Include="Parsers\Other\EmptyPackets.cs" />
+    <Compile Include="Parsers\Other\WORLD_LOGIN.cs" />
     <Compile Include="Parsers\SMSG_HEALTH_UPDATE.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
