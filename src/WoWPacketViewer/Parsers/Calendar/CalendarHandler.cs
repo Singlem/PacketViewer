@@ -66,7 +66,7 @@ namespace WowPacketParser.Parsing.Parsers
                 WriteLine("  EventID: " + packet.ReadInt64());
                 WriteLine("  EventName: " + packet.ReadString());
                 WriteLine("  EventModFlags: " + packet.ReadInt32());
-                WriteLine("  EventDate: " + packet.ReadTime());
+                WriteLine("  EventDate: " + packet.ReadPackedTime());
                 WriteLine("  EventFlags: " + packet.ReadInt32());
                 WriteLine("  DungeonID: " + packet.ReadInt32());
                 WriteLine("  unk: " + packet.ReadInt64());
@@ -75,7 +75,7 @@ namespace WowPacketParser.Parsing.Parsers
             }
 
             WriteLine("CurrentUnixTime: " + packet.ReadTime());
-            WriteLine("CurrentPacketTime: " + packet.ReadTime());
+            WriteLine("CurrentPacketTime: " + packet.ReadPackedTime());
 
             var InstanceResetCount = packet.ReadInt32();
             WriteLine("InstanceResetCount: " + InstanceResetCount);
@@ -102,10 +102,6 @@ namespace WowPacketParser.Parsing.Parsers
 
             var Counter = packet.ReadInt32();
             WriteLine("Counter: " + Counter + "(Never seen this larger than 0)");
-            for (var i = 0; i < Counter; ++i)
-            {
-
-            }
         }
      
         [Parser(OpCodes.SMSG_CALENDAR_COMMAND_RESULT)]
@@ -182,7 +178,7 @@ namespace WowPacketParser.Parsing.Parsers
             WriteLine("MaxSize: " + packet.ReadInt32());
             WriteLine("DungeonID: " + packet.ReadInt32());
             WriteLine("EventFlags: " + packet.ReadInt32());
-            WriteLine("EventTime: " + packet.ReadTime());
+            WriteLine("EventTime: " + packet.ReadPackedTime());
             WriteLine("LockOutTime: " + packet.ReadInt32());
             WriteLine("unk: " + packet.ReadInt32());
             WriteLine("unk: " + packet.ReadInt32());
@@ -201,6 +197,15 @@ namespace WowPacketParser.Parsing.Parsers
                 WriteLine("  unk: " + packet.ReadInt32());
                 WriteLine("");
             }
+        }
+
+        [Parser(OpCodes.CMSG_CALENDAR_EVENT_REMOVE_INVITE)]
+        public void HandleRemove_Invite(Parser packet)
+        {
+            WriteLine("Removee'sGuid: " + packet.ReadPackedGuid());
+            WriteLine("Removee'sInviteID: " + packet.ReadInt64());
+            WriteLine("unk: " + packet.ReadInt64());
+            WriteLine("EventID: " + packet.ReadInt64());
         }
     }
 }
