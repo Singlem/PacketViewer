@@ -8,9 +8,32 @@ namespace WowPacketParser.Parsing.Parsers
         [Parser(OpCodes.CMSG_CANCEL_TRADE)]
         [Parser(OpCodes.CMSG_WORLD_STATE_UI_TIMER_UPDATE)]
         [Parser(OpCodes.CMSG_CALENDAR_GET_CALENDAR)]
-        public void HandleEmptyPacket(Parser packet)
+        [Parser(OpCodes.CMSG_ATTACKSTOP)]
+        [Parser(OpCodes.CMSG_QUESTGIVER_STATUS_MULTIPLE_QUERY)]
+        [Parser(OpCodes.CMSG_READY_FOR_ACCOUNT_DATA_TIMES)]
+        [Parser(OpCodes.CMSG_CHAR_ENUM)]
+        [Parser(OpCodes.CMSG_REQUEST_RAID_INFO)]
+        [Parser(OpCodes.CMSG_GMTICKET_GETTICKET)]
+        [Parser(OpCodes.CMSG_CALENDAR_GET_NUM_PENDING)]
+        [Parser(OpCodes.CMSG_KEEP_ALIVE)]
+        [Parser(OpCodes.CMSG_BATTLEFIELD_STATUS)]
+        [Parser(OpCodes.CMSG_MEETINGSTONE_INFO)]
+        public void HandleEmptyCMSGPacket(Parser packet)
         {
             WriteLine("CMSG Packet that wants responce from server");
+        }
+
+        [Parser(OpCodes.SMSG_FORCE_SEND_QUEUED_PACKETS)]
+        public void HandleEmptySMSGPacket(Parser packet)
+        {
+            WriteLine("SMSG Packet that wants responce from client");
+        }
+
+        [Parser(OpCodes.MSG_QUERY_NEXT_MAIL_TIME)]
+        [Parser(OpCodes.MSG_GUILD_BANK_MONEY_WITHDRAWN)]
+        public void HandleEmptyMSGPacket(Parser packet)
+        {
+            WriteLine("MSG Packet that wants responce from client/Server");
         }
     }
 }
