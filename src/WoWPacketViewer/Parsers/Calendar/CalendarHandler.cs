@@ -69,6 +69,7 @@ namespace WowPacketParser.Parsing.Parsers
                 WriteLine("  EventDate: " + packet.ReadTime());
                 WriteLine("  EventFlags: " + packet.ReadInt32());
                 WriteLine("  DungeonID: " + packet.ReadInt32());
+                WriteLine("  unk: " + packet.ReadInt64());
                 WriteLine("  InvitedBy: " + packet.ReadPackedGuid());
                 WriteLine("");
             }
@@ -100,7 +101,7 @@ namespace WowPacketParser.Parsing.Parsers
             }
 
             var Counter = packet.ReadInt32();
-            WriteLine("Counter: " + Counter + "(Never seen packet larger that 344)");
+            WriteLine("Counter: " + Counter + "(Never seen this larger than 0)");
             for (var i = 0; i < Counter; ++i)
             {
 
@@ -142,9 +143,62 @@ namespace WowPacketParser.Parsing.Parsers
 
             for (var i = 0; i < inviteCount; ++i)
             {
-                WriteLine(" PlayerGuid: " + Reader.ReadPackedGuid());
+                WriteLine(" PlayerGuid: " + packet.ReadPackedGuid());
                 WriteLine(" inviteStatus: " + packet.ReadInt8());
                 WriteLine(" modType: " + packet.ReadInt8());
+                WriteLine("");
+            }
+        }
+
+        [Parser(OpCodes.SMSG_CALENDAR_EVENT_INVITE_ALERT)]
+        public void HandleEventInviteAlert(Parser packet)
+        {
+            WriteLine("EventID: " + packet.ReadInt64());
+            WriteLine("EventName: " + packet.ReadString());
+            WriteLine("EventTime: " + packet.ReadTime());
+            WriteLine("EventFlags: " + packet.ReadInt32());
+            WriteLine("EventType: " + packet.ReadInt32());
+            WriteLine("DungeonID: " + packet.ReadInt32());
+            WriteLine("unk: " + packet.ReadInt32());
+            WriteLine("InviteID: " + packet.ReadInt64());
+            WriteLine("InviteStatus: " + packet.ReadInt8());
+            WriteLine("Mod_Type: " + packet.ReadInt8());
+            WriteLine("unk: " + packet.ReadInt32());
+            WriteLine("Inviter_1: " + packet.ReadPackedGuid());
+            WriteLine("Inviter_2: " + packet.ReadPackedGuid());
+        }
+
+        [Parser(OpCodes.SMSG_CALENDAR_SEND_EVENT)]
+        public void HandleSendEvent(Parser packet)
+        {
+            WriteLine("Invite_Type: " + packet.ReadInt8());
+            WriteLine("Creator " + packet.ReadPackedGuid());
+            WriteLine("EventID: " + packet.ReadInt32());
+            WriteLine("unk: " + packet.ReadInt32());
+            WriteLine("EventName: " + packet.ReadString());
+            WriteLine("EventDescription: " + packet.ReadString());
+            WriteLine("Event_Type: " + packet.ReadInt8());
+            WriteLine("Repeat_Option: " + packet.ReadInt8());
+            WriteLine("MaxSize: " + packet.ReadInt32());
+            WriteLine("DungeonID: " + packet.ReadInt32());
+            WriteLine("EventFlags: " + packet.ReadInt32());
+            WriteLine("EventTime: " + packet.ReadTime());
+            WriteLine("LockOutTime: " + packet.ReadInt32());
+            WriteLine("unk: " + packet.ReadInt32());
+            WriteLine("unk: " + packet.ReadInt32());
+            var inviteCount = packet.ReadInt32();
+            WriteLine("InviteCount: " + inviteCount);
+
+            for (var i = 0; i < inviteCount; ++i)
+            {
+                WriteLine("  PlayerGuid: " + packet.ReadPackedGuid());
+                WriteLine("  PlayerLevel: " + packet.ReadInt8());
+                WriteLine("  InviteStatus: " + packet.ReadInt8());
+                WriteLine("  Mod_Type: " + packet.ReadInt8());
+                WriteLine("  unk: " + packet.ReadInt8());
+                WriteLine("  inviteID: " + packet.ReadInt64());
+                WriteLine("  unk: " + packet.ReadInt8());
+                WriteLine("  unk: " + packet.ReadInt32());
                 WriteLine("");
             }
         }
