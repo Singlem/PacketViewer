@@ -197,7 +197,7 @@
     <Compile Include="Parsers\SMSG_MAIL_LIST_RESULT.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\SMSG_MONSTER_MOVE.cs">
+    <Compile Include="Parsers\Movement\SMSG_MONSTER_MOVE.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\SMSG_PET_SPELLS.cs">

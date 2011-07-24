@@ -4,7 +4,7 @@ using WowTools.Core;
 namespace WoWPacketViewer
 {
     [Parser(OpCodes.SMSG_AURA_UPDATE)]
-    [Parser(OpCodes.SMSG_AURA_UPDATE_ALL)]
+    //[Parser(OpCodes.SMSG_AURA_UPDATE_ALL)]
     class AuraUpdateParser : Parser
     {
         [Flags]

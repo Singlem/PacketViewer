@@ -3,7 +3,7 @@ using WowTools.Core;
 
 namespace WoWPacketViewer
 {
-    [Parser(OpCodes.CMSG_AUTH_SESSION)]
+    //[Parser(OpCodes.CMSG_AUTH_SESSION)]
     class CMSG_AUTH_SESSION : Parser
     {
         public override void Parse()

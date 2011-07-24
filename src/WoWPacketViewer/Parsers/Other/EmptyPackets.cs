@@ -28,13 +28,6 @@ namespace WowPacketParser.Parsing.Parsers
         {
             WriteLine("SMSG Packet that wants responce from client");
         }
-
-        [Parser(OpCodes.MSG_QUERY_NEXT_MAIL_TIME)]
-        [Parser(OpCodes.MSG_GUILD_BANK_MONEY_WITHDRAWN)]
-        public void HandleEmptyMSGPacket(Parser packet)
-        {
-            WriteLine("MSG Packet that wants responce from client/Server");
-        }
     }
 }
  
