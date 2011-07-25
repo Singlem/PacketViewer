@@ -78,7 +78,7 @@
             // 
             // BtnStave
             // 
-            this.BtnStave.Location = new System.Drawing.Point(55, 142);
+            this.BtnStave.Location = new System.Drawing.Point(68, 142);
             this.BtnStave.Name = "BtnStave";
             this.BtnStave.Size = new System.Drawing.Size(75, 23);
             this.BtnStave.TabIndex = 5;
@@ -133,6 +133,7 @@
             // 
             // FrmSettings
             // 
+            this.AcceptButton = this.BtnStave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(210, 170);

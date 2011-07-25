@@ -30,9 +30,6 @@ namespace WoWPacketViewer
         public FrmMain()
         {
             InitializeComponent();
-
-            FrmSettings SettingsForm = new FrmSettings();
-            SettingsForm.ShowDialog(this);
         }
 
         private void OpenMenu_Click(object sender, EventArgs e)
@@ -387,6 +384,12 @@ namespace WoWPacketViewer
             Settings.Default.LastFiles.Clear();
             Settings.Default.LastFiles.AddRange(filesList.ToArray());
             Settings.Default.Save();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmSettings SettingsForm = new FrmSettings();
+            SettingsForm.ShowDialog(this);
         }
     }
 }
