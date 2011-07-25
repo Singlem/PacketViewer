@@ -189,5 +189,17 @@ namespace WoWPacketViewer.Properties {
                 this["AutoOpenLast"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OpcodesUpdatesPath {
+            get {
+                return ((string)(this["OpcodesUpdatesPath"]));
+            }
+            set {
+                this["OpcodesUpdatesPath"] = value;
+            }
+        }
     }
 }

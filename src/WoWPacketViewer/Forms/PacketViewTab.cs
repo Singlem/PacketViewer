@@ -255,5 +255,22 @@ namespace WoWPacketViewer
         {
             PacketView.Focus();
         }
+
+        private void PacketView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListViewItem item = PacketView.GetItemAt(e.Location.X, e.Location.Y);
+            if (item == null)
+                return;
+            ListViewItem.ListViewSubItem subitem = item.GetSubItemAt(e.Location.X, e.Location.Y);
+            if (subitem == null)
+                return;
+            var index = item.SubItems.IndexOf(subitem);
+            if (index != 2 && index != 3)
+                return; // only for clicks on the opcode
+
+            var form = new FrmChangeOpcode(subitem.Text);
+            if(form.ShowDialog() == DialogResult.OK)
+                ClearCache();   // maybe do the same for other tabs?
+        }
     }
 }

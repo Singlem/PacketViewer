@@ -13,10 +13,10 @@ namespace WowTools.Core
         /// </summary>
         public static bool Enabled = true;
         //static Dictionary<uint, OpCodes> NumberToEnum = new Dictionary<uint, OpCodes>();
-        static OpCodes[] NumberToEnum = new OpCodes[0xFFFF];
-        static Dictionary<OpCodes, uint> EnumToNumber = new Dictionary<OpCodes, uint>();
+        public static OpCodes[] NumberToEnum = new OpCodes[0xFFFF];
+        public static Dictionary<OpCodes, uint> EnumToNumber = new Dictionary<OpCodes, uint>();
 
-        private static uint BuildLoaded = 0;
+        public static uint BuildLoaded { private set; get; }
         private static string ConnectionString;
 
         public static void Load(uint build, String connectionString)
@@ -92,6 +92,28 @@ namespace WowTools.Core
                 return 0;
             }
             return EnumToNumber[enumValue];
+        }
+
+        public static string UpdateOpcode(string name, uint number)
+        {
+            OpCodes enumVal;
+            if(!OpCodes.TryParse(name, true, out enumVal))
+                return "";
+
+            if (EnumToNumber[enumVal] == number)
+                return "";  // value not changed
+
+            NumberToEnum[number] = enumVal;
+            EnumToNumber[enumVal] = number;
+            string query = String.Format("UPDATE emuopcodes SET number = {0} WHERE name = \"{1}\" and version = @ver;",
+                                         number, name);
+            using (var conn = new MySqlConnection(ConnectionString))
+            {
+                conn.Open();
+                var command = new MySqlCommand(query.Replace("@ver", BuildLoaded.ToString()), conn);
+                command.ExecuteNonQuery();
+            }
+            return query;
         }
     }
 }
