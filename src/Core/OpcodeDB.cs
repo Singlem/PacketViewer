@@ -15,6 +15,10 @@ namespace WowTools.Core
         //static Dictionary<uint, OpCodes> NumberToEnum = new Dictionary<uint, OpCodes>();
         public static OpCodes[] NumberToEnum = new OpCodes[0xFFFF];
         public static Dictionary<OpCodes, uint> EnumToNumber = new Dictionary<OpCodes, uint>();
+        /// <summary>
+        /// Mapping of opcode numbers directly to string names for opcodes missing in the enum but present in the DB
+        /// </summary>
+        public static Dictionary<uint, string> NumberToName = new Dictionary<uint, string>();
 
         public static uint BuildLoaded { private set; get; }
         private static string ConnectionString;
@@ -47,6 +51,7 @@ namespace WowTools.Core
                         if (!Enum.TryParse(name, out enumVal))
                         {
                             Console.WriteLine("No OpCodes enum value for DB entry {0}", name);
+                            NumberToName.Add(number, name);
                             continue;
                         }
                         NumberToEnum[number] = enumVal;
@@ -65,6 +70,7 @@ namespace WowTools.Core
             
             Array.Clear(NumberToEnum, 0, NumberToEnum.Length);
             EnumToNumber.Clear();
+            NumberToName.Clear();
             Load(curBuild, ConnectionString);
         }
 
@@ -79,6 +85,22 @@ namespace WowTools.Core
                 return (OpCodes)number; // it will be left as a number to display
             }
             return NumberToEnum[number];    // DB mapping found
+        }
+
+        static public string GetName(uint number)
+        {
+            if (!Enabled)
+            {
+                return ((OpCodes)number).ToString(); // cast it to an appropriate OpCodes member
+            }
+            if (number > 0xFFFF || NumberToEnum[number] == 0)//!NumberToEnum.ContainsKey(number))
+            {
+                if (NumberToName.ContainsKey(number))
+                    return NumberToName[number];    // not in the enum but name is in the DB
+
+                return number.ToString(); // unknown and will be left as a number to display
+            }
+            return NumberToEnum[number].ToString();    // DB mapping found
         }
 
         static public uint GetOpcode(OpCodes enumValue)

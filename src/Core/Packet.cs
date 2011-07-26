@@ -8,6 +8,7 @@ namespace WowTools.Core
 
         public uint OpcodeNumber { get; private set; }
         public OpCodes Code { get { return OpcodeDB.GetOpcode(OpcodeNumber); } }
+        public string Name { get { return OpcodeDB.GetName(OpcodeNumber); } }
 
         public byte[] Data { get; private set; }
 

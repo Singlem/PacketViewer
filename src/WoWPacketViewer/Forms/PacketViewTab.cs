@@ -164,7 +164,7 @@ namespace WoWPacketViewer
 
         private bool SearchMatches(SearchForVirtualItemEventArgs e, StringComparison comparisonType, int i)
         {
-            var op = packets[i].Code.ToString();
+            var op = packets[i].Name;
             if (op.IndexOf(e.Text, comparisonType) != -1)
             {
                 e.Index = i;
@@ -207,7 +207,7 @@ namespace WoWPacketViewer
                     {
                         p.UnixTime.AsUnixTime().ToString("H:mm:ss"),
                         (p.TicksCount - startTick).ToString(),
-                        p.Code.ToString(),
+                        p.Name,
                         String.Empty,
                         p.Data.Length.ToString(),
                         ParserFactory.HasParser(p.Code).ToString()
@@ -217,7 +217,7 @@ namespace WoWPacketViewer
                         p.UnixTime.AsUnixTime().ToString("H:mm:ss"),
                         (p.TicksCount - startTick).ToString(),
                         String.Empty,
-                        p.Code.ToString(), 
+                        p.Name, 
                         p.Data.Length.ToString(),
                         ParserFactory.HasParser(p.Code).ToString()
                     });
