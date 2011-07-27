@@ -215,22 +215,22 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\Grouped\AuctionHandler.cs" />
-    <Compile Include="Parsers\Spells\SpellHelpers\CastFlags.cs">
+    <Compile Include="Parsers\Spells\CastFlags.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\Spells\SpellHelpers\CooldownMask.cs">
+    <Compile Include="Parsers\Spells\CooldownMask.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\Spells\SMSG_SPELL_GO.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\Spells\SpellHelpers\SpellParserBase.cs">
+    <Compile Include="Parsers\Spells\SpellParserBase.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\Spells\SMSG_SPELL_START.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\Spells\SpellHelpers\TargetFlags.cs">
+    <Compile Include="Parsers\Spells\TargetFlags.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\UnknownPacketParser.cs">
