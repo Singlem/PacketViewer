@@ -234,6 +234,11 @@ namespace WowTools.Core
             return value;
         }
 
+        public long GetSize()
+        {
+            return Reader.BaseStream.Length;
+        }
+
         public Byte[] ReadBytes(int count) { return Reader.ReadBytes(count); }
         public DateTime ReadPackedTime(string fmt = null, params object[] args) { return Print(Reader.ReadInt32().AsGameTime(), fmt, args); }
         public DateTime ReadTime(string fmt = null, params object[] args) { return Print(Reader.ReadUInt32().AsUnixTime(), fmt, args); }

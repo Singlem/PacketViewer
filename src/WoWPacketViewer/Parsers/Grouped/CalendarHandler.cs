@@ -117,6 +117,9 @@ namespace WowPacketParser.Parsing.Parsers
         public void HandleGetEvent(Parser packet)
         {
             WriteLine("EventID: " + packet.ReadInt32());
+
+            if (packet.GetSize() == 8)
+                WriteLine("unk: " + packet.ReadInt32());
         }
 
         [Parser(OpCodes.CMSG_CALENDAR_ADD_EVENT)]
