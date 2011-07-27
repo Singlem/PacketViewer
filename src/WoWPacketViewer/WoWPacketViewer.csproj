@@ -136,7 +136,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Parsers\ACCOUNT_DATA.cs" />
-    <Compile Include="Parsers\Calendar\CalendarHandler.cs" />
+    <Compile Include="Parsers\Grouped\CalendarHandler.cs" />
     <Compile Include="Parsers\Grouped\WorldStateHandler.cs">
       <SubType>Code</SubType>
     </Compile>
