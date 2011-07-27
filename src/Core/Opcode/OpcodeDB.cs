@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 namespace WowTools.Core
@@ -40,23 +41,35 @@ namespace WowTools.Core
             {
                 var query = String.Format("select name, number from emuopcodes where version = {0};", build);
                 var command = new MySqlCommand(query, conn);
-                conn.Open();
-                using (var reader = command.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    conn.Open();
+                    using (var reader = command.ExecuteReader())
                     {
-                        string name = reader.GetString(0);
-                        uint number = reader.GetUInt16(1);
-                        OpCodes enumVal;
-                        if (!Enum.TryParse(name, out enumVal))
+                        while (reader.Read())
                         {
-                            Console.WriteLine("No OpCodes enum value for DB entry {0}", name);
-                            NumberToName.Add(number, name);
-                            continue;
+                            string name = reader.GetString(0);
+                            uint number = reader.GetUInt16(1);
+                            OpCodes enumVal;
+                            if (!Enum.TryParse(name, out enumVal))
+                            {
+                                Console.WriteLine("No OpCodes enum value for DB entry {0}", name);
+                                NumberToName.Add(number, name);
+                                continue;
+                            }
+                            NumberToEnum[number] = enumVal;
+                            EnumToNumber[enumVal] = number;
                         }
-                        NumberToEnum[number] = enumVal;
-                        EnumToNumber[enumVal] = number;
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conn.State == System.Data.ConnectionState.Open)
+                        conn.Close();
                 }
             }
 
@@ -131,9 +144,21 @@ namespace WowTools.Core
                                          number, name);
             using (var conn = new MySqlConnection(ConnectionString))
             {
-                conn.Open();
-                var command = new MySqlCommand(query.Replace("@ver", BuildLoaded.ToString()), conn);
-                command.ExecuteNonQuery();
+                try
+                {
+                    conn.Open();
+                    var command = new MySqlCommand(query.Replace("@ver", BuildLoaded.ToString()), conn);
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conn.State == System.Data.ConnectionState.Open)
+                        conn.Close();
+                }
             }
             return query;
         }
