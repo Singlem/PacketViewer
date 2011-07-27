@@ -185,9 +185,7 @@
     <Compile Include="Parsers\SMSG_AURA_UPDATE.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\Grouped\AuthHandler.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Parsers\Grouped\AuthHandler.cs" />
     <Compile Include="Parsers\SMSG_LOAD_EQUIPMENT_SET.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -203,9 +201,7 @@
     <Compile Include="Parsers\SMSG_MAIL_LIST_RESULT.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\Movement\SMSG_MONSTER_MOVE.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Parsers\Movement\SMSG_MONSTER_MOVE.cs" />
     <Compile Include="Parsers\Spells\SMSG_PET_SPELLS.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -218,25 +214,23 @@
     <Compile Include="Parsers\SMSG_TUTORIAL_FLAGS.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\Grouped\AuctionHandler.cs">
+    <Compile Include="Parsers\Grouped\AuctionHandler.cs" />
+    <Compile Include="Parsers\Spells\SpellHelpers\CastFlags.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\Spells\CastFlags.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\Spells\CooldownMask.cs">
+    <Compile Include="Parsers\Spells\SpellHelpers\CooldownMask.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\Spells\SMSG_SPELL_GO.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\Spells\SpellParserBase.cs">
+    <Compile Include="Parsers\Spells\SpellHelpers\SpellParserBase.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\Spells\SMSG_SPELL_START.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\Spells\TargetFlags.cs">
+    <Compile Include="Parsers\Spells\SpellHelpers\TargetFlags.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\UnknownPacketParser.cs">
