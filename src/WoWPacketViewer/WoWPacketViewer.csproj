@@ -185,7 +185,7 @@
     <Compile Include="Parsers\SMSG_AURA_UPDATE.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\CMSG_AUTH_SESSION.cs">
+    <Compile Include="Parsers\Grouped\AuthHandler.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\SMSG_LOAD_EQUIPMENT_SET.cs">

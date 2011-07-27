@@ -3,32 +3,21 @@ using WowTools.Core;
 
 namespace WoWPacketViewer
 {
-    //[Parser(OpCodes.CMSG_AUTH_SESSION)]
-    class CMSG_AUTH_SESSION : Parser
+    public class AuthHandler : Parser
     {
-        public override void Parse()
+        //[Parser(OpCodes.CMSG_AUTH_SESSION)]
+        public void AuthSessionHandler(Parser packet)
         {
-            var clientBuild = Reader.ReadUInt32();
-            var unk1 = Reader.ReadUInt32();
-            var account = Reader.ReadCString();
-            var unk2 = Reader.ReadUInt32();
-            var clientSeed = Reader.ReadUInt32();
-            var unk4 = Reader.ReadUInt32();
-            var unk5 = Reader.ReadUInt32();
-            var unk6 = Reader.ReadUInt32();
-            var unk3 = Reader.ReadUInt64();
-            var digest = Reader.ReadBytes(20);
-
-            AppendFormatLine("Client Build: {0}", clientBuild);
-            AppendFormatLine("Unk1: {0}", unk1);
-            AppendFormatLine("Account: {0}", account);
-            AppendFormatLine("Unk2: {0}", unk2);
-            AppendFormatLine("Client Seed: {0}", clientSeed);
-            AppendFormatLine("Unk4: {0}", unk4);
-            AppendFormatLine("Unk5: {0}", unk5);
-            AppendFormatLine("Unk6: {0}", unk6);
-            AppendFormatLine("Unk3: {0}", unk3);
-            AppendFormatLine("Digest: {0}", digest.ToHexString());
+            WriteLine("Client Build: " + packet.ReadUInt32());
+            WriteLine("Unk1: " + packet.ReadUInt32());
+            WriteLine("Account: " + packet.ReadCString());
+            WriteLine("Unk2: " + packet.ReadUInt32());
+            WriteLine("clientSeed: " + packet.ReadUInt32());
+            WriteLine("Unk3: " + packet.ReadUInt32());
+            WriteLine("Unk4: " + packet.ReadUInt32());
+            WriteLine("Unk5: " + packet.ReadUInt32());
+            WriteLine("Unk6: " + packet.ReadUInt32());
+            WriteLine("Digest: " + packet.ReadBytes(2).ToHexString());
 
             // addon info
             var addonData = Reader.ReadBytes((int)Reader.BaseStream.Length - (int)Reader.BaseStream.Position);
