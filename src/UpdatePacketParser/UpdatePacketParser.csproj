@@ -120,9 +120,9 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="IzidorPackerReader.cs" />
+    <Compile Include="Readers\IzidorPackerReader.cs" />
     <Compile Include="Packet.cs" />
-    <Compile Include="PacketReader.cs" />
+    <Compile Include="Readers\PacketReader.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -362,9 +362,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SniffitztPacketReader.cs" />
-    <Compile Include="SqLitePacketReader.cs" />
-    <Compile Include="WowCorePacketReader.cs" />
+    <Compile Include="Readers\SniffitztPacketReader.cs" />
+    <Compile Include="Readers\SqLitePacketReader.cs" />
+    <Compile Include="Readers\WowCorePacketReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
