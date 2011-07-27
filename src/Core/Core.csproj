@@ -102,20 +102,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryReaderExtensions.cs" />
-    <Compile Include="Coords.cs" />
-    <Compile Include="MovementFlags.cs" />
-    <Compile Include="MovementBlock.cs" />
-    <Compile Include="MovementInfo.cs" />
-    <Compile Include="OpcodeDB.cs" />
-    <Compile Include="Opcodes.cs" />
+    <Compile Include="Movement\Coords.cs" />
+    <Compile Include="Movement\MovementFlags.cs" />
+    <Compile Include="Movement\MovementBlock.cs" />
+    <Compile Include="Movement\MovementInfo.cs" />
+    <Compile Include="Opcode\OpcodeDB.cs" />
+    <Compile Include="Opcode\Opcodes.cs" />
     <Compile Include="Packet.cs" />
-    <Compile Include="Parser.cs" />
-    <Compile Include="ParserAttribute.cs" />
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\ParserAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegularMovementPacket.cs" />
-    <Compile Include="SplineFlags.cs" />
-    <Compile Include="SplineInfo.cs" />
-    <Compile Include="TransportInfo.cs" />
+    <Compile Include="Movement\RegularMovementPacket.cs" />
+    <Compile Include="Movement\SplineFlags.cs" />
+    <Compile Include="Movement\SplineInfo.cs" />
+    <Compile Include="Movement\TransportInfo.cs" />
     <Compile Include="UpdateFields.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="WoWObject.cs" />
