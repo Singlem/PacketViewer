@@ -66,5 +66,12 @@ namespace WoWPacketViewer
             byte[] data = compressedData.Decompress();
             AppendFormatLine("Data: {0}", encoder.GetString(data));
         }
+
+        [Parser(OpCodes.SMSG_UPDATE_ACCOUNT_DATA_COMPLETE)]
+        public void HandleUpdateAccountDataComplete(Parser packet)
+        {
+            packet.ReadEnum<AccountDataType>("Type");
+            packet.ReadInt32("unk");
+        }
     }
 }

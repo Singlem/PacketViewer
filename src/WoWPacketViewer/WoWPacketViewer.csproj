@@ -136,7 +136,13 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Parsers\Grouped\AccountHandler.cs" />
+    <Compile Include="Parsers\Grouped\AchievementHandler.cs" />
     <Compile Include="Parsers\Grouped\CalendarHandler.cs" />
+    <Compile Include="Parsers\Grouped\ChannelHandler.cs" />
+    <Compile Include="Parsers\Grouped\CombatHandler.cs" />
+    <Compile Include="Parsers\Grouped\CorpseHandler.cs" />
+    <Compile Include="Parsers\Grouped\EquipmentSetHandler.cs" />
+    <Compile Include="Parsers\Grouped\MiscellaneousHandler.cs" />
     <Compile Include="Parsers\Grouped\WorldStateHandler.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -147,9 +153,7 @@
     <Compile Include="Parsers\Movement\MSG_MOVE_START_SWIM.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_ROOT.cs" />
     <None Include="Parsers\Movement\MSG_MOVE_.cs" />
-    <Compile Include="Parsers\Other\PingPong.cs" />
-    <Compile Include="Parsers\CRITERIA_UPDATE.cs" />
-    <Compile Include="Parsers\Other\EmptyPackets.cs" />
+    <Compile Include="Parsers\Grouped\EmptyPackets.cs" />
     <Compile Include="Parsers\WORLD_LOGIN.cs" />
     <Compile Include="Parsers\SMSG_HEALTH_UPDATE.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -209,9 +213,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\SMSG_CHAR_ENUM.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\SMSG_TUTORIAL_FLAGS.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\Grouped\AuctionHandler.cs" />

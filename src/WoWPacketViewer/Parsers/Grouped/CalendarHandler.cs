@@ -46,8 +46,7 @@ namespace WowPacketParser.Parsing.Parsers
         [Parser(OpCodes.SMSG_CALENDAR_SEND_CALENDAR)]
         public void HandleSenddCalendar(Parser packet)
         {
-            var inviteCount = packet.ReadInt32();
-            WriteLine("InviteCount: " + inviteCount);
+            var inviteCount = packet.ReadInt32("InviteCount");
             for (var i = 0; i < inviteCount; ++i)
             {
                 WriteLine("  EventID: " + packet.ReadInt64());
@@ -59,8 +58,7 @@ namespace WowPacketParser.Parsing.Parsers
                 WriteLine("");
             }
 
-            var EventCount = packet.ReadInt32();
-            WriteLine("EventCount: " + EventCount);
+            var EventCount = packet.ReadInt32("EventCount");
             for (var i = 0; i < EventCount; ++i)
             {
                 WriteLine("  EventID: " + packet.ReadInt64());
@@ -77,8 +75,7 @@ namespace WowPacketParser.Parsing.Parsers
             WriteLine("CurrentUnixTime: " + packet.ReadTime());
             WriteLine("CurrentPacketTime: " + packet.ReadPackedTime());
 
-            var InstanceResetCount = packet.ReadInt32();
-            WriteLine("InstanceResetCount: " + InstanceResetCount);
+            var InstanceResetCount = packet.ReadInt32("InstanceResetCount");
             for (var i = 0; i < InstanceResetCount; ++i)
             {
                 WriteLine("  MapID: " + packet.ReadInt32());
@@ -90,8 +87,7 @@ namespace WowPacketParser.Parsing.Parsers
 
             WriteLine("BaseTime: " + packet.ReadTime());
 
-            var RaidResetCount = packet.ReadInt32();
-            WriteLine("RaidResetCount: " + RaidResetCount);
+            var RaidResetCount = packet.ReadInt32("RaidResetCount");
             for (var i = 0; i < RaidResetCount; ++i)
             {
                 WriteLine("  MapID: " + packet.ReadInt32());
@@ -135,8 +131,7 @@ namespace WowPacketParser.Parsing.Parsers
             WriteLine("lockoutTime: " + packet.ReadInt32());
             WriteLine("flags: " + packet.ReadInt32());
 
-            var inviteCount = packet.ReadInt32();
-            WriteLine("inviteCount: " + inviteCount);
+            var inviteCount = packet.ReadInt32("inviteCount");
             WriteLine("");
             WriteLine("Invited Players");
 
@@ -185,9 +180,8 @@ namespace WowPacketParser.Parsing.Parsers
             WriteLine("LockOutTime: " + packet.ReadInt32());
             WriteLine("unk: " + packet.ReadInt32());
             WriteLine("unk: " + packet.ReadInt32());
-            var inviteCount = packet.ReadInt32();
-            WriteLine("InviteCount: " + inviteCount);
-
+            
+            var inviteCount = packet.ReadInt32("InviteCount");
             for (var i = 0; i < inviteCount; ++i)
             {
                 WriteLine("  PlayerGuid: " + packet.ReadPackedGuid());
