@@ -135,6 +135,12 @@
     <Compile Include="Forms\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Parsers\Enum\AccountDataType.cs" />
+    <Compile Include="Parsers\Enum\ActionButtonType.cs" />
+    <Compile Include="Parsers\Enum\AIReaction.cs" />
+    <Compile Include="Parsers\Enum\CalendarResponseResult.cs" />
+    <Compile Include="Parsers\Enum\Character.cs" />
+    <Compile Include="Parsers\Enum\Miscellaneous.cs" />
     <Compile Include="Parsers\Grouped\AccountHandler.cs" />
     <Compile Include="Parsers\Grouped\AchievementHandler.cs" />
     <Compile Include="Parsers\Grouped\ActionBarHandler.cs" />

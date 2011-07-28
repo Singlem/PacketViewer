@@ -4,15 +4,6 @@ using WowTools.Core;
 
 namespace WoWPacketViewer
 {
-    public enum AIReaction
-    {
-        Alert = 0,
-        Friendly = 1,
-        Hostile = 2,
-        Afraid = 3,
-        Destroy = 4
-    }
-
     public class CombatHandler : Parser
     {
         [Parser(OpCodes.SMSG_AI_REACTION)]
