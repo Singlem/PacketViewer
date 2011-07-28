@@ -137,8 +137,10 @@
     </Compile>
     <Compile Include="Parsers\Grouped\AccountHandler.cs" />
     <Compile Include="Parsers\Grouped\AchievementHandler.cs" />
+    <Compile Include="Parsers\Grouped\ActionBarHandler.cs" />
     <Compile Include="Parsers\Grouped\CalendarHandler.cs" />
     <Compile Include="Parsers\Grouped\ChannelHandler.cs" />
+    <Compile Include="Parsers\Grouped\CharacterHandler.cs" />
     <Compile Include="Parsers\Grouped\CombatHandler.cs" />
     <Compile Include="Parsers\Grouped\CorpseHandler.cs" />
     <Compile Include="Parsers\Grouped\EquipmentSetHandler.cs" />
