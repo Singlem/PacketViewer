@@ -81,7 +81,7 @@ namespace WoWPacketViewer
         public void HandleTutorialFlag(Parser packet)
         {
             var flag = packet.ReadInt32();
-            Console.WriteLine("Flag: 0x" + flag.ToString("X8"));
+            WriteLine("Flag: 0x" + flag.ToString("X8"));
         }
 
         [Parser(OpCodes.SMSG_TUTORIAL_FLAGS)]
@@ -110,24 +110,24 @@ namespace WoWPacketViewer
         }
 
         [Parser(OpCodes.SMSG_SET_FACTION_STANDING)]
-        public static void HandleSetFactionStanding(Parser packet)
+        public void HandleSetFactionStanding(Parser packet)
         {
             var unk1 = packet.ReadSingle();
-            Console.WriteLine("Unk Float: " + unk1);
+            WriteLine("Unk Float: " + unk1);
 
             var unk2 = packet.ReadByte();
-            Console.WriteLine("Unk UInt8: " + unk2);
+            WriteLine("Unk UInt8: " + unk2);
 
             var amount = packet.ReadInt32();
-            Console.WriteLine("Count: " + amount);
+            WriteLine("Count: " + amount);
 
             for (int i = 0; i < amount; i++)
             {
                 var listId = packet.ReadInt32();
-                Console.WriteLine("Faction List ID: " + listId);
+                WriteLine("Faction List ID: " + listId);
 
                 var standing = packet.ReadInt32();
-                Console.WriteLine("Standing: " + standing);
+                WriteLine("Standing: " + standing);
             }
         }
     }

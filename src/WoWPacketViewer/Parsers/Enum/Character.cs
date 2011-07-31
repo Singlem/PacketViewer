@@ -29,7 +29,7 @@ namespace WoWPacketViewer
         IceTroll = 21
     }
 
-    public enum Class
+    public enum Class : byte
     {
         Warrior = 1,
         Paladin = 2,
@@ -44,14 +44,14 @@ namespace WoWPacketViewer
         Druid = 11
     }
 
-    public enum Gender
+    public enum Gender : byte
     {
         Male = 0,
         Female = 1,
         None = 2
     }
 
-    public enum ResponseCode
+    public enum ResponseCode : byte
     {
         RESPONSE_SUCCESS = 0x00,
         RESPONSE_FAILURE = 0x01,

@@ -7,24 +7,21 @@ namespace WoWPacketViewer
     public class CharacterHandler : Parser
     {
         [Parser(OpCodes.CMSG_CHAR_CREATE)]
-        public void HandleClientCharCreate(Parser packet)
+        public void HandleClientCharCreate()
         {
-            packet.ReadString("Name");
+            CString("Name");
 
-            var race = (Race)packet.ReadByte();
-            Console.WriteLine("Race: " + race);
+            ReadEnum<Race>("Race");
 
-            var chClass = (Class)packet.ReadByte();
-            Console.WriteLine("Class: " + chClass);
+            ReadEnum<Class>("Class");
 
-            var gender = (Gender)packet.ReadByte();
-            Console.WriteLine("Gender: " + gender);
+            ReadEnum<Gender>("Gender");
 
-            packet.ReadByte("Face");
-            packet.ReadByte("HairStyle");
-            packet.ReadByte("HairColor");
-            packet.ReadByte("FacialHair");
-            packet.ReadByte("OutfitID");
+            Byte("Face");
+            Byte("HairStyle");
+            Byte("HairColor");
+            Byte("FacialHair");
+            Byte("OutfitID");
         }
 
         [Parser(OpCodes.CMSG_CHAR_DELETE)]
@@ -43,8 +40,7 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_CHAR_RENAME)]
         public void HandleServerCharRename(Parser packet)
         {
-            var result = (ResponseCode)packet.ReadByte();
-            Console.WriteLine("Response: " + result);
+            var result = ReadEnum<ResponseCode>("Response");
 
             if (result != ResponseCode.RESPONSE_SUCCESS)
                 return;
@@ -57,8 +53,7 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_CHAR_DELETE)]
         public void HandleCharResponse(Parser packet)
         {
-            var response = (ResponseCode)packet.ReadByte();
-            Console.WriteLine("Response: " + response);
+            ReadEnum<ResponseCode>("Response");
         }
 
         [Parser(OpCodes.CMSG_ALTER_APPEARANCE)]
@@ -73,7 +68,7 @@ namespace WoWPacketViewer
         public void HandleBarberShopResult(Parser packet)
         {
             var status = (BarberShopResult)packet.ReadInt32();
-            Console.WriteLine("Result: " + status);
+            WriteLine("Result: " + status);
         }
 
         [Parser(OpCodes.CMSG_CHAR_CUSTOMIZE)]
@@ -82,8 +77,7 @@ namespace WoWPacketViewer
             packet.ReadInt64("GUID");
             packet.ReadString("NewName");
 
-            var gender = (Gender)packet.ReadByte();
-            Console.WriteLine("Gender: " + gender);
+            ReadEnum<Gender>("Gender");
 
             packet.ReadByte("Skin");
             packet.ReadByte("Face");
@@ -93,25 +87,23 @@ namespace WoWPacketViewer
         }
 
         [Parser(OpCodes.SMSG_CHAR_CUSTOMIZE)]
-        public void HandleServerCharCustomize(Parser packet)
+        public void HandleServerCharCustomize()
         {
-            var response = (ResponseCode)packet.ReadByte();
-            Console.WriteLine("Response: " + response);
+            var response = ReadEnum<ResponseCode>("Response");
 
             if (response != ResponseCode.RESPONSE_SUCCESS)
                 return;
 
-            packet.ReadInt64("GUID");
-            packet.ReadString("New Name");
+            ReadInt64("GUID");
+            CString("New Name");
 
-            var gender = (Gender)packet.ReadByte();
-            Console.WriteLine("Gender: " + gender);
+            ReadEnum<Gender>("Gender");
 
-            packet.ReadByte("Skin");
-            packet.ReadByte("Face");
-            packet.ReadByte("HairColor");
-            packet.ReadByte("Hair Style");
-            packet.ReadByte("Facial Hair");
+            Byte("Skin");
+            Byte("Face");
+            Byte("HairColor");
+            Byte("Hair Style");
+            Byte("Facial Hair");
         }
     }
 }
