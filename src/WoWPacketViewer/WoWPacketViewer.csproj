@@ -135,8 +135,22 @@
     <Compile Include="Forms\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Parsers\ACCOUNT_DATA.cs" />
-    <Compile Include="Parsers\Calendar\CalendarHandler.cs" />
+    <Compile Include="Parsers\Enum\AccountDataType.cs" />
+    <Compile Include="Parsers\Enum\ActionButtonType.cs" />
+    <Compile Include="Parsers\Enum\AIReaction.cs" />
+    <Compile Include="Parsers\Enum\CalendarResponseResult.cs" />
+    <Compile Include="Parsers\Enum\Character.cs" />
+    <Compile Include="Parsers\Enum\Miscellaneous.cs" />
+    <Compile Include="Parsers\Grouped\AccountHandler.cs" />
+    <Compile Include="Parsers\Grouped\AchievementHandler.cs" />
+    <Compile Include="Parsers\Grouped\ActionBarHandler.cs" />
+    <Compile Include="Parsers\Grouped\CalendarHandler.cs" />
+    <Compile Include="Parsers\Grouped\ChannelHandler.cs" />
+    <Compile Include="Parsers\Grouped\CharacterHandler.cs" />
+    <Compile Include="Parsers\Grouped\CombatHandler.cs" />
+    <Compile Include="Parsers\Grouped\CorpseHandler.cs" />
+    <Compile Include="Parsers\Grouped\EquipmentSetHandler.cs" />
+    <Compile Include="Parsers\Grouped\MiscellaneousHandler.cs" />
     <Compile Include="Parsers\Grouped\WorldStateHandler.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -147,10 +161,8 @@
     <Compile Include="Parsers\Movement\MSG_MOVE_START_SWIM.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_ROOT.cs" />
     <None Include="Parsers\Movement\MSG_MOVE_.cs" />
-    <Compile Include="Parsers\Other\CMSG_PING.cs" />
-    <Compile Include="Parsers\Other\CRITERIA_UPDATE.cs" />
-    <Compile Include="Parsers\Other\EmptyPackets.cs" />
-    <Compile Include="Parsers\Other\WORLD_LOGIN.cs" />
+    <Compile Include="Parsers\Grouped\EmptyPackets.cs" />
+    <Compile Include="Parsers\WORLD_LOGIN.cs" />
     <Compile Include="Parsers\SMSG_HEALTH_UPDATE.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -185,13 +197,11 @@
     <Compile Include="Parsers\SMSG_AURA_UPDATE.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\CMSG_AUTH_SESSION.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Parsers\Grouped\AuthHandler.cs" />
     <Compile Include="Parsers\SMSG_LOAD_EQUIPMENT_SET.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\SMSG_INITIAL_SPELLS.cs">
+    <Compile Include="Parsers\Spells\SMSG_INITIAL_SPELLS.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\SMSG_INSPECT_RESULTS.cs">
@@ -203,10 +213,8 @@
     <Compile Include="Parsers\SMSG_MAIL_LIST_RESULT.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\Movement\SMSG_MONSTER_MOVE.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\SMSG_PET_SPELLS.cs">
+    <Compile Include="Parsers\Movement\SMSG_MONSTER_MOVE.cs" />
+    <Compile Include="Parsers\Spells\SMSG_PET_SPELLS.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Parsers\SMSG_POWER_UPDATE.cs">
@@ -215,12 +223,7 @@
     <Compile Include="Parsers\SMSG_CHAR_ENUM.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\SMSG_TUTORIAL_FLAGS.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\SMSG_AUCTION_LIST_PENDING_SALES.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Parsers\Grouped\AuctionHandler.cs" />
     <Compile Include="Parsers\Spells\CastFlags.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -245,11 +248,11 @@
     <Compile Include="Parsers\SMSG_UPDATE_OBJECT.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Parsers\Warden\CheckInfo.cs" />
-    <Compile Include="Parsers\Warden\CheckType.cs" />
+    <Compile Include="Parsers\Warden\WardenHelpers\CheckInfo.cs" />
+    <Compile Include="Parsers\Warden\WardenHelpers\CheckType.cs" />
     <Compile Include="Parsers\Warden\CMSG_WARDEN_DATA.cs" />
     <Compile Include="Parsers\Warden\SMSG_WARDEN_DATA.cs" />
-    <Compile Include="Parsers\Warden\WardenData.cs" />
+    <Compile Include="Parsers\Warden\WardenHelpers\WardenData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\FrmChangeOpcode.resx">

@@ -164,7 +164,8 @@ namespace WoWPacketViewer
                     string parsed = ParserFactory.CreateParser(p).ToString();
                     if (String.IsNullOrEmpty(parsed))
                         continue;
-                    stream.Write(parsed);
+                    stream.WriteLine(p.Name);
+                    stream.WriteLine(parsed);
                 }
             }
         }

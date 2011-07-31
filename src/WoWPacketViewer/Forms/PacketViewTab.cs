@@ -25,16 +25,8 @@ namespace WoWPacketViewer
             Text = Path.GetFileName(file);
 
             packetViewer = PacketReaderFactory.Create(Path.GetExtension(file));
-
-            string connectionString = String.Format("Server={0};Port={1};Uid={2};Pwd={3};Database={4};character set=utf8;Connection Timeout=10",
-                    Settings.Default.Host,
-                    Settings.Default.Port,
-                    Settings.Default.User,
-                    Settings.Default.Pass,
-                    Settings.Default.OpcodeDBName);
             packets = packetViewer.ReadPackets(file).ToList();
-
-            OpcodeDB.Load(packetViewer.Build, connectionString);
+            OpcodeDB.Load(packetViewer.Build, GetConnectionString());
 
             PacketView.VirtualMode = true;
             PacketView.VirtualListSize = packets.Count;
@@ -271,6 +263,16 @@ namespace WoWPacketViewer
             var form = new FrmChangeOpcode(subitem.Text);
             if(form.ShowDialog() == DialogResult.OK)
                 ClearCache();   // maybe do the same for other tabs?
+        }
+
+        private string GetConnectionString()
+        {
+            return  String.Format("Server={0};Port={1};Uid={2};Pwd={3};Database={4};character set=utf8;Connection Timeout=10",
+                    Settings.Default.Host,
+                    Settings.Default.Port,
+                    Settings.Default.User,
+                    Settings.Default.Pass,
+                    Settings.Default.OpcodeDBName);
         }
     }
 }
