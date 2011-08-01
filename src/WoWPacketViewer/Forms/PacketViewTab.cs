@@ -248,23 +248,6 @@ namespace WoWPacketViewer
             PacketView.Focus();
         }
 
-        private void PacketView_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            ListViewItem item = PacketView.GetItemAt(e.Location.X, e.Location.Y);
-            if (item == null)
-                return;
-            ListViewItem.ListViewSubItem subitem = item.GetSubItemAt(e.Location.X, e.Location.Y);
-            if (subitem == null)
-                return;
-            var index = item.SubItems.IndexOf(subitem);
-            if (index != 2 && index != 3)
-                return; // only for clicks on the opcode
-
-            var form = new FrmChangeOpcode(subitem.Text);
-            if(form.ShowDialog() == DialogResult.OK)
-                ClearCache();   // maybe do the same for other tabs?
-        }
-
         private string GetConnectionString()
         {
             return  String.Format("Server={0};Port={1};Uid={2};Pwd={3};Database={4};character set=utf8;Connection Timeout=10",
@@ -273,6 +256,20 @@ namespace WoWPacketViewer
                     Settings.Default.User,
                     Settings.Default.Pass,
                     Settings.Default.OpcodeDBName);
+        }
+
+        private void tsmChangeOpcode_Click(object sender, EventArgs e)
+        {
+            int item1 = PacketView.SelectedIndices[0];
+            ListViewItem item = PacketView.Items[item1];
+            ListViewItem.ListViewSubItem subitem = item.SubItems[3];
+            
+            if (subitem.Text == "")
+                subitem = item.SubItems[2];
+            
+            var form = new FrmChangeOpcode(subitem.Text);
+            if (form.ShowDialog() == DialogResult.OK)
+                ClearCache();   // maybe do the same for other tabs?
         }
     }
 }
