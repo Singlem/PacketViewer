@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace WowTools.Core
 {
-    public abstract class Parser
+    public class Parser
     {
         private readonly StringBuilder stringBuilder = new StringBuilder();
 
@@ -42,8 +42,9 @@ namespace WowTools.Core
         {
             if (Reader.BaseStream.Position != Reader.BaseStream.Length)
             {
-                string msg = String.Format("{0}: Packet size changed, should be {1} instead of {2}", Packet.Code, Reader.BaseStream.Position, Reader.BaseStream.Length);
-                MessageBox.Show(msg);
+                string msg = String.Format("ERROR: Packet size is wrong, should be {1} instead of {2}", Packet.Code, Reader.BaseStream.Position, Reader.BaseStream.Length);
+                //MessageBox.Show(msg);
+                WriteLine(msg);
             }
         }
 
@@ -57,7 +58,7 @@ namespace WowTools.Core
         // position of the next bit in _currentByte to be read
         private sbyte _bitPos = -1;
 
-        protected Parser()
+        public Parser()
         {
             packet = this;  // an alias for parser compatibility with SilinoronParser
         }

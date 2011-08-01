@@ -113,7 +113,7 @@ namespace WoWPacketViewer
         {
             foreach (Type type in assembly.GetTypes())
             {
-                if (type.IsSubclassOf(typeof(Parser)))
+                //if (type.IsSubclassOf(typeof(Parser))) // check disabled to support static parser classes
                 {
                     var attributes = (ParserAttribute[])type.GetCustomAttributes(typeof(ParserAttribute), true);
                     foreach (ParserAttribute attribute in attributes)
@@ -123,7 +123,7 @@ namespace WoWPacketViewer
                     }
 
                     foreach (MethodInfo mi in type.GetMethods(BindingFlags.DeclaredOnly 
-                        | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+                        | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
                     {
                         attributes = (ParserAttribute[])mi.GetCustomAttributes(typeof(ParserAttribute), true);
                         foreach (ParserAttribute attribute in attributes)
@@ -155,14 +155,24 @@ namespace WoWPacketViewer
                 return parser;
             }
             MethodInfo mi;
-            if(MethodParsers.TryGetValue(packet.Code, out mi))
+            if (MethodParsers.TryGetValue(packet.Code, out mi))
             {
-                var parserObj = (Parser)Activator.CreateInstance(mi.DeclaringType);
+                Type createdType = mi.IsStatic ? typeof (Parser) : mi.DeclaringType;
+                var parserObj = (Parser) Activator.CreateInstance(createdType);
                 parserObj.Initialize(packet);
                 var args = new object[mi.GetParameters().Length];
-                if(args.Length > 0)
-                    args[0] = parserObj;
-                mi.Invoke(parserObj, args);
+                if (args.Length > 0)
+                    args[0] = parserObj; // pass the Parser object as a parameter for compatibility
+                try
+                {
+                    mi.Invoke(parserObj, args);
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException != null)
+                        e = e.InnerException;
+                    parserObj.WriteLine("ERROR: Parsing failed with exception " + e);
+                }
                 parserObj.CheckPacket();
                 return parserObj;
             }
