@@ -122,7 +122,8 @@ namespace WoWPacketViewer
                         Parsers[attribute.Code] = type;
                     }
 
-                    foreach(MethodInfo mi in type.GetMethods())
+                    foreach (MethodInfo mi in type.GetMethods(BindingFlags.DeclaredOnly 
+                        | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
                     {
                         attributes = (ParserAttribute[])mi.GetCustomAttributes(typeof(ParserAttribute), true);
                         foreach (ParserAttribute attribute in attributes)
