@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
@@ -187,6 +188,18 @@ namespace WowTools.Core
             return val;
         }
 
+        public KeyValuePair<int, bool> ReadEntry()
+        {
+            var entry = ReadInt32();
+            var masked = (int)(entry & 0x80000000);
+
+            var result = masked != 0;
+            if (result)
+                entry = masked;
+
+            return new KeyValuePair<int, bool>(entry, result);
+        }
+
         /* TODO: port GUID stuff
         public Guid ReadGuid()
         {
@@ -240,6 +253,8 @@ namespace WowTools.Core
         }
 
         public Byte[] ReadBytes(int count) { return Reader.ReadBytes(count); }
+        public IPAddress ReadIPAddress(string fmt = null, params object[] args) { return Print(new IPAddress(Reader.ReadBytes(4)), fmt, args); }
+        public Guid ReadGuid(string fmt = null, params object[] args) { return Print(new Guid(Reader.ReadUInt64()), fmt, args); }
         public DateTime ReadPackedTime(string fmt = null, params object[] args) { return Print(Reader.ReadInt32().AsGameTime(), fmt, args); }
         public DateTime ReadTime(string fmt = null, params object[] args) { return Print(Reader.ReadUInt32().AsUnixTime(), fmt, args); }
         public string ReadString(string fmt = null, params object[] args) { return Print(Reader.ReadCString(), fmt, args); }
@@ -255,8 +270,10 @@ namespace WowTools.Core
         public ushort ReadUInt16(string fmt = null, params object[] args) { return Print(Reader.ReadUInt16(), fmt, args); }
         public byte ReadUInt8(string fmt = null, params object[] args) { return Print(Reader.ReadByte(), fmt, args); }
         public byte ReadByte(string fmt = null, params object[] args) { return Print(Reader.ReadByte(), fmt, args); }
+        public bool ReadBoolean(string fmt = null, params object[] args) { return Print(Reader.ReadBoolean(), fmt, args); }
 
         public Byte[] Bytes(int count) { return Reader.ReadBytes(count); }
+        public Guid WowGuid(string fmt = null, params object[] args) { return ReadGuid(fmt, args); }
         public DateTime PackedTime(string fmt = null, params object[] args) { return ReadPackedTime(fmt, args); }
         public DateTime Time(string fmt = null, params object[] args) { return ReadTime(fmt, args); }
         public string CString(string fmt = null, params object[] args) { return ReadCString(fmt, args); }

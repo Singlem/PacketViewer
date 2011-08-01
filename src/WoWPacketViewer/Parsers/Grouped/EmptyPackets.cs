@@ -1,7 +1,7 @@
 ﻿using System;
 using WowTools.Core;
 
-namespace WowPacketParser.Parsing.Parsers
+namespace WoWPacketViewer
 {
     public class EmptyPackets : Parser
     {

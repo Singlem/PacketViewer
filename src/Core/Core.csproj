@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryReaderExtensions.cs" />
+    <Compile Include="Guid.cs" />
     <Compile Include="Movement\Coords.cs" />
     <Compile Include="Movement\MovementFlags.cs" />
     <Compile Include="Movement\MovementBlock.cs" />
