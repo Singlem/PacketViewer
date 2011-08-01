@@ -260,8 +260,18 @@ namespace WoWPacketViewer
 
         private void tsmChangeOpcode_Click(object sender, EventArgs e)
         {
-            int item1 = PacketView.SelectedIndices[0];
-            ListViewItem item = PacketView.Items[item1];
+            int itemIndex = 0;
+
+            try
+            {
+                itemIndex = PacketView.SelectedIndices[0];
+            }
+            catch
+            {
+                return;
+            }
+
+            ListViewItem item = PacketView.Items[itemIndex];
             ListViewItem.ListViewSubItem subitem = item.SubItems[3];
             
             if (subitem.Text == "")
