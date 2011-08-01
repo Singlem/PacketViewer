@@ -163,9 +163,7 @@
     <None Include="Parsers\Movement\MSG_MOVE_.cs" />
     <Compile Include="Parsers\Grouped\EmptyPackets.cs" />
     <Compile Include="Parsers\WORLD_LOGIN.cs" />
-    <Compile Include="Parsers\SMSG_HEALTH_UPDATE.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Parsers\SMSG_HEALTH_UPDATE.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_START_STRAFE_RIGHT.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_STOP_STRAFE.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_SET_FACING.cs" />
@@ -180,9 +178,7 @@
     <Compile Include="Parsers\Movement\MSG_MOVE_START_BACKWARD.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_HEARTBEAT.cs" />
     <Compile Include="Parsers\Movement\SMSG_PLAYER_MOVE.cs" />
-    <Compile Include="Parsers\SMSG_MOTD.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Parsers\SMSG_MOTD.cs" />
     <Compile Include="Readers\IPacketReader.cs" />
     <Compile Include="ISupportFind.cs" />
     <Compile Include="Readers\IzidorPackerReader.cs" />
@@ -194,60 +190,26 @@
       <DependentUpon>PacketViewTab.cs</DependentUpon>
     </Compile>
     <Compile Include="ParserFactory.cs" />
-    <Compile Include="Parsers\SMSG_AURA_UPDATE.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Parsers\SMSG_AURA_UPDATE.cs" />
     <Compile Include="Parsers\Grouped\AuthHandler.cs" />
-    <Compile Include="Parsers\SMSG_LOAD_EQUIPMENT_SET.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\Spells\SMSG_INITIAL_SPELLS.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\SMSG_INSPECT_RESULTS.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\SMSG_LFG_SEARCH_RESULTS.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\SMSG_MAIL_LIST_RESULT.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Parsers\SMSG_LOAD_EQUIPMENT_SET.cs" />
+    <Compile Include="Parsers\Spells\SMSG_INITIAL_SPELLS.cs" />
+    <Compile Include="Parsers\SMSG_INSPECT_RESULTS.cs" />
+    <Compile Include="Parsers\SMSG_LFG_SEARCH_RESULTS.cs" />
+    <Compile Include="Parsers\SMSG_MAIL_LIST_RESULT.cs" />
     <Compile Include="Parsers\Movement\SMSG_MONSTER_MOVE.cs" />
-    <Compile Include="Parsers\Spells\SMSG_PET_SPELLS.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\SMSG_POWER_UPDATE.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\SMSG_CHAR_ENUM.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Parsers\Spells\SMSG_PET_SPELLS.cs" />
+    <Compile Include="Parsers\SMSG_POWER_UPDATE.cs" />
+    <Compile Include="Parsers\SMSG_CHAR_ENUM.cs" />
     <Compile Include="Parsers\Grouped\AuctionHandler.cs" />
-    <Compile Include="Parsers\Spells\CastFlags.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\Spells\CooldownMask.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\Spells\SMSG_SPELL_GO.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\Spells\SpellParserBase.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\Spells\SMSG_SPELL_START.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\Spells\TargetFlags.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\UnknownPacketParser.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Parsers\SMSG_UPDATE_OBJECT.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Parsers\Spells\CastFlags.cs" />
+    <Compile Include="Parsers\Spells\CooldownMask.cs" />
+    <Compile Include="Parsers\Spells\SMSG_SPELL_GO.cs" />
+    <Compile Include="Parsers\Spells\SpellParserBase.cs" />
+    <Compile Include="Parsers\Spells\SMSG_SPELL_START.cs" />
+    <Compile Include="Parsers\Spells\TargetFlags.cs" />
+    <Compile Include="Parsers\UnknownPacketParser.cs" />
+    <Compile Include="Parsers\SMSG_UPDATE_OBJECT.cs" />
     <Compile Include="Parsers\Warden\WardenHelpers\CheckInfo.cs" />
     <Compile Include="Parsers\Warden\WardenHelpers\CheckType.cs" />
     <Compile Include="Parsers\Warden\CMSG_WARDEN_DATA.cs" />

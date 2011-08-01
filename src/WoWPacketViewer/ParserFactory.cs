@@ -117,17 +117,26 @@ namespace WoWPacketViewer
                 {
                     var attributes = (ParserAttribute[])type.GetCustomAttributes(typeof(ParserAttribute), true);
                     foreach (ParserAttribute attribute in attributes)
+                    {
+                        EnsureUnique(attribute.Code);
                         Parsers[attribute.Code] = type;
+                    }
 
                     foreach(MethodInfo mi in type.GetMethods())
                     {
                         attributes = (ParserAttribute[])mi.GetCustomAttributes(typeof(ParserAttribute), true);
                         foreach (ParserAttribute attribute in attributes)
+                        {
+                            EnsureUnique(attribute.Code);
                             MethodParsers[attribute.Code] = mi;
+                        }
 
                         OpCodes opcode;
                         if (Enum.TryParse(mi.Name, true, out opcode))
+                        {
+                            EnsureUnique(opcode);
                             MethodParsers[opcode] = mi;
+                        }
                     }
                 }
             }
@@ -157,6 +166,13 @@ namespace WoWPacketViewer
                 return parserObj;
             }
             return UnknownParser;
+        }
+
+        private static void EnsureUnique(OpCodes opcode)
+        {
+            if (HasParser(opcode))
+                //Console.WriteLine("Parser redefined for " + opcode);
+                MessageBox.Show("Parser redefined for " + opcode);
         }
 
         public static bool HasParser(OpCodes opcode)
