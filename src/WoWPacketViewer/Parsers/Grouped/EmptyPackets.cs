@@ -20,13 +20,13 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_MEETINGSTONE_INFO)]
         public void HandleEmptyCMSGPacket(Parser packet)
         {
-            WriteLine("CMSG Packet that wants responce from server");
+            WriteLine("CMSG Packet that wants response from server");
         }
 
         [Parser(OpCodes.SMSG_FORCE_SEND_QUEUED_PACKETS)]
         public void HandleEmptySMSGPacket(Parser packet)
         {
-            WriteLine("SMSG Packet that wants responce from client");
+            WriteLine("SMSG Packet that wants response from client");
         }
     }
 }
