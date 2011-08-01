@@ -55,7 +55,7 @@ namespace WoWPacketViewer
             // cut off the old number
             name = name.Substring(0, name.IndexOf(' '));
             uint number;
-            if (!uint.TryParse(OpcodeNumber.Text, out number) || number > 0xFFFF)
+            if (!uint.TryParse(OpcodeNumber.Text, out number))
                 return false;
 
             var filename = Properties.Settings.Default.OpcodesUpdatesPath;

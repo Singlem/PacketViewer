@@ -138,6 +138,25 @@ namespace WowTools.Core
             if (EnumToNumber[enumVal] == number)
                 return "";  // value not changed
 
+            if(number > 0xFFFF)
+            {
+                MessageBox.Show("Number is too large. Valid range is 0-65535.\nChange not applied", "Out of range",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return "";
+            }
+
+            string conflictName = null;
+            if (number != 0 && NumberToName.ContainsKey(number))
+                conflictName = NumberToName[number];
+            if(number != 0 && NumberToEnum[number] != 0)
+                conflictName = NumberToEnum[number].ToString();
+            if (conflictName != null)
+            {
+                MessageBox.Show("Number " + number + " already assigned to " + conflictName + ".\nChange not applied",
+                                "Duplicate", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return "";
+            }
+
             NumberToEnum[number] = enumVal;
             EnumToNumber[enumVal] = number;
             string query = String.Format("UPDATE emuopcodes SET number = {0} WHERE name = \"{1}\" and version = @ver;",
