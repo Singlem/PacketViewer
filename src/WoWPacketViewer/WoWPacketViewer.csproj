@@ -312,7 +312,6 @@
     </Compile>
     <Compile Include="ParserFactory.cs" />
     <Compile Include="Parsers\SMSG_AURA_UPDATE.cs" />
-    <Compile Include="Parsers\Grouped\AuthHandler.cs" />
     <Compile Include="Parsers\SMSG_LOAD_EQUIPMENT_SET.cs" />
     <Compile Include="Parsers\Spells\SMSG_INITIAL_SPELLS.cs" />
     <Compile Include="Parsers\SMSG_INSPECT_RESULTS.cs" />

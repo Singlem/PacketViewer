@@ -16,45 +16,50 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_AUTH_CHALLENGE)]
         public void HandleServerAuthChallenge(Parser packet)
         {
-            var unk = packet.ReadInt32();
-            WriteLine("Shuffle Count: " + unk);
-
-            var seed = packet.ReadInt32();
-            WriteLine("Server Seed: " + seed);
-
-            for (var i = 0; i < 8; i++)
+            for (int i = 0; i < 4; i++)
             {
-                var rand = packet.ReadInt32();
-                WriteLine("Server State " + i + ": " + rand);
+                UInt32("unk");
+            }
+
+            UInt32("Server Seed");
+            UInt8("unk");
+
+            for (int i = 0; i < 4; i++)
+            {
+                UInt32("unk");
             }
         }
 
-        /*[Parser(OpCodes.CMSG_AUTH_SESSION)]
+        public void ReadBytesUnk(Parser packet, int count)
+        {
+            var unk = Bytes(count);
+            WriteLine("unk: " + unk.ToHexString());
+        }
+
+        [Parser(OpCodes.CMSG_AUTH_SESSION)]
         public void HandleAuthSession(Parser packet)
         {
-            var build = packet.ReadInt32();
-            WriteLine("Client Build: " + build);
+            UInt8("unk");
+            ReadBytesUnk(packet, 5);
+            UInt16("Client Build");
+            ReadBytesUnk(packet, 2);
+            UInt8("unk");
+            UInt32("unk");
+            ReadBytesUnk(packet, 4);
+            UInt64("unk");
+            UInt8("unk");
+            ReadBytesUnk(packet, 2);
+            UInt32("unk");
+            ReadBytesUnk(packet, 4);
+            UInt32("Client Seed");
+            ReadBytesUnk(packet, 2);
+            UInt32("unk");
+            ReadBytesUnk(packet, 1);
+            UInt32("unk");
+            CString("Account");
 
-            var unk1 = packet.ReadInt32();
-            WriteLine("Unk Int32 1: " + unk1);
-
-            var account = packet.ReadCString();
-            WriteLine("Account: " + account);
-
-            var unk2 = packet.ReadInt32();
-            WriteLine("Unk Int32 2: " + unk2);
-
-            var clientSeed = packet.ReadInt32();
-            WriteLine("Client Seed: " + clientSeed);
-
-            var unk3 = packet.ReadInt64();
-            WriteLine("Unk Int64: " + unk3);
-
-            var digest = packet.ReadBytes(20);
-            WriteLine("Proof SHA-1 Hash: " + digest.ToHexString());
-
-            AddonHandler.ReadClientAddonsList(packet);
-        }*/
+            //ToDo read addon data
+        }
 
         [Parser(OpCodes.SMSG_AUTH_RESPONSE)]
         public void HandleAuthResponse(Parser packet)
