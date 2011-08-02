@@ -56,7 +56,9 @@ namespace WoWPacketViewer
             UInt32("unk");
             ReadBytesUnk(packet, 1);
             UInt32("unk");
-            CString("Account");
+            ReadString("Account");
+
+            UInt32("AddonSize");
 
             //ToDo read addon data
         }
@@ -99,6 +101,9 @@ namespace WoWPacketViewer
 
             var billingRested = packet.ReadInt32();
             WriteLine("Billing Time Rested: " + billingRested);
+
+            var payedexpansion = (ClientType)packet.ReadByte();
+            WriteLine("Payed Expansion: " + payedexpansion);
 
             var expansion = (ClientType)packet.ReadByte();
             WriteLine("Expansion: " + expansion);

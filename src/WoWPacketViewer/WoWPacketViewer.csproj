@@ -163,6 +163,7 @@
     <Compile Include="Parsers\Enums\DifficultyChangeType.cs" />
     <Compile Include="Parsers\Enums\EquipmentSetState.cs" />
     <Compile Include="Parsers\Enums\FactionFlag.cs" />
+    <Compile Include="Parsers\Enums\FeatureStatusFlags.cs" />
     <Compile Include="Parsers\Enums\GameObjectDynamicFlag.cs" />
     <Compile Include="Parsers\Enums\GameObjectFlag.cs" />
     <Compile Include="Parsers\Enums\GameObjectType.cs" />
@@ -238,12 +239,12 @@
     <Compile Include="Parsers\Enums\VehicleFlags.cs" />
     <Compile Include="Parsers\Enums\WardenCheckType.cs" />
     <Compile Include="Parsers\Enums\WardenOpcode.cs" />
-    <Compile Include="Parsers\Enum\AccountDataType.cs" />
-    <Compile Include="Parsers\Enum\ActionButtonType.cs" />
-    <Compile Include="Parsers\Enum\AIReaction.cs" />
-    <Compile Include="Parsers\Enum\CalendarResponseResult.cs" />
-    <Compile Include="Parsers\Enum\Character.cs" />
-    <Compile Include="Parsers\Enum\Miscellaneous.cs" />
+    <Compile Include="Parsers\Enums\AccountDataType.cs" />
+    <Compile Include="Parsers\Enums\ActionButtonType.cs" />
+    <Compile Include="Parsers\Enums\AIReaction.cs" />
+    <Compile Include="Parsers\Enums\CalendarResponseResult.cs" />
+    <Compile Include="Parsers\Enums\Character.cs" />
+    <Compile Include="Parsers\Enums\Miscellaneous.cs" />
     <Compile Include="Parsers\Grouped\AccountHandler.cs" />
     <Compile Include="Parsers\Grouped\AchievementHandler.cs" />
     <Compile Include="Parsers\Grouped\ActionBarHandler.cs" />
@@ -271,6 +272,7 @@
     <Compile Include="Parsers\Grouped\QuestHandler.cs" />
     <Compile Include="Parsers\Grouped\ReputationHandler.cs" />
     <Compile Include="Parsers\Grouped\SessionHandler.cs" />
+    <Compile Include="Parsers\Grouped\SpellHandler.cs" />
     <Compile Include="Parsers\Grouped\TalentHandler.cs" />
     <Compile Include="Parsers\Grouped\VoiceChatHandler.cs" />
     <Compile Include="Parsers\Grouped\WorldStateHandler.cs">
@@ -284,8 +286,6 @@
     <Compile Include="Parsers\Movement\MSG_MOVE_ROOT.cs" />
     <None Include="Parsers\Movement\MSG_MOVE_.cs" />
     <Compile Include="Parsers\Grouped\EmptyPackets.cs" />
-    <Compile Include="Parsers\WORLD_LOGIN.cs" />
-    <Compile Include="Parsers\SMSG_HEALTH_UPDATE.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_START_STRAFE_RIGHT.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_STOP_STRAFE.cs" />
     <Compile Include="Parsers\Movement\MSG_MOVE_SET_FACING.cs" />
@@ -311,23 +311,14 @@
       <DependentUpon>PacketViewTab.cs</DependentUpon>
     </Compile>
     <Compile Include="ParserFactory.cs" />
-    <Compile Include="Parsers\SMSG_AURA_UPDATE.cs" />
     <Compile Include="Parsers\SMSG_LOAD_EQUIPMENT_SET.cs" />
-    <Compile Include="Parsers\Spells\SMSG_INITIAL_SPELLS.cs" />
     <Compile Include="Parsers\SMSG_INSPECT_RESULTS.cs" />
     <Compile Include="Parsers\SMSG_LFG_SEARCH_RESULTS.cs" />
-    <Compile Include="Parsers\SMSG_MAIL_LIST_RESULT.cs" />
     <Compile Include="Parsers\Movement\SMSG_MONSTER_MOVE.cs" />
-    <Compile Include="Parsers\Spells\SMSG_PET_SPELLS.cs" />
-    <Compile Include="Parsers\SMSG_POWER_UPDATE.cs" />
     <Compile Include="Parsers\SMSG_CHAR_ENUM.cs" />
     <Compile Include="Parsers\Grouped\AuctionHandler.cs" />
-    <Compile Include="Parsers\Spells\CastFlags.cs" />
-    <Compile Include="Parsers\Spells\CooldownMask.cs" />
-    <Compile Include="Parsers\Spells\SMSG_SPELL_GO.cs" />
-    <Compile Include="Parsers\Spells\SpellParserBase.cs" />
-    <Compile Include="Parsers\Spells\SMSG_SPELL_START.cs" />
-    <Compile Include="Parsers\Spells\TargetFlags.cs" />
+    <Compile Include="Parsers\Enums\CooldownMask.cs" />
+    <Compile Include="Parsers\Enums\TargetFlags.cs" />
     <Compile Include="Parsers\UnknownPacketParser.cs" />
     <Compile Include="Parsers\SMSG_UPDATE_OBJECT.cs" />
     <Compile Include="Parsers\Warden\WardenHelpers\CheckInfo.cs" />

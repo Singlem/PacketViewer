@@ -6,7 +6,7 @@ using WowTools.Core;
 
 namespace WoWPacketViewer
 {
-    //[Parser(OpCodes.SMSG_WARDEN_DATA)]
+    [Parser(OpCodes.SMSG_WARDEN_DATA)]
     class SmsgWardenData : Parser
     {
         public override void Parse()
@@ -34,7 +34,7 @@ namespace WoWPacketViewer
                 case 0x01:
                     {
                         var opcode = Reader.ReadByte();
-                        var len = Reader.ReadInt16();
+                        var len = Reader.ReadInt32();
                         var chunk = Reader.ReadBytes(len);
                         AppendFormatLine("Received warden module chunk, len {0}", len);
                         AppendLine();

@@ -38,6 +38,7 @@ namespace WoWPacketViewer
         public void HandleUpdateWorldState(Parser packet)
         {
             ReadWorldStateBlock(packet);
+            UInt8("unk(always 0)");
         }
 
         [Parser(OpCodes.SMSG_WORLD_STATE_UI_TIMER_UPDATE)]

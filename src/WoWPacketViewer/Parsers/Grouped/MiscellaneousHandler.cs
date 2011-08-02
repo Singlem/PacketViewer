@@ -130,5 +130,56 @@ namespace WoWPacketViewer
                 WriteLine("Standing: " + standing);
             }
         }
+
+        [Parser(OpCodes.SMSG_SET_PROFICIENCY)]
+        public void HandleSetProficiency(Parser packet)
+        {
+            var itemclass = (ItemClass)packet.ReadByte();
+            WriteLine("ItemClass: " + itemclass);
+
+            UInt32("ItemSubClassMask");
+        }
+
+        [Parser(OpCodes.SMSG_BINDPOINTUPDATE)]
+        public void HandleSetBindPointUpdate(Parser packet)
+        {
+            var curr = Reader.ReadCoords3();
+            WriteLine("Current Position: {0}", curr);
+
+            UInt32("MapID");
+            UInt32("ZoneID");
+        }
+
+        [Parser(OpCodes.SMSG_LOGIN_SETTIMESPEED)]
+        public void HandleLoginSetTimeSpeed(Parser packet)
+        {
+            PackedTime("GameTime");
+            UInt32("GameSpeed");
+            UInt32("unk");
+        }
+
+        [Parser(OpCodes.SMSG_FEATURE_SYSTEM_STATUS)]
+        public void HandleFeatureSystemStatus(Parser packet)
+        {
+            var itemclass = (FeatureStatusFlags)packet.ReadByte();
+            WriteLine("ItemClass: " + itemclass);
+
+            Byte("Complain System Status");
+            UInt32("Unknown Mail Url Related Value (SR)");
+        }
+
+        [Parser(OpCodes.SMSG_HEALTH_UPDATE)]
+        public void HandleHealthUpdate(Parser packet)
+        {
+            ReadPackedGuid("GUID: {0:X16}");
+            ReadUInt16("Value");
+        }
+
+        [Parser(OpCodes.CMSG_WORLD_LOGIN)]
+        public void HanleWorldLogin(Parser packet)
+        {
+            UInt32("unk");
+            UInt8("unk");
+        }
     }
 }
