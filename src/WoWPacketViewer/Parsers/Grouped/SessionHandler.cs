@@ -9,10 +9,6 @@ namespace WoWPacketViewer
 {
     public class SessionHandler : Parser
     {
-        public Guid LoginGuid;
-
-        //public CharacterInfo LoggedInCharacter;
-
         [Parser(OpCodes.SMSG_AUTH_CHALLENGE)]
         public void HandleServerAuthChallenge(Parser packet)
         {
@@ -121,9 +117,7 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_PLAYER_LOGIN)]
         public void HandlePlayerLogin(Parser packet)
         {
-            var guid = packet.ReadGuid();
-            WriteLine("GUID: " + guid);
-            LoginGuid = guid;
+            ReadPackedGuid("PlayerGuid");
         }
 
         [Parser(OpCodes.SMSG_CHARACTER_LOGIN_FAILED)]
