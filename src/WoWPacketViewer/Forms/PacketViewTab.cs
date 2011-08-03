@@ -276,10 +276,30 @@ namespace WoWPacketViewer
             
             if (subitem.Text == "")
                 subitem = item.SubItems[2];
-            
-            var form = new FrmChangeOpcode(subitem.Text);
+
+            ChangeOpcode(subitem.Text);
+        }
+
+        private void ChangeOpcode(string name)
+        {
+            var form = new FrmChangeOpcode(name);
             if (form.ShowDialog() == DialogResult.OK)
                 ClearCache();   // maybe do the same for other tabs?
+        }
+
+        private void PacketView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListViewItem item = PacketView.GetItemAt(e.Location.X, e.Location.Y);
+            if (item == null)
+                return;
+            ListViewItem.ListViewSubItem subitem = item.GetSubItemAt(e.Location.X, e.Location.Y);
+            if (subitem == null)
+                return;
+            var index = item.SubItems.IndexOf(subitem);
+            if ((index != 2 && index != 3) || string.IsNullOrEmpty(subitem.Text))
+                return; // only for clicks on the opcode
+
+            ChangeOpcode(subitem.Text);
         }
     }
 }
