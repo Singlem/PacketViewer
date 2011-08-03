@@ -191,5 +191,21 @@ namespace WoWPacketViewer
             WriteLine("Loading Screen Active: " + LoadingScreenActive);
             UInt32("MapID");
         }
+
+        [Parser(OpCodes.SMSG_PVP_TYPES_ENABLED)]
+        public void HanlePVPTypesEnabled(Parser packet)
+        {
+            var WarGames = packet.ReadBit();
+            var UnkType = packet.ReadBit();
+            var RatedBattlegrounds = packet.ReadBit();
+            var RatedArenas = packet.ReadBit();
+            var UnkType1 = packet.ReadBit();
+
+            WriteLine("War Games Enabled: " + WarGames);
+            WriteLine("Unk Type Enabled: " + UnkType);
+            WriteLine("Rated Battlegrounds Enabled: " + RatedBattlegrounds);
+            WriteLine("Rated Arenas Enabled: " + RatedArenas);
+            WriteLine("Unk Type Enabled: " + UnkType1);
+        }
     }
 }
