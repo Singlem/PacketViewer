@@ -161,8 +161,10 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_FEATURE_SYSTEM_STATUS)]
         public void HandleFeatureSystemStatus(Parser packet)
         {
-            var itemclass = (FeatureStatusFlags)packet.ReadByte();
-            WriteLine("ItemClass: " + itemclass);
+            var HaveTravelPass = packet.ReadBit();
+            var VoiceChatAllowed = packet.ReadBit();
+            WriteLine("Have Travel Pass: " + HaveTravelPass);
+            WriteLine("Voice Chat Allowed: " + HaveTravelPass);
 
             Byte("Complain System Status");
             UInt32("Unknown Mail Url Related Value (SR)");
