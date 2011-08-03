@@ -183,5 +183,13 @@ namespace WoWPacketViewer
             UInt32("unk");
             UInt8("unk");
         }
+
+        [Parser(OpCodes.CMSG_LOADING_SCREEN_NOTIFY)]
+        public void HanleLoadingScreenNotify(Parser packet)
+        {
+            var LoadingScreenActive = packet.ReadBit();
+            WriteLine("Loading Screen Active: " + LoadingScreenActive);
+            UInt32("MapID");
+        }
     }
 }

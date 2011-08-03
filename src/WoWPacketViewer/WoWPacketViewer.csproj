@@ -163,7 +163,6 @@
     <Compile Include="Parsers\Enums\DifficultyChangeType.cs" />
     <Compile Include="Parsers\Enums\EquipmentSetState.cs" />
     <Compile Include="Parsers\Enums\FactionFlag.cs" />
-    <Compile Include="Parsers\Enums\FeatureStatusFlags.cs" />
     <Compile Include="Parsers\Enums\GameObjectDynamicFlag.cs" />
     <Compile Include="Parsers\Enums\GameObjectFlag.cs" />
     <Compile Include="Parsers\Enums\GameObjectType.cs" />

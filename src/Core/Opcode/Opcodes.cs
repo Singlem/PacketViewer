@@ -306,6 +306,7 @@ namespace WowTools.Core
         CMSG_LFG_TELEPORT,
         CMSG_LIST_INVENTORY,
         CMSG_LOAD_DANCES,
+        CMSG_LOADING_SCREEN_NOTIFY,
         CMSG_LOGOUT_CANCEL,
         CMSG_LOGOUT_REQUEST,
         CMSG_LOOT,
