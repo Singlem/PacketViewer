@@ -164,7 +164,7 @@ namespace WoWPacketViewer
             var HaveTravelPass = packet.ReadBit();
             var VoiceChatAllowed = packet.ReadBit();
             WriteLine("Have Travel Pass: " + HaveTravelPass);
-            WriteLine("Voice Chat Allowed: " + HaveTravelPass);
+            WriteLine("Voice Chat Allowed: " + VoiceChatAllowed);
 
             Byte("Complain System Status");
             UInt32("Unknown Mail Url Related Value (SR)");
