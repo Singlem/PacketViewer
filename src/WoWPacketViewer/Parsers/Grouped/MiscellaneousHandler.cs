@@ -9,8 +9,8 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_PING)]
         public void Ping(Parser packet)
         {
-            UInt32("Ping");
             UInt32("Latency");
+            UInt32("Ping");
         }
 
         [Parser(OpCodes.SMSG_PONG)]

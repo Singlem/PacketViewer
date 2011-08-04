@@ -10,7 +10,7 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_CHANNEL_VOICE_OFF)]
         public void HandleChannelSetVoice(Parser packet)
         {
-            packet.ReadString("ChannelName");
+            CString("ChannelName");
         }
 
         [Parser(OpCodes.CMSG_CHANNEL_SILENCE_VOICE)]
@@ -19,8 +19,25 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_CHANNEL_UNSILENCE_ALL)]
         public void HandleChannelSilencing(Parser packet)
         {
-            packet.ReadString("ChannelName");
-            packet.ReadString("PlayerName");
+            CString("ChannelName");
+            CString("PlayerName");
+        }
+
+        [Parser(OpCodes.CMSG_JOIN_CHANNEL)]
+        public void HandleChannelJoin(Parser packet)
+        {
+            UInt8("unk");
+            UInt8("unk");
+            UInt32("Channel_ID");
+            CString("ChannelName");
+            CString("Pass");
+        }
+
+        [Parser(OpCodes.CMSG_LEAVE_CHANNEL)]
+        public void HandleChannelLeave(Parser packet)
+        {
+            UInt32("Channel_ID");
+            CString("ChannelName");
         }
     }
 }

@@ -273,6 +273,7 @@
     <Compile Include="Parsers\Grouped\SessionHandler.cs" />
     <Compile Include="Parsers\Grouped\SpellHandler.cs" />
     <Compile Include="Parsers\Grouped\TalentHandler.cs" />
+    <Compile Include="Parsers\Grouped\TradeHandler.cs" />
     <Compile Include="Parsers\Grouped\VoiceChatHandler.cs" />
     <Compile Include="Parsers\Grouped\WorldStateHandler.cs">
       <SubType>Code</SubType>

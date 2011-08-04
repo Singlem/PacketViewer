@@ -14,6 +14,15 @@ namespace WoWPacketViewer
             WriteLine("Unk Int32: " + unkInt);
         }
 
+        [Parser(OpCodes.CMSG_MAIL_MARK_AS_READ)]
+        [Parser(OpCodes.CMSG_MAIL_TAKE_MONEY)]
+        public void HandleMailMarkAsRead(Parser packet)
+        {
+            UInt64("mailbox");
+            UInt32("MailID");
+            UInt64("unk(uint64)");
+        }
+
         [Parser(OpCodes.SMSG_MAIL_LIST_RESULT)]
         public void HandleListResultMail(Parser packet)
         {

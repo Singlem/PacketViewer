@@ -52,7 +52,7 @@ namespace WoWPacketViewer
             UInt32("unk");
             ReadBytesUnk(packet, 1);
             UInt32("unk");
-            ReadString("Account");
+            CString("Account");
 
             UInt32("AddonSize");
 

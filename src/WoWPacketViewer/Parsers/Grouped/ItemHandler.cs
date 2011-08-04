@@ -1,10 +1,6 @@
 using System;
 using WowTools.Core;
 
-
-
-
-
 namespace WoWPacketViewer
 {
     public class ItemHandler : Parser
@@ -280,6 +276,18 @@ namespace WoWPacketViewer
                 var enchId = packet.ReadInt32();
                 WriteLine("Aura ID " + i + ": " + enchId);
             }
+        }
+
+        [Parser(OpCodes.CMSG_BUY_ITEM)]
+        public void HandleBuyItem(Parser packet)
+        {
+            UInt64("VendorGuid");
+            UInt8("unk(uint8)");
+            UInt32("Item");
+            UInt32("Slot");
+            UInt32("Count");
+            UInt64("unk(uint64)");
+            UInt8("unk(uint8)");
         }
     }
 }

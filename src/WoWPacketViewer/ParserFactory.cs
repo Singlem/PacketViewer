@@ -182,7 +182,6 @@ namespace WoWPacketViewer
         private static void EnsureUnique(OpCodes opcode)
         {
             if (HasParser(opcode))
-                //Console.WriteLine("Parser redefined for " + opcode);
                 MessageBox.Show("Parser redefined for " + opcode);
         }
 

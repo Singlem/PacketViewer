@@ -49,19 +49,9 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_ALL_ACHIEVEMENT_DATA)]
         public void HandleAllAchievementData(Parser packet)
         {
-            packet.ReadInt32("AchievementID");
-            packet.ReadPackedTime("AchievementTime");
-            
-            packet.ReadInt32("CriteriaID");
-            packet.ReadPackedGuid("CriteriaCounter");
-            packet.ReadPackedGuid("PlayerGUID");
-            packet.ReadInt32("unk");
-            packet.ReadPackedTime("CriteriaTime");
+            UInt32("Achievements");
 
-            for (var i = 0; i < 2; i++)
-            {
-                packet.ReadInt32("Timer");
-            }
+            //FINISH THIS
         }
 
         [Parser(OpCodes.CMSG_QUERY_INSPECT_ACHIEVEMENTS)]
