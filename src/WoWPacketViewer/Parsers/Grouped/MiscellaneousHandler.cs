@@ -9,53 +9,53 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_PING)]
         public void Ping(Parser packet)
         {
-            packet.ReadInt32("Ping");
-            packet.ReadInt32("Latency");
+            UInt32("Ping");
+            UInt32("Latency");
         }
 
         [Parser(OpCodes.SMSG_PONG)]
         public void Pong(Parser packet)
         {
-            packet.ReadInt32("Ping");
+            UInt32("Ping");
         }
 
         [Parser(OpCodes.CMSG_REALM_SPLIT)]
         public void HandleClientRealmSplit(Parser packet)
         {
-            packet.ReadInt32("Unk");
+            UInt32("Unk");
         }
 
         [Parser(OpCodes.SMSG_REALM_SPLIT)]
         public void HandleServerRealmSplit(Parser packet)
         {
-            packet.ReadInt32("Unk");
-            packet.ReadEnum<RealmSplitState>("SplitState");
-            packet.ReadString("Unk");
+            UInt32("Unk");
+            ReadEnum<RealmSplitState>("SplitState");
+            CString("Unk");
         }
 
         [Parser(OpCodes.SMSG_CLIENTCACHE_VERSION)]
         public void HandleClientCacheVersion(Parser packet)
         {
-            packet.ReadInt32("Version");
+            UInt32("Version");
         }
 
         [Parser(OpCodes.SMSG_TIME_SYNC_REQ)]
         public void HandleTimeSyncReq(Parser packet)
         {
-            packet.ReadInt32("Count");
+            UInt32("Count");
         }
 
         [Parser(OpCodes.SMSG_LEARNED_DANCE_MOVES)]
         public void HandleLearnedDanceMoves(Parser packet)
         {
-            packet.ReadInt64("DanceMoveID");
+            UInt64("DanceMoveID");
         }
 
         [Parser(OpCodes.SMSG_TRIGGER_CINEMATIC)]
         [Parser(OpCodes.SMSG_TRIGGER_MOVIE)]
         public void HandleTriggerSequence(Parser packet)
         {
-            packet.ReadInt32("SequenceID");
+            UInt32("SequenceID");
         }
 
         [Parser(OpCodes.SMSG_PLAY_SOUND)]
@@ -63,18 +63,18 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_PLAY_OBJECT_SOUND)]
         public void HandleSoundMessages(Parser packet)
         {
-            packet.ReadInt32("Sound ID");
+            UInt32("Sound ID");
 
             if (packet.GetSize() > 4)
-                packet.ReadInt64("GUID");
+                ReadGuid("Guid");
         }
 
         [Parser(OpCodes.SMSG_WEATHER)]
         public void HandleWeatherStatus(Parser packet)
         {
-            packet.ReadEnum<WeatherState>("State");
-            packet.ReadSingle("Grade");
-            packet.ReadByte("Unk");
+            ReadEnum<WeatherState>("State");
+            ReadSingle("Grade");
+            Byte("Unk");
         }
 
         [Parser(OpCodes.CMSG_TUTORIAL_FLAG)]
@@ -93,41 +93,35 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_AREATRIGGER)]
         public void HandleClientAreaTrigger(Parser packet)
         {
-            packet.ReadInt32("AreaTriggerID");
+            UInt32("AreaTriggerID");
         }
 
         [Parser(OpCodes.SMSG_PRE_RESURRECT)]
         public void HandlePreRessurect(Parser packet)
         {
-            packet.ReadPackedGuid("GUID");
+            ReadPackedGuid("GUID");
         }
 
         [Parser(OpCodes.CMSG_SET_ALLOW_LOW_LEVEL_RAID1)]
         [Parser(OpCodes.CMSG_SET_ALLOW_LOW_LEVEL_RAID2)]
         public void HandleLowLevelRaidPackets(Parser packet)
         {
-            var unk = packet.ReadInt8("Allow");
+            UInt8("Allow");
         }
 
         [Parser(OpCodes.SMSG_SET_FACTION_STANDING)]
         public void HandleSetFactionStanding(Parser packet)
         {
-            var unk1 = packet.ReadSingle();
-            WriteLine("Unk Float: " + unk1);
-
-            var unk2 = packet.ReadByte();
-            WriteLine("Unk UInt8: " + unk2);
+            ReadSingle("unk(Float)");
+            Byte("unk(unit8)");
 
             var amount = packet.ReadInt32();
             WriteLine("Count: " + amount);
 
             for (int i = 0; i < amount; i++)
             {
-                var listId = packet.ReadInt32();
-                WriteLine("Faction List ID: " + listId);
-
-                var standing = packet.ReadInt32();
-                WriteLine("Standing: " + standing);
+                UInt32("FactionListID");
+                UInt32("Standing");
             }
         }
 
@@ -161,10 +155,8 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_FEATURE_SYSTEM_STATUS)]
         public void HandleFeatureSystemStatus(Parser packet)
         {
-            var HaveTravelPass = packet.ReadBit();
-            var VoiceChatAllowed = packet.ReadBit();
-            WriteLine("Have Travel Pass: " + HaveTravelPass);
-            WriteLine("Voice Chat Allowed: " + VoiceChatAllowed);
+            WriteLine("Have Travel Pass: " + packet.ReadBit());
+            WriteLine("Voice Chat Allowed: " + packet.ReadBit());
 
             Byte("Complain System Status");
             UInt32("Unknown Mail Url Related Value (SR)");
@@ -187,25 +179,18 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_LOADING_SCREEN_NOTIFY)]
         public void HanleLoadingScreenNotify(Parser packet)
         {
-            var LoadingScreenActive = packet.ReadBit();
-            WriteLine("Loading Screen Active: " + LoadingScreenActive);
+            WriteLine("Loading Screen Active: " + packet.ReadBit());
             UInt32("MapID");
         }
 
         [Parser(OpCodes.SMSG_PVP_TYPES_ENABLED)]
         public void HanlePVPTypesEnabled(Parser packet)
         {
-            var WarGames = packet.ReadBit();
-            var UnkType = packet.ReadBit();
-            var RatedBattlegrounds = packet.ReadBit();
-            var RatedArenas = packet.ReadBit();
-            var UnkType1 = packet.ReadBit();
-
-            WriteLine("War Games Enabled: " + WarGames);
-            WriteLine("Unk Type Enabled: " + UnkType);
-            WriteLine("Rated Battlegrounds Enabled: " + RatedBattlegrounds);
-            WriteLine("Rated Arenas Enabled: " + RatedArenas);
-            WriteLine("Unk Type Enabled: " + UnkType1);
+            WriteLine("War Games Enabled: " + packet.ReadBit());
+            WriteLine("Unk Type Enabled: " + packet.ReadBit());
+            WriteLine("Rated Battlegrounds Enabled: " + packet.ReadBit());
+            WriteLine("Rated Arenas Enabled: " + packet.ReadBit());
+            WriteLine("Unk Type Enabled: " + packet.ReadBit());
         }
     }
 }

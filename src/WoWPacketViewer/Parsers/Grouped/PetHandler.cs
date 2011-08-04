@@ -96,5 +96,24 @@ namespace WoWPacketViewer
                 for (var i = 0; i < (int)MiscConstants.MaxDeclinedNameCases; i++)
                     WriteLine("Declined name " + i + ": " + packet.ReadCString());
         }
+
+        [Parser(OpCodes.MSG_LIST_STABLED_PETS)]
+        public void HandleListStabledPets(Parser packet)
+        {
+            ReadGuid("VendorEntityId");
+
+            var NumPets = Byte("NumPets");
+            Byte("NumOwnedSlots");
+
+            for (byte i = 0; i < NumPets; i++)
+            {
+                UInt32("PetIndex(?)");
+                UInt32("PetNumber");
+                UInt32("PetEntryID");
+                UInt32("PetLevel");
+                CString("PetName");
+                Byte("SlotNum");
+            }
+        }
     }
 }
