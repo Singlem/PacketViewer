@@ -35,6 +35,13 @@ namespace WoWPacketViewer
                     {
                         var opcode = Reader.ReadByte();
                         var len = Reader.ReadInt32();
+
+                        if (len < 0)
+                        {
+                            AppendFormatLine("Len(Uint32) is smaller that 0 size: {0}", len);
+                            return;
+                        }
+
                         var chunk = Reader.ReadBytes(len);
                         AppendFormatLine("Received warden module chunk, len {0}", len);
                         AppendLine();
