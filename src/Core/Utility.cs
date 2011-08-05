@@ -74,7 +74,7 @@ namespace WowTools.Core
 
             if (length == 0)
             {
-                result.AppendLine("0000: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- : ................");
+                //result.AppendLine("0000: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- : ................");
             }
             else
             {
@@ -96,8 +96,8 @@ namespace WowTools.Core
                         }
                         else
                         {
-                            bytes.Append("-- ");
-                            chars.Append('.');
+                            bytes.Append("   ");
+                            chars.Append(' ');
                         }
                     }
 
