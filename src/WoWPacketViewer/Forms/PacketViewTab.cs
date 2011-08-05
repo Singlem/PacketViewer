@@ -202,7 +202,7 @@ namespace WoWPacketViewer
                         p.Name,
                         String.Empty,
                         p.Data.Length.ToString(),
-                        ParserFactory.HasParser(p.Code).ToString()
+                        ParserFactory.HasParser(p.Code) ? "+" : ""
                     })
                 : new ListViewItem(new[]
                     {
@@ -211,7 +211,7 @@ namespace WoWPacketViewer
                         String.Empty,
                         p.Name, 
                         p.Data.Length.ToString(),
-                        ParserFactory.HasParser(p.Code).ToString()
+                        ParserFactory.HasParser(p.Code) ? "+" : ""
                     });
         }
 
@@ -300,6 +300,69 @@ namespace WoWPacketViewer
                 return; // only for clicks on the opcode
 
             ChangeOpcode(subitem.Text);
+        }
+
+        private void ParserCode_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\t')
+            {
+                e.Handled = true;
+            }
+            else if (e.KeyChar == '\r')
+            {
+                string tab = GetTabulation(ParserCode);
+                InsertText(ParserCode, Environment.NewLine + tab);
+                e.Handled = true;
+            }
+
+        }
+
+        private void ParserCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                if (e.Modifiers.HasFlag(Keys.Shift))
+                    Untab(ParserCode);
+                else
+                    InsertText(ParserCode, "    ");
+
+                e.Handled = true;
+            }
+        }
+
+        private static void Untab(TextBox textBox)
+        {
+            var selectionIndex = textBox.SelectionStart;
+            string text = textBox.Text.Substring(0, selectionIndex);
+            int lineStart = text.LastIndexOf('\n') + 1;
+            int i = lineStart;
+            while (i < text.Length && text[i] == ' ')
+            {
+                i++;
+            }
+            int spacesRemoved = Math.Min(i - lineStart, 4);
+            textBox.Text = textBox.Text.Remove(lineStart, spacesRemoved);
+            textBox.SelectionStart = selectionIndex - spacesRemoved;
+        }
+
+        private static string GetTabulation(TextBox textBox)
+        {
+            var selectionIndex = textBox.SelectionStart;
+            string text = textBox.Text.Substring(0, selectionIndex);
+            int lineStart = text.LastIndexOf('\n') + 1;
+            int i = lineStart;
+            while(i < text.Length && text[i] == ' ')
+            {
+                i++;
+            }
+            return new string(' ', i - lineStart);
+        }
+
+        private static void InsertText(TextBox textBox, string insertText)
+        {
+            var selectionIndex = textBox.SelectionStart;
+            textBox.Text = textBox.Text.Insert(selectionIndex, insertText);
+            textBox.SelectionStart = selectionIndex + insertText.Length;
         }
     }
 }
