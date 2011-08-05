@@ -202,7 +202,7 @@ namespace WoWPacketViewer
                         p.Name,
                         String.Empty,
                         p.Data.Length.ToString(),
-                        ParserFactory.HasParser(p.Code).ToString()
+                        ParserFactory.HasParser(p.Code) ? "+" : ""
                     })
                 : new ListViewItem(new[]
                     {
@@ -211,7 +211,7 @@ namespace WoWPacketViewer
                         String.Empty,
                         p.Name, 
                         p.Data.Length.ToString(),
-                        ParserFactory.HasParser(p.Code).ToString()
+                        ParserFactory.HasParser(p.Code) ? "+" : ""
                     });
         }
 
