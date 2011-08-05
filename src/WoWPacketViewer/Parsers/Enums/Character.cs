@@ -4,7 +4,7 @@ using WowTools.Core;
 
 namespace WoWPacketViewer
 {
-    public enum Race
+    public enum Race : byte
     {
         Human = 1,
         Orc = 2,

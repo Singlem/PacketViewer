@@ -28,6 +28,7 @@ namespace WoWPacketViewer
             Byte("HairColor");
             Byte("FacialHair");
             Byte("OutfitID");
+            Byte("unk");
         }
 
         [Parser(OpCodes.CMSG_CHAR_DELETE)]
