@@ -17,7 +17,7 @@ namespace WoWPacketViewer
         public void HandleServerFirstAchievement(Parser packet)
         {
             CString("PlayerName");
-            UInt64("PlayerGUID");
+            ReadGuid("PlayerGUID");
             UInt32("Achievement");
             UInt32("LinkedName");
         }

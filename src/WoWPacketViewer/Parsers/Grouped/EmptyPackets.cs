@@ -3,7 +3,7 @@ using WowTools.Core;
 
 namespace WoWPacketViewer
 {
-    public static class EmptyPackets
+    public class EmptyPackets : Parser
     {
         [Parser(OpCodes.CMSG_CANCEL_TRADE)]
         [Parser(OpCodes.CMSG_WORLD_STATE_UI_TIMER_UPDATE)]
@@ -18,13 +18,13 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_KEEP_ALIVE)]
         [Parser(OpCodes.CMSG_BATTLEFIELD_STATUS)]
         [Parser(OpCodes.CMSG_MEETINGSTONE_INFO)]
-        public static void HandleEmptyCMSGPacket(Parser packet)
+        public void HandleEmptyCMSGPacket(Parser packet)
         {
             packet.WriteLine("CMSG Packet that wants response from server");
         }
 
         [Parser(OpCodes.SMSG_FORCE_SEND_QUEUED_PACKETS)]
-        public static void HandleEmptySMSGPacket(Parser packet)
+        public void HandleEmptySMSGPacket(Parser packet)
         {
             packet.WriteLine("SMSG Packet that wants response from client");
         }

@@ -21,7 +21,32 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_RECLAIM_CORPSE)]
         public void HandleReclaimCorpse(Parser packet)
         {
-            UInt64("CorpseGUID");
+            ReadGuid("CorpseGUID");
+        }
+
+        [Parser(OpCodes.SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE)]
+        public void HandleCorpseMapPositionResponse(Parser packet)
+        {
+            var curr = Reader.ReadCoords3();
+            WriteLine("Corpse Position: {0}", curr);
+
+            ReadSingle("Unk(Single)");
+        }
+
+        [Parser(OpCodes.MSG_CORPSE_QUERY)]
+        public void HandleCorpseQuery(Parser packet)
+        {
+            if (Packet.Direction != Direction.Server)
+            {
+                WriteLine("MSG Packet that wants response from server");
+                return;
+            }
+
+            UInt8("unk(uint8)");
+            UInt32("MapID");
+            ReadCoords3("Corpse Position");
+            UInt32("CorpseMapID");
+            UInt32("CorpseLowGuid");
         }
     }
 }
