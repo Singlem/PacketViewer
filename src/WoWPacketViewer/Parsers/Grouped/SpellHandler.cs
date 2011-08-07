@@ -251,6 +251,25 @@ namespace WoWPacketViewer
             }
         }
 
+        [Parser(OpCodes.SMSG_SET_PCT_SPELL_MODIFIER)]
+        [Parser(OpCodes.SMSG_SET_FLAT_SPELL_MODIFIER)]
+        public void HandleSetSpellModifier(Parser packet)
+        {
+            UInt32("unk(uint32)");
+            var count = UInt32("Counter");
+            UInt8("unk(uint8)");
+
+            for (int i = 0; i < count; i++)
+            {
+                UInt8("  unk(uint8)");
+
+                if (Packet.Name == "SMSG_SET_PCT_SPELL_MODIFIER")
+                    ReadSingle("  Value");
+                else
+                    UInt32("  Value");
+            }
+        }
+
         public void ReadAuraUpdateBlock(Parser packet)
         {
             ReadByte("Slot");
