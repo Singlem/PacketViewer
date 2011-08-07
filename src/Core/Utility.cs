@@ -150,5 +150,11 @@ namespace WowTools.Core
 
             return new DateTime(year + 2000, month + 1, day + 1, hour, minute, 0);
         }
+
+        public static uint ToUnixTime(this DateTime value)
+        {
+            TimeSpan span = value - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return (uint)span.TotalSeconds;
+        }
     }
 }
