@@ -317,5 +317,11 @@ namespace WoWPacketViewer
             if (arenapoints < 0)
                 WriteLine("Arenapoints: " + arenapoints);
         }
+
+        [Parser(OpCodes.CMSG_QUESTGIVER_STATUS_QUERY)]
+        public void HandleQuestGiverStatusQuery(Parser packet)
+        {
+            ReadGuid("Guid");
+        }
     }
 }
