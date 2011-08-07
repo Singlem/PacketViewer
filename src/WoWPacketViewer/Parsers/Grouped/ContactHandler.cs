@@ -15,11 +15,8 @@ namespace WoWPacketViewer
             if (onlineCheck && status != ContactStatus.Online)
                 return;
 
-            var area = packet.ReadInt32();
-            WriteLine("Area ID: " + area);
-
-            var level = packet.ReadInt32();
-            WriteLine("Level: " + level);
+            UInt32("AreaID");
+            UInt32("Level");
 
             var clss = (Class)packet.ReadInt32();
             WriteLine("Class: " + clss);
@@ -50,9 +47,6 @@ namespace WoWPacketViewer
 
                 ReadSingleContactBlock(packet, true);
             }
-
-            //if (!packet.IsRead())
-            //    WardenHandler.ReadCheatCheckDecryptionBlock(packet);
         }
 
         [Parser(OpCodes.SMSG_FRIEND_STATUS)]

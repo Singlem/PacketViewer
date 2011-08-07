@@ -256,16 +256,6 @@ namespace WoWPacketViewer
 
             var holidayId = (Holiday)packet.ReadInt32();
             WriteLine("Holiday: " + holidayId);
-
-            //SQLStore.WriteData(SQLStore.Items.GetCommand(entry.Key, iClass, subClass, unk0, name, dispId,
-            //    quality, flags, flags2, buyPrice, sellPrice, invType, allowClass, allowRace, itemLvl,
-            //    reqLvl, reqSkill, reqSkLvl, reqSpell, reqHonor, reqCity, reqRepFaction, reqRepValue,
-            //    maxCount, stacks, contSlots, statsCount, type, value, ssdId, ssdVal, dmgMin, dmgMax,
-            //    dmgType, resistance, delay, ammoType, rangedMod, spellId, spellTrigger, spellCharges,
-            //    spellCooldown, spellCategory, spellCatCooldown, binding, description, pageText, langId,
-            //    pageMat, startQuest, lockId, material, sheath, randomProp, randomSuffix, block, itemSet,
-            //    maxDura, area, map, bagFamily, totemCat, color, content, socketBonus, gemProps,
-            //    reqDisEnchSkill, armorDmgMod, duration, limitCategory, holidayId));
         }
 
         [Parser(OpCodes.SMSG_UPDATE_ITEM_ENCHANTMENTS)]

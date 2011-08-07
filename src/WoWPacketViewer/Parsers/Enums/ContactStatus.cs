@@ -1,6 +1,6 @@
 namespace WoWPacketViewer
 {
-    public enum ContactStatus
+    public enum ContactStatus : byte
     {
         Offline = 0,
         Online = 1,

@@ -10,11 +10,8 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_EMOTE)]
         public void HandleEmote(Parser packet)
         {
-            var id = packet.ReadInt32();
-            WriteLine("Emote ID: " + id);
-
-            var guid = packet.ReadGuid();
-            WriteLine("GUID: " + guid);
+            UInt32("EmoteID");
+            ReadGuid("GUID");
         }
 
         [Parser(OpCodes.SMSG_MESSAGECHAT)]
