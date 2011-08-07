@@ -20,7 +20,7 @@ namespace WoWPacketViewer
         {
             UInt64("mailbox");
             UInt32("MailID");
-            UInt64("unk(uint64)");
+            UInt64("Amount");
         }
 
         [Parser(OpCodes.SMSG_MAIL_LIST_RESULT)]
@@ -53,10 +53,10 @@ namespace WoWPacketViewer
                         }
                 }
 
-                UInt32("COD");
+                UInt64("COD");
                 UInt32("Item Text Id");
                 UInt32("Stationary");
-                UInt32("Money");
+                UInt64("Money");
                 UInt32("Flags");
                 ReadSingle("Time");
                 UInt32("Template Id");
