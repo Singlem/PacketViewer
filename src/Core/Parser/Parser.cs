@@ -189,6 +189,18 @@ namespace WowTools.Core
             return val;
         }
 
+        public Coords4 ReadCoords4(string name = null)
+        {
+            Coords4 val;
+            val.X = Reader.ReadSingle();
+            val.Y = Reader.ReadSingle();
+            val.Z = Reader.ReadSingle();
+            val.O = Reader.ReadSingle();
+            if (name != null)
+                AppendFormatLine("{0}: {1}", name, val);
+            return val;
+        }
+
         public KeyValuePair<int, bool> ReadEntry()
         {
             var entry = ReadInt32();
