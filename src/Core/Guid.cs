@@ -123,8 +123,8 @@ namespace WowTools.Core
 
         public override string ToString()
         {
-            return "Full: 0x" + Full.ToString("X8") + " Flags: " + GetHighMask() + " Type: " +
-                GetHighType() + " Entry: " + GetEntry() + " Low: " + GetLow();
+            return "0x" + Full.ToString("X8") + " Flags: " + GetHighMask() + "\nType: " +
+                GetHighType() + "\nEntry: " + GetEntry() + "\nLow: " + GetLow();
         }
     }
 }
