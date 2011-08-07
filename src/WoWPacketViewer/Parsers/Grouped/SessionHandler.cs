@@ -197,5 +197,29 @@ namespace WoWPacketViewer
         {
             For(ReadInt32("Lines count: {0}"), i => ReadCString("Line {0} text: {1}", i));
         }
+
+        [Parser(OpCodes.CMSG_WORLD_LOGIN)]
+        public void HanleWorldLogin(Parser packet)
+        {
+            UInt32("unk");
+            UInt8("unk");
+        }
+
+        [Parser(OpCodes.SMSG_LOGIN_SETTIMESPEED)]
+        public void HandleLoginSetTimeSpeed(Parser packet)
+        {
+            PackedTime("GameTime");
+            ReadSingle("GameSpeed");
+            UInt32("unk");
+        }
+
+        [Parser(OpCodes.SMSG_LOGIN_VERIFY_WORLD)]
+        public void HandleEnterWorld(Parser packet)
+        {
+            UInt32("MapID");
+
+            var pos = packet.ReadCoords4();
+            WriteLine("Position: " + pos);
+        }
     }
 }

@@ -144,14 +144,6 @@ namespace WoWPacketViewer
             UInt32("ZoneID");
         }
 
-        [Parser(OpCodes.SMSG_LOGIN_SETTIMESPEED)]
-        public void HandleLoginSetTimeSpeed(Parser packet)
-        {
-            PackedTime("GameTime");
-            UInt32("GameSpeed");
-            UInt32("unk");
-        }
-
         [Parser(OpCodes.SMSG_FEATURE_SYSTEM_STATUS)]
         public void HandleFeatureSystemStatus(Parser packet)
         {
@@ -167,13 +159,6 @@ namespace WoWPacketViewer
         {
             ReadPackedGuid("GUID: {0:X16}");
             ReadUInt16("Value");
-        }
-
-        [Parser(OpCodes.CMSG_WORLD_LOGIN)]
-        public void HanleWorldLogin(Parser packet)
-        {
-            UInt32("unk");
-            UInt8("unk");
         }
 
         [Parser(OpCodes.CMSG_LOADING_SCREEN_NOTIFY)]
