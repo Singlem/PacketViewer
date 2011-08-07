@@ -186,5 +186,19 @@ namespace WoWPacketViewer
             UInt32("SpellID");
             UInt8("SomeBool");
         }
+
+        [Parser(OpCodes.CMSG_PLAYED_TIME)]
+        public void HanleCPlayedTime(Parser packet)
+        {
+            ReadBoolean("Unk(bool)");
+        }
+
+        [Parser(OpCodes.SMSG_PLAYED_TIME)]
+        public void HanleSPlayedTime(Parser packet)
+        {
+            UInt32("Total PlayedTime");
+            UInt32("Total PlayedTime");
+            ReadBoolean("unk");
+        }
     }
 }
