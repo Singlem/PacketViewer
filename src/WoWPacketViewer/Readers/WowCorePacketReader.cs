@@ -90,7 +90,7 @@ namespace WoWPacketViewer
                             gr.ReadUInt32(); // sessionID
                         uint tickcount = gr.ReadUInt32();
                         if(version != Pkt.V3) // 3.1: has to be computed
-                            unixtime = startTime.AddTicks(tickcount - startTickCount).ToUnixTime();
+                            unixtime = startTime.AddMilliseconds(tickcount - startTickCount).ToUnixTime();
                         int optionalSize = gr.ReadInt32();
                         int dataSize = gr.ReadInt32();
                         gr.ReadBytes(optionalSize);

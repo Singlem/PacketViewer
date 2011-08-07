@@ -151,10 +151,83 @@ namespace WowTools.Core
             return new DateTime(year + 2000, month + 1, day + 1, hour, minute, 0);
         }
 
+        /// <summary>
+        /// Converts the <see cref="System.DateTime"/> to UTC Unix Timestamp.
+        /// </summary>
+        /// <param name="dateTime">
+        /// <see cref="System.DateTime"/> to convert to UTC Unix Timestamp.
+        /// </param>
+        /// <returns>
+        /// Number of seconds passed since UTC Unix Epoch.
+        /// </returns>
+        /// <exception cref="System.ArgumentException">
+        /// The provided <see cref="System.DateTime"/> cannot be converted to UTC Unix Timestamp.
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// dateTime is null.
+        /// </exception>
         public static uint ToUnixTime(this DateTime value)
         {
-            TimeSpan span = value - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return (uint)span.TotalSeconds;
+            return (uint)ToUnixTimeLong(value);
+        }
+
+        /// <summary>
+        /// Converts the <see cref="System.DateTime"/> to UTC Unix Timestamp.
+        /// </summary>
+        /// <param name="dateTime">
+        /// <see cref="System.DateTime"/> to convert to UTC Unix Timestamp.
+        /// </param>
+        /// <returns>
+        /// Number of seconds passed since UTC Unix Epoch.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// dateTime is null.
+        /// </exception>
+        public static uint ToUnixTimeOrZero(this DateTime dateTime)
+        {
+            return (uint)ToUnixTimeOrZeroLong(dateTime);
+        }
+
+        /// <summary>
+        /// Converts the <see cref="System.DateTime"/> to UTC Unix Timestamp.
+        /// </summary>
+        /// <param name="dateTime">
+        /// <see cref="System.DateTime"/> to convert to UTC Unix Timestamp.
+        /// </param>
+        /// <returns>
+        /// Number of seconds passed since UTC Unix Epoch.
+        /// </returns>
+        /// <exception cref="System.ArgumentException">
+        /// The provided <see cref="System.DateTime"/> cannot be converted to UTC Unix Timestamp.
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// dateTime is null.
+        /// </exception>
+        public static long ToUnixTimeLong(this DateTime dateTime)
+        {
+            dateTime = dateTime.ToUniversalTime();
+            return (long)(dateTime - s_unixEpochReference).TotalSeconds;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="System.DateTime"/> to UTC Unix Timestamp.
+        /// </summary>
+        /// <param name="dateTime">
+        /// <see cref="System.DateTime"/> to convert to UTC Unix Timestamp.
+        /// </param>
+        /// <returns>
+        /// Number of seconds passed since UTC Unix Epoch.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// dateTime is null.
+        /// </exception>
+        public static long ToUnixTimeOrZeroLong(this DateTime dateTime)
+        {
+            dateTime = dateTime.ToUniversalTime();
+            if (dateTime < s_unixEpochReference)
+                return 0;
+
+            return (long)(dateTime - s_unixEpochReference).TotalSeconds;
         }
     }
 }
