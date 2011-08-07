@@ -262,11 +262,7 @@ namespace WoWPacketViewer
             for (int i = 0; i < count; i++)
             {
                 UInt8("  unk(uint8)");
-
-                if (Packet.Name == "SMSG_SET_PCT_SPELL_MODIFIER")
-                    ReadSingle("  Value");
-                else
-                    UInt32("  Value");
+                ReadSingle("  Value");
             }
         }
 
