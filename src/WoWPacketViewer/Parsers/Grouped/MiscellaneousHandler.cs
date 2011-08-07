@@ -192,5 +192,14 @@ namespace WoWPacketViewer
             WriteLine("Rated Arenas Enabled: " + packet.ReadBit());
             WriteLine("Unk Type Enabled: " + packet.ReadBit());
         }
+
+        [Parser(OpCodes.SMSG_PROCRESIST)]
+        public void HanleProcresist(Parser packet)
+        {
+            ReadGuid("PlayerGuid");
+            ReadGuid("TragetGuid");
+            UInt32("SpellID");
+            UInt8("SomeBool");
+        }
     }
 }
