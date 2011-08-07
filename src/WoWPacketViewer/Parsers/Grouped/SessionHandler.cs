@@ -169,11 +169,11 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_REDIRECTION_AUTH_PROOF)]
         public void HandleRedirectionAuthProof(Parser packet)
         {
-            var name = packet.ReadCString();
-            WriteLine("Account: " + name);
-
             var unk = packet.ReadInt64();
             WriteLine("Unk Int64: " + unk);
+
+            var name = packet.ReadCString();
+            WriteLine("Account: " + name);
 
             var hash = packet.ReadBytes(20);
             WriteLine("Proof SHA-1 Hash: " + hash.ToHexString());
