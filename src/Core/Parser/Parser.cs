@@ -283,6 +283,9 @@ namespace WowTools.Core
         public ushort ReadUInt16(string fmt = null, params object[] args) { return Print(Reader.ReadUInt16(), fmt, args); }
         public byte ReadUInt8(string fmt = null, params object[] args) { return Print(Reader.ReadByte(), fmt, args); }
         public byte ReadByte(string fmt = null, params object[] args) { return Print(Reader.ReadByte(), fmt, args); }
+        /// <summary>
+        /// Reads 1 byte as a boolean.
+        /// </summary>
         public bool ReadBoolean(string fmt = null, params object[] args) { return Print(Reader.ReadBoolean(), fmt, args); }
 
         public Byte[] Bytes(int count) { return Reader.ReadBytes(count); }
@@ -300,5 +303,9 @@ namespace WowTools.Core
         public ushort UInt16(string fmt = null, params object[] args) { return ReadUInt16(fmt, args); }
         public byte UInt8(string fmt = null, params object[] args) { return ReadByte(fmt, args); }
         public byte Byte(string fmt = null, params object[] args) { return ReadByte(fmt, args); }
+        /// <summary>
+        /// Reads 1 byte as a boolean.
+        /// </summary>
+        public bool Bool(string fmt = null, params object[] args) { return ReadBoolean(fmt, args); }
     }
 }
