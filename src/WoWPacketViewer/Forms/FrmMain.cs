@@ -30,6 +30,9 @@ namespace WoWPacketViewer
         public FrmMain()
         {
             InitializeComponent();
+
+            if (Settings.Default.StartMaximized)
+                WindowState = FormWindowState.Maximized;
         }
 
         private void OpenMenu_Click(object sender, EventArgs e)
