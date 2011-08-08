@@ -42,7 +42,8 @@ namespace WoWPacketViewer
                 return;
             }
 
-            UInt8("unk(uint8)");
+            var found = UInt8("Found");
+            if (found == 0) return;
             UInt32("MapID");
             ReadCoords3("Corpse Position");
             UInt32("CorpseMapID");

@@ -255,13 +255,13 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_SET_FLAT_SPELL_MODIFIER)]
         public void HandleSetSpellModifier(Parser packet)
         {
-            UInt32("unk(uint32)");
-            var count = UInt32("Counter");
-            UInt8("unk(uint8)");
+            UInt32("Mods count");
+            var count = UInt32("Groups count");
+            ReadEnum<SpellMod>("Modifier");
 
             for (int i = 0; i < count; i++)
             {
-                UInt8("  unk(uint8)");
+                UInt8("  Spell group");
                 ReadSingle("  Value");
             }
         }

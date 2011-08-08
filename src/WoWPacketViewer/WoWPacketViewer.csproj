@@ -219,6 +219,7 @@
     <Compile Include="Parsers\Enums\SpellCastFailureReason.cs" />
     <Compile Include="Parsers\Enums\SpellMechanics.cs" />
     <Compile Include="Parsers\Enums\SpellMissType.cs" />
+    <Compile Include="Parsers\Enums\SpellMod.cs" />
     <Compile Include="Parsers\Enums\SplineFlag.cs" />
     <Compile Include="Parsers\Enums\SplineMode.cs" />
     <Compile Include="Parsers\Enums\SplineType.cs" />
