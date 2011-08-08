@@ -392,5 +392,29 @@ namespace WoWPacketViewer
             FrmSettings SettingsForm = new FrmSettings();
             SettingsForm.ShowDialog(this);
         }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedTab == null)
+                return;
+
+            SelectedTab.RunParserCode();
+        }
+
+        private void saveParserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedTab == null)
+                return;
+            try
+            {
+                SelectedTab.SaveParserCode();
+                statusStrip1.Items[0].Text = "Parser saved.";
+            }
+            catch (Exception ex)
+            {
+                statusStrip1.Text = "Parser save error: " + ex.Message;
+            }
+            
+        }
     }
 }

@@ -330,6 +330,36 @@ namespace WoWPacketViewer
             }
         }
 
+        public void RunParserCode()
+        {
+            if (SelectedIndex < 0)
+                return;
+            var packet = packets[SelectedIndex];
+            try
+            {
+                ParserFactory.DefineParser(ParserCode.Text, packet.Code);
+                ParsedView.Text = ParserFactory.CreateParser(packet).ToString();
+            }
+            catch (Exception ex)
+            {
+                ParsedView.Text = ex.Message;
+            }
+        }
+
+        public void SaveParserCode()
+        {
+            // TODO: allow editing of parsers in existing files
+            if (SelectedIndex < 0)
+                return;
+            var packet = packets[SelectedIndex];
+            string completeCode = ParserCompiler.AddImpliedCode(ParserCode.Text, packet.Code);
+            var className = ParserCompiler.GetClassName(packet.Code);
+            using (var s = new StreamWriter("parsers" + Path.DirectorySeparatorChar + className + ".cs"))
+            {
+                s.WriteLine(completeCode);
+            }
+        }
+
         private static void Untab(TextBox textBox)
         {
             var selectionIndex = textBox.SelectionStart;

@@ -109,7 +109,7 @@ namespace WoWPacketViewer
             }
         }
 
-        private static void LoadAssembly(Assembly assembly)
+        private static void LoadAssembly(Assembly assembly, bool initialization = true)
         {
             foreach (Type type in assembly.GetTypes())
             {
@@ -118,7 +118,8 @@ namespace WoWPacketViewer
                     var attributes = (ParserAttribute[])type.GetCustomAttributes(typeof(ParserAttribute), true);
                     foreach (ParserAttribute attribute in attributes)
                     {
-                        EnsureUnique(attribute.Code);
+                        if (initialization)
+                            EnsureUnique(attribute.Code);
                         Parsers[attribute.Code] = type;
                     }
 
@@ -128,14 +129,16 @@ namespace WoWPacketViewer
                         attributes = (ParserAttribute[])mi.GetCustomAttributes(typeof(ParserAttribute), true);
                         foreach (ParserAttribute attribute in attributes)
                         {
-                            EnsureUnique(attribute.Code);
+                            if (initialization)
+                                EnsureUnique(attribute.Code);
                             MethodParsers[attribute.Code] = mi;
                         }
 
                         OpCodes opcode;
                         if (Enum.TryParse(mi.Name, true, out opcode))
                         {
-                            EnsureUnique(opcode);
+                            if (initialization)
+                                EnsureUnique(opcode);
                             MethodParsers[opcode] = mi;
                         }
                     }
@@ -188,6 +191,12 @@ namespace WoWPacketViewer
         public static bool HasParser(OpCodes opcode)
         {
             return Parsers.ContainsKey(opcode) || MethodParsers.ContainsKey(opcode);
+        }
+
+        public static void DefineParser(string source, OpCodes opcode)
+        {
+            Assembly asm = ParserCompiler.CompileParser(source, opcode);
+            LoadAssembly(asm, false);
         }
     }
 }

@@ -135,6 +135,7 @@
     <Compile Include="Forms\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ParserCompiler.cs" />
     <Compile Include="Parsers\Enums\AmmoType.cs" />
     <Compile Include="Parsers\Enums\AttackerStateFlags.cs" />
     <Compile Include="Parsers\Enums\AuraFlag.cs" />
