@@ -109,25 +109,38 @@ namespace WoWPacketViewer
             }
         }
 
-        private static void LoadAssembly(Assembly assembly)
+        private static void LoadAssembly(Assembly assembly, bool initialization = true)
         {
             foreach (Type type in assembly.GetTypes())
             {
-                if (type.IsSubclassOf(typeof(Parser)))
+                //if (type.IsSubclassOf(typeof(Parser))) // check disabled to support static parser classes
                 {
                     var attributes = (ParserAttribute[])type.GetCustomAttributes(typeof(ParserAttribute), true);
                     foreach (ParserAttribute attribute in attributes)
+                    {
+                        if (initialization)
+                            EnsureUnique(attribute.Code);
                         Parsers[attribute.Code] = type;
+                    }
 
-                    foreach(MethodInfo mi in type.GetMethods())
+                    foreach (MethodInfo mi in type.GetMethods(BindingFlags.DeclaredOnly 
+                        | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
                     {
                         attributes = (ParserAttribute[])mi.GetCustomAttributes(typeof(ParserAttribute), true);
                         foreach (ParserAttribute attribute in attributes)
+                        {
+                            if (initialization)
+                                EnsureUnique(attribute.Code);
                             MethodParsers[attribute.Code] = mi;
+                        }
 
                         OpCodes opcode;
                         if (Enum.TryParse(mi.Name, true, out opcode))
+                        {
+                            if (initialization)
+                                EnsureUnique(opcode);
                             MethodParsers[opcode] = mi;
+                        }
                     }
                 }
             }
@@ -145,23 +158,45 @@ namespace WoWPacketViewer
                 return parser;
             }
             MethodInfo mi;
-            if(MethodParsers.TryGetValue(packet.Code, out mi))
+            if (MethodParsers.TryGetValue(packet.Code, out mi))
             {
-                var parserObj = (Parser)Activator.CreateInstance(mi.DeclaringType);
+                Type createdType = mi.IsStatic ? typeof (Parser) : mi.DeclaringType;
+                var parserObj = (Parser) Activator.CreateInstance(createdType);
                 parserObj.Initialize(packet);
                 var args = new object[mi.GetParameters().Length];
-                if(args.Length > 0)
-                    args[0] = parserObj;
-                mi.Invoke(parserObj, args);
+                if (args.Length > 0)
+                    args[0] = parserObj; // pass the Parser object as a parameter for compatibility
+                try
+                {
+                    mi.Invoke(parserObj, args);
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException != null)
+                        e = e.InnerException;
+                    parserObj.WriteLine("ERROR: Parsing failed with exception " + e);
+                }
                 parserObj.CheckPacket();
                 return parserObj;
             }
             return UnknownParser;
         }
 
+        private static void EnsureUnique(OpCodes opcode)
+        {
+            if (HasParser(opcode))
+                MessageBox.Show("Parser redefined for " + opcode);
+        }
+
         public static bool HasParser(OpCodes opcode)
         {
             return Parsers.ContainsKey(opcode) || MethodParsers.ContainsKey(opcode);
+        }
+
+        public static void DefineParser(string source, OpCodes opcode)
+        {
+            Assembly asm = ParserCompiler.CompileParser(source, opcode);
+            LoadAssembly(asm, false);
         }
     }
 }

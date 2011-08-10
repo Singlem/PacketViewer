@@ -1,7 +1,7 @@
 ﻿using System;
 using WowTools.Core;
 
-namespace WowPacketParser.Parsing.Parsers
+namespace WoWPacketViewer
 {
     public class EmptyPackets : Parser
     {
@@ -20,13 +20,13 @@ namespace WowPacketParser.Parsing.Parsers
         [Parser(OpCodes.CMSG_MEETINGSTONE_INFO)]
         public void HandleEmptyCMSGPacket(Parser packet)
         {
-            WriteLine("CMSG Packet that wants responce from server");
+            packet.WriteLine("CMSG Packet that wants response from server");
         }
 
         [Parser(OpCodes.SMSG_FORCE_SEND_QUEUED_PACKETS)]
         public void HandleEmptySMSGPacket(Parser packet)
         {
-            WriteLine("SMSG Packet that wants responce from client");
+            packet.WriteLine("SMSG Packet that wants response from client");
         }
     }
 }

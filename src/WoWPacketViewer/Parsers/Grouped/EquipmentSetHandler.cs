@@ -34,8 +34,8 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_EQUIPMENT_SET_SAVED)]
         public void HandleReclaimCorpse(Parser packet)
         {
-            packet.ReadInt32("Index");
-            packet.ReadPackedGuid("SetID");
+            UInt32("Index");
+            ReadPackedGuid("SetID");
         }
 
         [Parser(OpCodes.CMSG_EQUIPMENT_SET_USE)]
@@ -43,22 +43,22 @@ namespace WoWPacketViewer
         {
             for (var i = 0; i < 19; i++)
             {
-                packet.ReadPackedGuid("ItemGUID");
-                packet.ReadByte("SourceBag");
-                packet.ReadByte("SourceSlot");
+                ReadPackedGuid("ItemGUID");
+                Byte("SourceBag");
+                Byte("SourceSlot");
             }
         }
 
         [Parser(OpCodes.SMSG_EQUIPMENT_SET_USE_RESULT)]
         public void HandleEquipmentSetUseResult(Parser packet)
         {
-            packet.ReadByte("Result");
+            Byte("Result");
         }
 
         [Parser(OpCodes.CMSG_EQUIPMENT_SET_DELETE)]
         public void HandleEquipmentSetDelete(Parser packet)
         {
-            packet.ReadPackedGuid("SetID");
+            ReadPackedGuid("SetID");
         }
     }
 }

@@ -11,8 +11,9 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_ACCOUNT_DATA_TIMES)]
         public void AccountDataTimes(Parser packet)
         {
-            packet.ReadTime("Time");
-            packet.ReadByte("Unk byte (1)");
+            Time("Time");
+            Byte("Unk(byte)");
+            
             int mask = packet.ReadInt32("Mask");
             for (int i = 0; i < NUM_ACCOUNT_DATA_TYPES; ++i)
             {
@@ -24,7 +25,7 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_REQUEST_ACCOUNT_DATA)]
         public void AccountDataRequest(Parser packet)
         {
-            packet.ReadEnum<AccountDataType>("Type");
+            ReadEnum<AccountDataType>("Type");
         }
 
         [Parser(OpCodes.SMSG_UPDATE_ACCOUNT_DATA)]
@@ -32,9 +33,9 @@ namespace WoWPacketViewer
         {
             UTF8Encoding encoder = new System.Text.UTF8Encoding();
 
-            packet.ReadUInt64("GUID: {0:X16}");
-            packet.ReadEnum<AccountDataType>("Type");
-            packet.ReadTime("Time");
+            UInt64("GUID: {0:X16}");
+            ReadEnum<AccountDataType>("Type");
+            Time("Time");
 
             byte[] compressedData = Reader.ReadBytes((int)Reader.BaseStream.Length - (int)Reader.BaseStream.Position);
             byte[] data = compressedData.Decompress();
@@ -46,8 +47,8 @@ namespace WoWPacketViewer
         {
             UTF8Encoding encoder = new System.Text.UTF8Encoding();
 
-            packet.ReadEnum<AccountDataType>("Type");
-            packet.ReadTime("Time");
+            ReadEnum<AccountDataType>("Type");
+            Time("Time");
 
             byte[] compressedData = Reader.ReadBytes((int)Reader.BaseStream.Length - (int)Reader.BaseStream.Position);
             byte[] data = compressedData.Decompress();
@@ -57,8 +58,8 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_UPDATE_ACCOUNT_DATA_COMPLETE)]
         public void HandleUpdateAccountDataComplete(Parser packet)
         {
-            packet.ReadEnum<AccountDataType>("Type");
-            packet.ReadInt32("unk");
+            ReadEnum<AccountDataType>("Type");
+            UInt32("unk");
         }
     }
 }

@@ -4,7 +4,7 @@ using WowTools.Core;
 
 namespace WoWPacketViewer
 {
-    //[Parser(OpCodes.CMSG_WARDEN_DATA)]
+    [Parser(OpCodes.CMSG_WARDEN_DATA)]
     class CmsgWardenData : Parser
     {
         public override void Parse()

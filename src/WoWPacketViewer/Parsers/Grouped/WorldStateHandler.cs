@@ -1,7 +1,7 @@
 using System;
 using WowTools.Core;
 
-namespace WowPacketParser.Parsing.Parsers
+namespace WoWPacketViewer
 {
     public class WorldStateHandler : Parser
     {
@@ -38,6 +38,7 @@ namespace WowPacketParser.Parsing.Parsers
         public void HandleUpdateWorldState(Parser packet)
         {
             ReadWorldStateBlock(packet);
+            UInt8("unk(always 0)");
         }
 
         [Parser(OpCodes.SMSG_WORLD_STATE_UI_TIMER_UPDATE)]

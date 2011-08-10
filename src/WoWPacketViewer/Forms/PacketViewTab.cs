@@ -202,7 +202,7 @@ namespace WoWPacketViewer
                         p.Name,
                         String.Empty,
                         p.Data.Length.ToString(),
-                        ParserFactory.HasParser(p.Code).ToString()
+                        ParserFactory.HasParser(p.Code) ? "+" : ""
                     })
                 : new ListViewItem(new[]
                     {
@@ -211,7 +211,7 @@ namespace WoWPacketViewer
                         String.Empty,
                         p.Name, 
                         p.Data.Length.ToString(),
-                        ParserFactory.HasParser(p.Code).ToString()
+                        ParserFactory.HasParser(p.Code) ? "+" : ""
                     });
         }
 
@@ -248,6 +248,45 @@ namespace WoWPacketViewer
             PacketView.Focus();
         }
 
+        private string GetConnectionString()
+        {
+            return  String.Format("Server={0};Port={1};Uid={2};Pwd={3};Database={4};character set=utf8;Connection Timeout=10",
+                    Settings.Default.Host,
+                    Settings.Default.Port,
+                    Settings.Default.User,
+                    Settings.Default.Pass,
+                    Settings.Default.OpcodeDBName);
+        }
+
+        private void tsmChangeOpcode_Click(object sender, EventArgs e)
+        {
+            int itemIndex = 0;
+
+            try
+            {
+                itemIndex = PacketView.SelectedIndices[0];
+            }
+            catch
+            {
+                return;
+            }
+
+            ListViewItem item = PacketView.Items[itemIndex];
+            ListViewItem.ListViewSubItem subitem = item.SubItems[3];
+            
+            if (subitem.Text == "")
+                subitem = item.SubItems[2];
+
+            ChangeOpcode(subitem.Text);
+        }
+
+        private void ChangeOpcode(string name)
+        {
+            var form = new FrmChangeOpcode(name);
+            if (form.ShowDialog() == DialogResult.OK)
+                ClearCache();   // maybe do the same for other tabs?
+        }
+
         private void PacketView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ListViewItem item = PacketView.GetItemAt(e.Location.X, e.Location.Y);
@@ -257,22 +296,103 @@ namespace WoWPacketViewer
             if (subitem == null)
                 return;
             var index = item.SubItems.IndexOf(subitem);
-            if (index != 2 && index != 3)
+            if ((index != 2 && index != 3) || string.IsNullOrEmpty(subitem.Text))
                 return; // only for clicks on the opcode
 
-            var form = new FrmChangeOpcode(subitem.Text);
-            if(form.ShowDialog() == DialogResult.OK)
-                ClearCache();   // maybe do the same for other tabs?
+            ChangeOpcode(subitem.Text);
         }
 
-        private string GetConnectionString()
+        private void ParserCode_KeyPress(object sender, KeyPressEventArgs e)
         {
-            return  String.Format("Server={0};Port={1};Uid={2};Pwd={3};Database={4};character set=utf8;Connection Timeout=10",
-                    Settings.Default.Host,
-                    Settings.Default.Port,
-                    Settings.Default.User,
-                    Settings.Default.Pass,
-                    Settings.Default.OpcodeDBName);
+            if (e.KeyChar == '\t')
+            {
+                e.Handled = true;
+            }
+            else if (e.KeyChar == '\r')
+            {
+                string tab = GetTabulation(ParserCode);
+                InsertText(ParserCode, Environment.NewLine + tab);
+                e.Handled = true;
+            }
+
+        }
+
+        private void ParserCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                if (e.Modifiers.HasFlag(Keys.Shift))
+                    Untab(ParserCode);
+                else
+                    InsertText(ParserCode, "    ");
+
+                e.Handled = true;
+            }
+        }
+
+        public void RunParserCode()
+        {
+            if (SelectedIndex < 0)
+                return;
+            var packet = packets[SelectedIndex];
+            try
+            {
+                ParserFactory.DefineParser(ParserCode.Text, packet.Code);
+                ParsedView.Text = ParserFactory.CreateParser(packet).ToString();
+            }
+            catch (Exception ex)
+            {
+                ParsedView.Text = ex.Message;
+            }
+        }
+
+        public void SaveParserCode()
+        {
+            // TODO: allow editing of parsers in existing files
+            if (SelectedIndex < 0)
+                return;
+            var packet = packets[SelectedIndex];
+            string completeCode = ParserCompiler.AddImpliedCode(ParserCode.Text, packet.Code);
+            var className = ParserCompiler.GetClassName(packet.Code);
+            using (var s = new StreamWriter("parsers" + Path.DirectorySeparatorChar + className + ".cs"))
+            {
+                s.WriteLine(completeCode);
+            }
+        }
+
+        private static void Untab(TextBox textBox)
+        {
+            var selectionIndex = textBox.SelectionStart;
+            string text = textBox.Text.Substring(0, selectionIndex);
+            int lineStart = text.LastIndexOf('\n') + 1;
+            int i = lineStart;
+            while (i < text.Length && text[i] == ' ')
+            {
+                i++;
+            }
+            int spacesRemoved = Math.Min(i - lineStart, 4);
+            textBox.Text = textBox.Text.Remove(lineStart, spacesRemoved);
+            textBox.SelectionStart = selectionIndex - spacesRemoved;
+        }
+
+        private static string GetTabulation(TextBox textBox)
+        {
+            var selectionIndex = textBox.SelectionStart;
+            string text = textBox.Text.Substring(0, selectionIndex);
+            int lineStart = text.LastIndexOf('\n') + 1;
+            int i = lineStart;
+            while(i < text.Length && text[i] == ' ')
+            {
+                i++;
+            }
+            return new string(' ', i - lineStart);
+        }
+
+        private static void InsertText(TextBox textBox, string insertText)
+        {
+            var selectionIndex = textBox.SelectionStart;
+            textBox.Text = textBox.Text.Insert(selectionIndex, insertText);
+            textBox.SelectionStart = selectionIndex + insertText.Length;
         }
     }
 }

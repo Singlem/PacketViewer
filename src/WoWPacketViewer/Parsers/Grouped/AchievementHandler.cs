@@ -10,83 +10,71 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_CRITERIA_DELETED)]
         public void HandleDeleted(Parser packet)
         {
-            packet.ReadInt32("ID");
+            UInt32("ID");
         }
 
         [Parser(OpCodes.SMSG_SERVER_FIRST_ACHIEVEMENT)]
         public void HandleServerFirstAchievement(Parser packet)
         {
-            packet.ReadString("PlayerName");
-            packet.ReadInt64("PlayerGUID");
-            packet.ReadInt32("Achievement");
-            packet.ReadInt32("LinkedName");
+            CString("PlayerName");
+            ReadGuid("PlayerGUID");
+            UInt32("Achievement");
+            UInt32("LinkedName");
         }
 
         [Parser(OpCodes.SMSG_ACHIEVEMENT_EARNED)]
         public void HandleAchievementEarned(Parser packet)
         {
-            packet.ReadPackedGuid("PlayerGUID");
-            packet.ReadInt32("Achievement");
-            packet.ReadPackedTime("Time");
-            packet.ReadInt32("unk");
+            ReadPackedGuid("PlayerGUID");
+            UInt32("Achievement");
+            PackedTime("Time");
+            UInt32("unk");
         }
 
         [Parser(OpCodes.SMSG_CRITERIA_UPDATE)]
         public void HandleCriteriaUpdate(Parser packet)
         {
-            packet.ReadInt32("CriteriaID");
-            packet.ReadPackedGuid("CriteriaCounter");
-            packet.ReadPackedGuid("PlayerGUID");
-            packet.ReadInt32("unk");
-            packet.ReadPackedTime("CriteriaTime");
+            UInt32("CriteriaID");
+            ReadPackedGuid("CriteriaCounter");
+            ReadPackedGuid("PlayerGUID");
+            UInt32("unk");
+            ReadPackedTime("CriteriaTime");
 
             for (var i = 0; i < 2; i++)
-            {
-                packet.ReadInt32("Timer");
-            }
+                UInt32("Timer");
         }
 
         [Parser(OpCodes.SMSG_ALL_ACHIEVEMENT_DATA)]
         public void HandleAllAchievementData(Parser packet)
         {
-            packet.ReadInt32("AchievementID");
-            packet.ReadPackedTime("AchievementTime");
-            
-            packet.ReadInt32("CriteriaID");
-            packet.ReadPackedGuid("CriteriaCounter");
-            packet.ReadPackedGuid("PlayerGUID");
-            packet.ReadInt32("unk");
-            packet.ReadPackedTime("CriteriaTime");
+            UInt32("Achievements");
 
-            for (var i = 0; i < 2; i++)
-            {
-                packet.ReadInt32("Timer");
-            }
+            //FINISH THIS
         }
 
         [Parser(OpCodes.CMSG_QUERY_INSPECT_ACHIEVEMENTS)]
         public void HandleInspectAchievementData(Parser packet)
         {
-            packet.ReadPackedGuid("GUID");
+            ReadPackedGuid("GUID");
         }
 
         [Parser(OpCodes.SMSG_RESPOND_INSPECT_ACHIEVEMENTS)]
         public void HandleInspectAchievementDataResponse(Parser packet)
         {
-            packet.ReadPackedGuid("PlayerGUID");
+            ReadPackedGuid("PlayerGUID");
 
-            packet.ReadInt32("AchievementID");
-            packet.ReadPackedTime("AchievementTime");
+            UInt32("AchievementID");
+            ReadPackedTime("AchievementTime");
 
-            packet.ReadInt32("CriteriaID");
-            packet.ReadPackedGuid("CriteriaCounter");
-            packet.ReadPackedGuid("PlayerGUID");
-            packet.ReadInt32("unk");
-            packet.ReadPackedTime("CriteriaTime");
+            UInt32("CriteriaID");
+            ReadPackedGuid("CriteriaCounter");
+            ReadPackedGuid("PlayerGUID");
+            UInt32("unk");
+            PackedTime("CriteriaTime");
 
             for (var i = 0; i < 2; i++)
             {
-                packet.ReadInt32("Timer");
+                UInt32("Timer");
             }
         }
     }
