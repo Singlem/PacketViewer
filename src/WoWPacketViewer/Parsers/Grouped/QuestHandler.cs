@@ -82,6 +82,9 @@ namespace WoWPacketViewer
             var flags = (QuestFlag)(packet.ReadInt32() | 0xFFFF);
             WriteLine("Flags: " + flags);
 
+            var unk1 = packet.ReadInt32();
+            WriteLine("Unknown: " + unk1);
+
             var titleId = packet.ReadInt32();
             WriteLine("Title ID: " + titleId);
 
@@ -95,7 +98,19 @@ namespace WoWPacketViewer
             WriteLine("Bonus Arena Points: " + bonusArenaPoints);
 
             var bonusUnk = packet.ReadInt32();
-            WriteLine("Unk Int32: " + bonusUnk);
+            WriteLine("SkillLine: " + bonusUnk);
+
+            var unk2 = packet.ReadInt32();
+            WriteLine("SkillPoints: " + unk2);
+
+            var unk3 = packet.ReadInt32();
+            WriteLine("Reward Faction Mask: " + unk3);
+
+            var QuestGiverPortrait = packet.ReadInt32();
+            WriteLine("QuestGiverPortrait: " + QuestGiverPortrait);
+
+            var QuestTurnPortrait = packet.ReadInt32();
+            WriteLine("QuestTurnPortrait: " + QuestTurnPortrait);
 
             var rewItemId = new int[4];
             var rewItemCnt = new int[4];
@@ -323,5 +338,182 @@ namespace WoWPacketViewer
         {
             ReadGuid("Guid");
         }
+        [Parser(OpCodes.SMSG_QUESTGIVER_OFFER_REWARD)]
+        public void HandleQuestOfferReward(Parser packet)
+        {
+            var guid = packet.ReadInt64();
+
+            var questId = packet.ReadInt32();
+                WriteLine("Quest ID: " + questId);
+
+            var title = packet.ReadCString();
+                WriteLine("Title: " + title);
+
+            var RewardText = packet.ReadCString();
+                WriteLine("Reward Text: " + RewardText);
+
+            var QGWT = packet.ReadCString();
+                WriteLine("QuestStart Window Text: " + QGWT);
+
+            var QTN = packet.ReadCString();
+                WriteLine("QuestStart Window Name: " + QTN);
+
+            var QTWT = packet.ReadCString();
+                WriteLine("QuestEnd Window Text: " + QTWT);
+
+            var QTN1 = packet.ReadCString();
+                WriteLine("QuestEnd Window Name: " + QTN1);
+
+            var QSMID = packet.ReadInt32();
+                WriteLine("QuestStart ModelID: " + QSMID);
+
+            var QEMID = packet.ReadInt32();
+                WriteLine("QuestEnd ModelID: " + QEMID);
+
+            var EnableNext = packet.ReadByte();
+                WriteLine("Enable Next: " + EnableNext);
+
+            var flags = (QuestFlag)(packet.ReadInt32() | 0xFFFF);
+                WriteLine("Quest Flag: " + flags);
+
+            var SP = packet.ReadInt32();
+                WriteLine("Suggested Players: " + SP);
+
+            var EmoteCount = packet.ReadInt32();
+                WriteLine("Emote Count: " + EmoteCount);
+
+            for (int i = 0; i < EmoteCount; ++i)
+            {
+                var EDelay = packet.ReadInt32();
+                    WriteLine("Emote Delay: " + EDelay);
+                var EID = packet.ReadInt32();
+                    WriteLine("Emote Id: " + EID);
+            }
+
+            var RewCIC = packet.ReadInt32();
+                WriteLine("Reward Choice Items Amount: " + RewCIC);
+
+            for (int i = 0; i < 6; ++i)
+                packet.ReadInt32("Reward Choice ItemId: ");
+            for (int i = 0; i < 6; ++i)
+                packet.ReadInt32("Reward Choice Item Count: ");
+            for (int i = 0; i < 6; ++i)
+                packet.ReadInt32("Rew Choice Item Display: ");
+
+            packet.ReadInt32("RewItemCount");
+
+            for (int i = 0; i < 4; ++i)
+                packet.ReadInt32("RewItemId");
+            for (int i = 0; i < 4; ++i)
+                packet.ReadInt32("RewItemCount");
+            for (int i = 0; i < 4; ++i)
+                packet.ReadInt32("RewItemDisplay");
+
+            packet.ReadInt32("Reward Money");
+            packet.ReadInt32("Reward Exp");
+
+            packet.ReadInt32("Gained Title Id");
+            packet.ReadInt32("Unknown");
+            packet.ReadInt32("Unknown");
+            packet.ReadInt32("Bonus Talent");
+            packet.ReadInt32("Unknown");
+            packet.ReadInt32("Unknown");
+
+            for (int i = 0; i < 5; ++i)
+                packet.ReadInt32("Reward Faction");
+            for (int i = 0; i < 5; ++i)
+                packet.ReadInt32("Reward Reputation ValueId");
+            for (int i = 0; i < 5; ++i)
+                packet.ReadInt32("Reward Reputation Value");
+
+            packet.ReadInt32("Spell Learn");
+            packet.ReadInt32("Spell Cast");
+
+            for (int i = 0; i < 10; ++i)
+                packet.ReadInt32("Unknown");
+        }
+
+        [Parser(OpCodes.SMSG_QUESTGIVER_QUEST_DETAILS)]
+        public void QUESTGIVER_QUEST_DETAILS(Parser packet)
+        {
+            var Guid1 = packet.ReadInt64();
+            var Guid2 = packet.ReadInt64();
+
+            var QID = packet.ReadInt32("QuestID");
+                WriteLine("Quest ID: " + QID);
+
+            packet.ReadCString("Quest Name");
+            packet.ReadCString("Quest Description");
+            packet.ReadCString("Quest Progress");
+            packet.ReadCString("QuestGiverWindowText");
+            packet.ReadCString("QuestTargetName");
+            packet.ReadCString("QuestGiverWindowText #2");
+            packet.ReadCString("QuestTargetName #2");
+            packet.ReadInt32("QuestTargetModelID");
+            packet.ReadInt32("QuestTargetModelID #2");
+            packet.ReadByte("AcceptActivate");
+            packet.ReadEnum<QuestFlag>("Flags");
+            packet.ReadInt32("SugesstedPlayers");
+            packet.ReadByte("QuestStartType");
+            packet.ReadByte("QuestStartType");
+            packet.ReadInt32("Required Spell");
+
+            packet.ReadInt32("GetRewChoiceItemsCount");
+
+            for (int i = 0; i < 6; ++i)
+                packet.ReadInt32("RewChoiceItemId");
+
+            for (int i = 0; i < 6; ++i)
+                packet.ReadInt32("RewChoiceItemCount");
+
+            for (int i = 0; i < 6; ++i)
+                packet.ReadInt32("RewChoiceItemDisplayId");
+
+            packet.ReadInt32("GetRewItemsCount");
+
+            for (int i = 0; i < 4; ++i)
+                packet.ReadInt32("RewItemId");
+
+            for (int i = 0; i < 4; ++i)
+                packet.ReadInt32("RewItemCount");
+
+            for (int i = 0; i < 4; ++i)
+                packet.ReadInt32("RewItemDisplayId");
+
+            packet.ReadInt32("Money Rew?");
+            packet.ReadInt32("Exp Rew?");
+
+            for (int i = 0; i < 6; i++)
+                packet.ReadInt32("Unknown");
+
+            for (int i = 0; i < 5; ++i)
+                packet.ReadInt32("RewRepFaction");
+
+            for (int i = 0; i < 5; ++i)
+                packet.ReadInt32("RewRepValueId");
+
+            for (int i = 0; i < 5; ++i)
+                packet.ReadInt32("RewRepValue");
+
+            packet.ReadInt32("Spell Cast");
+            packet.ReadInt32("Silent Spell Cast");
+
+            for (int i = 0; i < 4; i++)
+                packet.ReadInt32("Unknown");
+
+            for (int i = 0; i < 4; i++)
+                packet.ReadInt32("Unknown");
+
+            packet.ReadInt32("Unknown");
+            packet.ReadInt32("Unknown");
+
+            packet.ReadInt32("Something with Emote");
+
+            for (int i = 0; i < 4; ++i)
+            {
+                packet.ReadInt32("EmoteId");
+                packet.ReadInt32("EmoteDelay");
+            }
+        } 
     }
 }
