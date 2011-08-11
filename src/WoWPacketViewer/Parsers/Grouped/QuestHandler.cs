@@ -394,28 +394,55 @@ namespace WoWPacketViewer
                 WriteLine("Reward Choice Items Amount: " + RewCIC);
 
             for (int i = 0; i < 6; ++i)
-                packet.ReadInt32("Reward Choice ItemId: ");
+            {
+                var RCID = packet.ReadInt32();
+                    WriteLine("Reward Choice ItemId: " + RCID);
+            }
             for (int i = 0; i < 6; ++i)
-                packet.ReadInt32("Reward Choice Item Count: ");
+            {
+                var RCIC = packet.ReadInt32();
+                    WriteLine("Reward Choice Item Count: " + RCIC);
+            }
             for (int i = 0; i < 6; ++i)
-                packet.ReadInt32("Rew Choice Item Display: ");
+            {
+                var RCIDis = packet.ReadInt32();
+                    WriteLine("Reward Choice Item DisplayId: " + RCIDis);
+            }
 
-            packet.ReadInt32("RewItemCount");
+            var RewItCount = packet.ReadInt32();
+                WriteLine("Reward Item Count: " + RewItCount);
 
             for (int i = 0; i < 4; ++i)
-                packet.ReadInt32("RewItemId");
+            {
+                var RewItemId = packet.ReadInt32("RewItemId");
+                    WriteLine("Reward Item Id: " + RewItemId);
+            }
             for (int i = 0; i < 4; ++i)
-                packet.ReadInt32("RewItemCount");
+            {
+                var RewItemCount = packet.ReadInt32("RewItemCount");
+                   WriteLine("Reward Item Count: " + RewItemCount);
+            }
+
             for (int i = 0; i < 4; ++i)
-                packet.ReadInt32("RewItemDisplay");
+            {
+                var RewItemDisplayID = packet.ReadInt32("RewItemDisplay");
+                    WriteLine("Reward Item DisplayId: " + RewItemDisplayID);
+            }
 
-            packet.ReadInt32("Reward Money");
-            packet.ReadInt32("Reward Exp");
+            var RewMoney = packet.ReadInt32();
+                WriteLine("Reward Money: " + RewMoney);
 
-            packet.ReadInt32("Gained Title Id");
+            var RewExp = packet.ReadInt32();
+                WriteLine("Reward Experience: " + RewExp);
+
+            var TitleId = packet.ReadInt32();
+                WriteLine("Reward Title Id: " + TitleId);
+
             packet.ReadInt32("Unknown");
             packet.ReadInt32("Unknown");
-            packet.ReadInt32("Bonus Talent");
+            var Talent = packet.ReadInt32();
+                WriteLine("Reward Talent Point: " + Talent);
+
             packet.ReadInt32("Unknown");
             packet.ReadInt32("Unknown");
 

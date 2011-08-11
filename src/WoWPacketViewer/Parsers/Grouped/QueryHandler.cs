@@ -90,8 +90,8 @@ namespace WoWPacketViewer
             if (entry.Value)
                 return;
 
-            var name = new string[4];
-            for (var i = 0; i < 4; i++)
+            var name = new string[8];
+            for (var i = 0; i < 8; i++)
             {
                 name[i] = packet.ReadCString();
                 WriteLine("Name " + i + ": " + name[i]);
@@ -103,8 +103,13 @@ namespace WoWPacketViewer
             var iconName = packet.ReadCString();
             WriteLine("Icon Name: " + iconName);
 
+            
+
             var typeFlags = (CreatureTypeFlag)packet.ReadInt32();
             WriteLine("Type Flags: " + typeFlags);
+
+            //Allways 0?
+            packet.ReadInt32("Unknown");
 
             var type = (CreatureType)packet.ReadInt32();
             WriteLine("Type: " + type);
