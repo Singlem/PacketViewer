@@ -2,8 +2,8 @@ This is a WoW Packet Viewer with a set of packet parsers.
 Target version is 4.2.0.
 Supported input formats include PKT and Izidor.
 Opcodes are loaded from a MySQL DB table.
-The base structure and content for OpcodesDB: https://github.com/ProjectSkyfire/SkyFireEMU/blob/420/sql/emuopcodes.sql
-And current updates: https://github.com/ProjectSkyfire/SkyFireEMU/blob/420/sql/OpcodesUpdates4.2.0.sql
+The base structure and content for OpcodesDB: https://github.com/ProjectSkyfire/SkyFireEMU_420/blob/master/sql/opcodes/emuopcodes.sql
+And current updates: https://github.com/ProjectSkyfire/SkyFireEMU_420/blob/master/sql/OpcodesUpdates4.2.0.sql
 
 UpdatePacketParser project is not updated for 4.2 yet.
 
