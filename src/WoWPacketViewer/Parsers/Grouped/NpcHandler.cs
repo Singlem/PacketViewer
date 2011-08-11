@@ -247,5 +247,32 @@ namespace WoWPacketViewer
                 WriteLine("Victim GUID: " + victim);
             }
         }
+        [Parser(OpCodes.SMSG_TAXINODE_STATUS)]
+        public void HandleTaxiNodes(Parser packet)
+        {
+            packet.ReadInt64("Guid: ");
+            packet.ReadByte("Is Already Discovered: ");
+        }
+        /* Packet 41582 Gossip Menu */
+        [Parser(OpCodes.SMSG_GOSSIP_QUEST_MENU)]
+        public void HandleGossipMenu(Parser packet)
+        {
+            packet.ReadInt64("Guid: ");
+            packet.ReadCString("Gossip Text: ");
+            packet.ReadInt32("Unk: ");
+            packet.ReadInt32("Unk: ");
+            var QuestAmount = packet.ReadByte();
+                WriteLine("Quest Amount: " + QuestAmount);
+
+            for (int i = 0; i < QuestAmount; i++)
+            {
+                packet.ReadInt32("Quest ID: " + i);
+                packet.ReadInt32("Unknown: " + i);
+                packet.ReadInt32("Unknown: " + i);
+                packet.ReadInt32("Unknown: " + i);
+                packet.ReadByte("Unknown: " + i);
+                packet.ReadCString("Quest Title: " + i);
+            }
+        }
     }
 }
