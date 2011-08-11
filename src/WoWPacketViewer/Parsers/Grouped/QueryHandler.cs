@@ -153,6 +153,8 @@ namespace WoWPacketViewer
             var moveId = packet.ReadInt32();
             WriteLine("Movement ID: " + moveId);
 
+            packet.ReadInt32("Unknown"); // 0 ?
+
            //SQLStore.WriteData(SQLStore.Creatures.GetCommand(entry.Key, name[0], subName, iconName, typeFlags,
            //     type, family, rank, killCredit, dispId, mod1, mod2, racialLeader, qItem, moveId));
         }
