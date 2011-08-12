@@ -226,5 +226,27 @@ namespace WoWPacketViewer
 
             //SQLStore.WriteData(SQLStore.NpcTexts.GetCommand(entry, prob, text1, text2, lang, emDelay, emEmote));
         }
+        [Parser(OpCodes.SMSG_GUILD_QUERY_RESPONSE)]
+        public void HandleGuildQueryResponse(Parser packet)
+        {
+            packet.ReadInt64("Guild ID");
+            packet.ReadCString("Name");
+            for (byte rank = 0; rank < 10; rank++)
+                packet.ReadCString("Rank " + rank + " name");
+
+            for (byte rank = 0; rank < 10; rank++)
+                packet.ReadInt32("Rank " + rank + " real rank ID");
+
+            // ignore these as they seem to always be identical to the above loop
+            for (byte rank = 0; rank < 10; rank++)
+                packet.ReadInt32();
+
+            packet.ReadInt32("Emblem style");
+            packet.ReadInt32("Emblem color");
+            packet.ReadInt32("Emblem border style");
+            packet.ReadInt32("Emblem border color");
+            packet.ReadInt32("Emblem background color");
+            packet.ReadInt32("Unk int from WotLK");
+        }
     }
 }
