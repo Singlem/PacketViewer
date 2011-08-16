@@ -5,6 +5,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.IO;
 using WowTools.Core;
 
@@ -115,6 +116,161 @@ using WowTools.Core;").AppendLine().AppendLine();
                 parts[i] = parts[i][0] + parts[i].Substring(1).ToLower();
             }
             return String.Join("", parts, 1, parts.Length - 1);
+        }
+
+        // Source Loading / Replacing code follows
+
+        public static readonly Dictionary<OpCodes, string> Sources = new Dictionary<OpCodes, string>();
+        public static readonly Dictionary<OpCodes, string> SourceFiles = new Dictionary<OpCodes, string>();
+
+        private static Regex AttrRegex = new Regex(@"^\s*\[\s*Parser\s*\(\s*OpCodes\.(\w+)\s*\)\s*\].*");
+        private static Regex FuncNameRegex = new Regex(@"^(?:        |\t\t)\S.+? ((?:[SC])?MSG_[\w_]+)\(.*"); // requires proper tabulation
+        private static Regex FuncEndRegex = new Regex(@"^(?:        |\t\t)\}");
+
+        public static void LoadSources(string fileName)
+        {
+            var source = new StringBuilder();
+            var parses = new List<OpCodes>();
+            
+            bool inFunction = false;
+            foreach (string line in File.ReadLines(fileName))
+            {
+                // easy hacky way for finding ends of functions. tabulations must be correct.
+                if (FuncEndRegex.IsMatch(line))
+                {
+                    AddSourceLine(source, line);
+                    
+                    string src = source.ToString();
+                    foreach (var opcode in parses)
+                    {
+                        if (Sources.ContainsKey(opcode))
+                            Console.WriteLine("Parser redefinition " + opcode);
+                        Sources[opcode] = src;
+                        SourceFiles[opcode] = fileName;
+                    }
+
+                    inFunction = false;
+                    parses.Clear();
+                    source.Clear();
+                }
+                OpCodes opc = CheckLine(line);
+                if (opc != 0)
+                {
+                    parses.Add(opc);
+                    inFunction = true;
+                }
+                if (inFunction)
+                {
+                    AddSourceLine(source, line);    // doesn't append the new line symbol
+                    source.AppendLine();
+                }
+            }
+        }
+
+        public static bool TryReplaceSource(string source, OpCodes opcode)
+        {
+            if (!SourceFiles.ContainsKey(opcode))
+                return false;
+
+            return ReplaceSource(SourceFiles[opcode], source, opcode);
+        }
+
+        public static bool ReplaceSource(string fileName, string source, OpCodes targetOpcode)
+        {
+            bool inFunction = false;
+            string[] oldContent = File.ReadAllLines(fileName);
+            int funcStartLine = -1;
+            bool replaceThis = false;
+            bool replaced = false;
+            string tempFile = fileName + ".new";
+            using(var w = new StreamWriter(tempFile, false, Encoding.UTF8)) // TODO: keep encoding of the source file
+            for (int l = 0; l < oldContent.Length; l++)
+            {
+                string line = oldContent[l];
+                // easy hacky way for finding ends of functions. tabulations must be correct.
+                if (inFunction && FuncEndRegex.IsMatch(line))
+                {
+                    if (replaceThis)
+                    {
+                        WriteAppendTabs(w, source);    // found and written
+                        replaced = true;
+                    }
+                    else // write back the content of the funcion that ends here
+                        for (int i = funcStartLine; i <= l; i++)
+                            w.WriteLine(oldContent[i]);
+
+                    inFunction = false;
+                    replaceThis = false;
+                    funcStartLine = -1;
+                    continue;
+                }
+                OpCodes opc = CheckLine(line);
+                if (opc != 0)
+                {
+                    if (!inFunction)
+                        funcStartLine = l;
+                    inFunction = true;
+                    if (opc == targetOpcode)
+                        replaceThis = true;
+                }
+                if (!inFunction)
+                    w.WriteLine(line);
+            }
+            if (replaced)
+            {
+                File.Delete(fileName);
+                File.Move(tempFile, fileName);
+            }
+            else
+                File.Delete(tempFile);  // nothing replaced. delete the temp file
+
+            return replaced;
+        }
+
+        private static OpCodes CheckLine(string line)
+        {
+            if (line.Contains("MSG_"))  // quick check to skip most lines
+            {
+                // potential parser defintion. investigate further
+                Match m = AttrRegex.Match(line);
+                if (!m.Success)
+                    m = FuncNameRegex.Match(line);
+                if (m.Success)
+                {
+                    var opcodeStr = m.Groups[1].Value;
+                    OpCodes opcode;
+                    if (Enum.TryParse<OpCodes>(opcodeStr, out opcode))
+                        return opcode;
+                    else
+                        Console.WriteLine("ERROR: Found something that looks like an opcode but not in the enum " + opcodeStr);
+                }
+            }
+            return 0;
+        }
+
+        private static void AddSourceLine(StringBuilder source, string line)
+        {
+            // for convenience and space saving remove 2 tabs that should be preceding all the parser function code
+            if (line.StartsWith("        "))
+                line = line.Substring(8);
+            source.Append(line);
+        }
+
+        private static void WriteAppendTabs(StreamWriter w, string source)
+        {
+            foreach (string line in source.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+            {
+                //if(!Regex.IsMatch(line, @"^\s*$"))
+                    w.Write("        ");
+                w.WriteLine(line);
+            }
+        }
+
+        public static string GetSource(OpCodes opcode)
+        {
+            if (!Sources.ContainsKey(opcode))
+                return "";
+            return Sources[opcode];
         }
     }
 }

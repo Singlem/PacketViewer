@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using WoWPacketViewer.Properties;
 using WowTools.Core;
@@ -415,9 +416,33 @@ namespace WoWPacketViewer
             }
             catch (Exception ex)
             {
-                statusStrip1.Text = "Parser save error: " + ex.Message;
+                statusStrip1.Items[0].Text = "Parser save error: " + ex.Message;
             }
             
+        }
+
+        private void loadSourcesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ParserCompiler.Sources.Clear();
+            string parsersDir = Path.GetDirectoryName(Application.ExecutablePath) + "\\..\\..\\src\\WoWPacketViewer\\Parsers\\";
+            string parsersBinDir = Path.GetDirectoryName(Application.ExecutablePath) + "\\parsers\\";
+            IEnumerable<string> files = new string[0];
+            if(Directory.Exists(parsersDir))
+                files = files.Concat(Directory.GetFiles(parsersDir, "*.cs", SearchOption.AllDirectories));
+            // loads only from the top dir inside bin atm
+            if(Directory.Exists(parsersBinDir))
+                files = files.Concat(Directory.GetFiles(parsersBinDir, "*.cs", SearchOption.TopDirectoryOnly));
+            var start = DateTime.Now;
+            foreach (string parserFile in files)
+            {
+                string dir = Path.GetDirectoryName(parserFile);
+                if(dir.EndsWith("\\bak") || dir.EndsWith("\\Enums"))
+                    continue; // skip backups and enums
+                ParserCompiler.LoadSources(parserFile);
+            }
+            var taken = DateTime.Now - start;
+            statusStrip1.Items[0].Text = String.Format("{0} parsers loaded in {1} ms", 
+                ParserCompiler.Sources.Count, (uint)taken.TotalMilliseconds);
         }
     }
 }

@@ -115,6 +115,7 @@ namespace WoWPacketViewer
 
             HexView.Text = packet.HexLike();
             ParsedView.Text = ParserFactory.CreateParser(packet).ToString();
+            ParserCode.Text = ParserCompiler.GetSource(packet.Code);
         }
 
         private void _list_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
@@ -352,12 +353,21 @@ namespace WoWPacketViewer
             if (SelectedIndex < 0)
                 return;
             var packet = packets[SelectedIndex];
-            string completeCode = ParserCompiler.AddImpliedCode(ParserCode.Text, packet.Code);
+            string source = ParserCode.Text;
+            var opcode = packet.Code;
+            ParserCompiler.Sources[opcode] = source;
+            if (ParserCompiler.TryReplaceSource(source, opcode))
+                return; // successfully replaced
+
+            // try creating a new file
+            string completeCode = ParserCompiler.AddImpliedCode(source, opcode);
             var className = ParserCompiler.GetClassName(packet.Code);
-            using (var s = new StreamWriter("parsers" + Path.DirectorySeparatorChar + className + ".cs"))
+            string newFile = "parsers" + Path.DirectorySeparatorChar + className + ".cs";
+            using (var s = new StreamWriter(newFile))
             {
                 s.WriteLine(completeCode);
             }
+            ParserCompiler.SourceFiles[opcode] = newFile;
         }
 
         private static void Untab(TextBox textBox)

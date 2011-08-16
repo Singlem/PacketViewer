@@ -42,6 +42,9 @@
             this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wardenDebugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.parserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runParserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveParserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listViewTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,9 +65,7 @@
             this.closeAllButThisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.colorChooser = new System.Windows.Forms.ColorDialog();
-            this.parserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.runParserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveParserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadSourcesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -183,6 +184,32 @@
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // parserToolStripMenuItem
+            // 
+            this.parserToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.runParserToolStripMenuItem,
+            this.saveParserToolStripMenuItem,
+            this.loadSourcesToolStripMenuItem});
+            this.parserToolStripMenuItem.Name = "parserToolStripMenuItem";
+            this.parserToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.parserToolStripMenuItem.Text = "Parser";
+            // 
+            // runParserToolStripMenuItem
+            // 
+            this.runParserToolStripMenuItem.Name = "runParserToolStripMenuItem";
+            this.runParserToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.runParserToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.runParserToolStripMenuItem.Text = "Run";
+            this.runParserToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
+            // 
+            // saveParserToolStripMenuItem
+            // 
+            this.saveParserToolStripMenuItem.Name = "saveParserToolStripMenuItem";
+            this.saveParserToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveParserToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.saveParserToolStripMenuItem.Text = "&Save";
+            this.saveParserToolStripMenuItem.Click += new System.EventHandler(this.saveParserToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -341,30 +368,13 @@
             // 
             this.colorChooser.FullOpen = true;
             // 
-            // parserToolStripMenuItem
+            // loadSourcesToolStripMenuItem
             // 
-            this.parserToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.runParserToolStripMenuItem,
-            this.saveParserToolStripMenuItem});
-            this.parserToolStripMenuItem.Name = "parserToolStripMenuItem";
-            this.parserToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
-            this.parserToolStripMenuItem.Text = "Parser";
-            // 
-            // runParserToolStripMenuItem
-            // 
-            this.runParserToolStripMenuItem.Name = "runParserToolStripMenuItem";
-            this.runParserToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.runParserToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.runParserToolStripMenuItem.Text = "Run";
-            this.runParserToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
-            // 
-            // saveParserToolStripMenuItem
-            // 
-            this.saveParserToolStripMenuItem.Name = "saveParserToolStripMenuItem";
-            this.saveParserToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveParserToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.saveParserToolStripMenuItem.Text = "&Save";
-            this.saveParserToolStripMenuItem.Click += new System.EventHandler(this.saveParserToolStripMenuItem_Click);
+            this.loadSourcesToolStripMenuItem.Name = "loadSourcesToolStripMenuItem";
+            this.loadSourcesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.loadSourcesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.loadSourcesToolStripMenuItem.Text = "&Load sources";
+            this.loadSourcesToolStripMenuItem.Click += new System.EventHandler(this.loadSourcesToolStripMenuItem_Click);
             // 
             // FrmMain
             // 
@@ -431,5 +441,6 @@
         private System.Windows.Forms.ToolStripMenuItem parserToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem runParserToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveParserToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadSourcesToolStripMenuItem;
     }
 }
