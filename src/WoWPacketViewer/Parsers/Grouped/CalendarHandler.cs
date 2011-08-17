@@ -11,50 +11,50 @@ namespace WoWPacketViewer
             var inviteCount = packet.ReadInt32("InviteCount");
             for (var i = 0; i < inviteCount; ++i)
             {
-                WriteLine("  EventID: " + packet.ReadInt64());
-                WriteLine("  InviteID: " + packet.ReadInt64());
-                WriteLine("  InviteStats: " + packet.ReadInt8());
-                WriteLine("  Mod_Type: " + packet.ReadInt8());
-                WriteLine("  Invite_Type: " + packet.ReadInt8());
-                WriteLine("  InvitedBy: " + packet.ReadPackedGuid());
+                UInt64("EventID");
+                UInt64("InviteID");
+                UInt8("InviteStats");
+                UInt8("Mod_Type");
+                UInt8("Invite_Type");
+                ReadPackedGuid("InvitedBy");
                 WriteLine("");
             }
 
             var EventCount = packet.ReadInt32("EventCount");
             for (var i = 0; i < EventCount; ++i)
             {
-                WriteLine("  EventID: " + packet.ReadInt64());
-                WriteLine("  EventName: " + packet.ReadString());
-                WriteLine("  EventModFlags: " + packet.ReadInt32());
-                WriteLine("  EventDate: " + packet.ReadPackedTime());
-                WriteLine("  EventFlags: " + packet.ReadInt32());
-                WriteLine("  DungeonID: " + packet.ReadInt32());
-                WriteLine("  unk: " + packet.ReadInt64());
-                WriteLine("  InvitedBy: " + packet.ReadPackedGuid());
+                UInt64("EventID");
+                CString("EventName");
+                UInt32("EventModFlags");
+                PackedTime("EventDate");
+                UInt32("EventFlags");
+                UInt32("DungeonID");
+                UInt64("unk");
+                ReadPackedGuid("InvitedBy");
                 WriteLine("");
             }
 
-            WriteLine("CurrentUnixTime: " + packet.ReadTime());
-            WriteLine("CurrentPacketTime: " + packet.ReadPackedTime());
+            Time("CurrentUnixTime");
+            ReadPackedTime("CurrentPacketTime");
 
             var InstanceResetCount = packet.ReadInt32("InstanceResetCount");
             for (var i = 0; i < InstanceResetCount; ++i)
             {
-                WriteLine("  MapID: " + packet.ReadInt32());
-                WriteLine("  Difficulty: " + packet.ReadInt32());
-                WriteLine("  ResetTime: " + packet.ReadTime());
-                WriteLine("  RaidID: " + packet.ReadInt64());
+                UInt32("MapID");
+                UInt32("Difficulty");
+                Time("ResetTime");
+                UInt64("RaidID");
                 WriteLine("");
             }
 
-            WriteLine("BaseTime: " + packet.ReadTime());
+            Time("BaseTime");
 
             var RaidResetCount = packet.ReadInt32("RaidResetCount");
             for (var i = 0; i < RaidResetCount; ++i)
             {
-                WriteLine("  MapID: " + packet.ReadInt32());
-                WriteLine("  ResetTime: " + packet.ReadTime());
-                WriteLine("  NegativeOffset: " + packet.ReadInt32());
+                UInt32("MapID");
+                Time("ResetTime");
+                UInt32("NegativeOffset");
                 WriteLine("");
             }
 
@@ -65,33 +65,33 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_CALENDAR_COMMAND_RESULT)]
         public void HandleCommandCalendar(Parser packet)
         {
-            WriteLine("unk: " + packet.ReadInt32() + "(unused)");
-            WriteLine("unk: " + packet.ReadInt8() + "(unused)");
-            WriteLine("unk: " + packet.ReadString());
+            UInt32("unk");
+            UInt8("unk");
+            CString("unk");
             packet.ReadEnum<CalendarResponseResult>("Result");
         }
 
         [Parser(OpCodes.CMSG_CALENDAR_GET_EVENT)]
         public void HandleGetEvent(Parser packet)
         {
-            WriteLine("EventID: " + packet.ReadInt32());
+            UInt32("EventID");
 
             if (packet.GetSize() == 8)
-                WriteLine("unk: " + packet.ReadInt32());
+                UInt32("unk");
         }
 
         [Parser(OpCodes.CMSG_CALENDAR_ADD_EVENT)]
         public void HandleAddEvent(Parser packet)
         {
-            WriteLine("Name: " + packet.ReadString());
-            WriteLine("Description: " + packet.ReadString());
-            WriteLine("Type: " + packet.ReadInt8());
-            WriteLine("Repeat_Option: " + packet.ReadInt8());
-            WriteLine("maxSize: " + packet.ReadInt32());
-            WriteLine("dungeonID: " + packet.ReadInt32());
-            WriteLine("time: " + packet.ReadPackedTime());
-            WriteLine("lockoutTime: " + packet.ReadInt32());
-            WriteLine("flags: " + packet.ReadInt32());
+            CString("Name");
+            CString("Description");
+            UInt8("Type");
+            UInt8("Repeat_Option");
+            UInt32("maxSize");
+            UInt32("dungeonID");
+            ReadPackedTime("time");
+            UInt32("lockoutTime");
+            UInt32("flags");
 
             var inviteCount = packet.ReadInt32("inviteCount");
             WriteLine("");
@@ -99,9 +99,9 @@ namespace WoWPacketViewer
 
             for (var i = 0; i < inviteCount; ++i)
             {
-                WriteLine(" PlayerGuid: " + packet.ReadPackedGuid());
-                WriteLine(" inviteStatus: " + packet.ReadInt8());
-                WriteLine(" modType: " + packet.ReadInt8());
+                ReadPackedGuid(" PlayerGuid");
+                UInt8(" inviteStatus");
+                UInt8(" modType");
                 WriteLine("");
             }
         }
@@ -109,51 +109,51 @@ namespace WoWPacketViewer
         [Parser(OpCodes.SMSG_CALENDAR_EVENT_INVITE_ALERT)]
         public void HandleEventInviteAlert(Parser packet)
         {
-            WriteLine("EventID: " + packet.ReadInt64());
-            WriteLine("EventName: " + packet.ReadString());
-            WriteLine("EventTime: " + packet.ReadTime());
-            WriteLine("EventFlags: " + packet.ReadInt32());
-            WriteLine("EventType: " + packet.ReadInt32());
-            WriteLine("DungeonID: " + packet.ReadInt32());
-            WriteLine("unk: " + packet.ReadInt32());
-            WriteLine("InviteID: " + packet.ReadInt64());
-            WriteLine("InviteStatus: " + packet.ReadInt8());
-            WriteLine("Mod_Type: " + packet.ReadInt8());
-            WriteLine("unk: " + packet.ReadInt32());
-            WriteLine("Inviter_1: " + packet.ReadPackedGuid());
-            WriteLine("Inviter_2: " + packet.ReadPackedGuid());
+            UInt64("EventID");
+            CString("EventName");
+            Time("EventTime");
+            UInt32("EventFlags");
+            UInt32("EventType");
+            UInt32("DungeonID");
+            UInt32("unk");
+            UInt64("InviteID");
+            UInt8("InviteStatus");
+            UInt8("Mod_Type");
+            UInt32("unk");
+            ReadPackedGuid("Inviter_1");
+            ReadPackedGuid("Inviter_2");
         }
 
         [Parser(OpCodes.SMSG_CALENDAR_SEND_EVENT)]
         public void HandleSendEvent(Parser packet)
         {
-            WriteLine("Invite_Type: " + packet.ReadInt8());
-            WriteLine("Creator " + packet.ReadPackedGuid());
-            WriteLine("EventID: " + packet.ReadInt32());
-            WriteLine("unk: " + packet.ReadInt32());
-            WriteLine("EventName: " + packet.ReadString());
-            WriteLine("EventDescription: " + packet.ReadString());
-            WriteLine("Event_Type: " + packet.ReadInt8());
-            WriteLine("Repeat_Option: " + packet.ReadInt8());
-            WriteLine("MaxSize: " + packet.ReadInt32());
-            WriteLine("DungeonID: " + packet.ReadInt32());
-            WriteLine("EventFlags: " + packet.ReadInt32());
-            WriteLine("EventTime: " + packet.ReadPackedTime());
-            WriteLine("LockOutTime: " + packet.ReadInt32());
-            WriteLine("unk: " + packet.ReadInt32());
-            WriteLine("unk: " + packet.ReadInt32());
+            UInt8("Invite_Type");
+            ReadPackedGuid("Creator");
+            UInt32("EventID");
+            UInt32("unk");
+            CString("Name");
+            CString("Description");
+            UInt8("Event_Type");
+            UInt8("Repeat_Option");
+            UInt32("maxSize");
+            UInt32("DungeonID");
+            UInt32("Eventflags");
+            Time("EventTime");
+            UInt32("lockoutTime");
+            UInt32("unk");
+            UInt32("unk");
             
             var inviteCount = packet.ReadInt32("InviteCount");
             for (var i = 0; i < inviteCount; ++i)
             {
-                WriteLine("  PlayerGuid: " + packet.ReadPackedGuid());
-                WriteLine("  PlayerLevel: " + packet.ReadInt8());
-                WriteLine("  InviteStatus: " + packet.ReadInt8());
-                WriteLine("  Mod_Type: " + packet.ReadInt8());
-                WriteLine("  unk: " + packet.ReadInt8());
-                WriteLine("  inviteID: " + packet.ReadInt64());
-                WriteLine("  unk: " + packet.ReadInt8());
-                WriteLine("  unk: " + packet.ReadInt32());
+                ReadPackedGuid(" PlayerGuid");
+                UInt8(" PlayerLevel");
+                UInt8(" InviteStatus");
+                UInt8(" Mod_Type");
+                UInt8(" unk");
+                UInt64(" inviteID");
+                UInt8(" unk");
+                UInt32(" unk");
                 WriteLine("");
             }
         }
@@ -161,10 +161,10 @@ namespace WoWPacketViewer
         [Parser(OpCodes.CMSG_CALENDAR_EVENT_REMOVE_INVITE)]
         public void HandleRemove_Invite(Parser packet)
         {
-            WriteLine("Removee'sGuid: " + packet.ReadPackedGuid());
-            WriteLine("Removee'sInviteID: " + packet.ReadInt64());
-            WriteLine("unk: " + packet.ReadInt64());
-            WriteLine("EventID: " + packet.ReadInt64());
+            ReadPackedGuid("Removee'sGuid");
+            UInt64("Removee'sInviteID");
+            UInt64("unk");
+            UInt64("EventID");
         }
     }
 }
