@@ -90,8 +90,8 @@ namespace WoWPacketViewer
             if (entry.Value)
                 return;
 
-            var name = new string[4];
-            for (var i = 0; i < 4; i++)
+            var name = new string[8];
+            for (var i = 0; i < 8; i++)
             {
                 name[i] = packet.ReadCString();
                 WriteLine("Name " + i + ": " + name[i]);
@@ -103,8 +103,13 @@ namespace WoWPacketViewer
             var iconName = packet.ReadCString();
             WriteLine("Icon Name: " + iconName);
 
+            
+
             var typeFlags = (CreatureTypeFlag)packet.ReadInt32();
             WriteLine("Type Flags: " + typeFlags);
+
+            //Allways 0?
+            packet.ReadInt32("Unknown");
 
             var type = (CreatureType)packet.ReadInt32();
             WriteLine("Type: " + type);
@@ -147,6 +152,8 @@ namespace WoWPacketViewer
 
             var moveId = packet.ReadInt32();
             WriteLine("Movement ID: " + moveId);
+
+            packet.ReadInt32("Unknown"); // 0 ?
 
            //SQLStore.WriteData(SQLStore.Creatures.GetCommand(entry.Key, name[0], subName, iconName, typeFlags,
            //     type, family, rank, killCredit, dispId, mod1, mod2, racialLeader, qItem, moveId));
@@ -218,6 +225,28 @@ namespace WoWPacketViewer
             }
 
             //SQLStore.WriteData(SQLStore.NpcTexts.GetCommand(entry, prob, text1, text2, lang, emDelay, emEmote));
+        }
+        [Parser(OpCodes.SMSG_GUILD_QUERY_RESPONSE)]
+        public void HandleGuildQueryResponse(Parser packet)
+        {
+            packet.ReadInt64("Guild ID");
+            packet.ReadCString("Name");
+            for (byte rank = 0; rank < 10; rank++)
+                packet.ReadCString("Rank " + rank + " name");
+
+            for (byte rank = 0; rank < 10; rank++)
+                packet.ReadInt32("Rank " + rank + " real rank ID");
+
+            // ignore these as they seem to always be identical to the above loop
+            for (byte rank = 0; rank < 10; rank++)
+                packet.ReadInt32();
+
+            packet.ReadInt32("Emblem style");
+            packet.ReadInt32("Emblem color");
+            packet.ReadInt32("Emblem border style");
+            packet.ReadInt32("Emblem border color");
+            packet.ReadInt32("Emblem background color");
+            packet.ReadInt32("Unk int from WotLK");
         }
     }
 }

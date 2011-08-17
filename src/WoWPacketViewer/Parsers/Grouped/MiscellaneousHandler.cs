@@ -200,5 +200,11 @@ namespace WoWPacketViewer
             UInt32("Total PlayedTime");
             ReadBoolean("unk");
         }
+        [Parser(OpCodes.SMSG_LOOT_MONEY_NOTIFY)]
+        public void HandleLootMoneyNotify(Parser packet)
+        {
+            packet.ReadInt32("Money Looted: ");
+            packet.ReadByte("Always 1: ");
+        }
     }
 }

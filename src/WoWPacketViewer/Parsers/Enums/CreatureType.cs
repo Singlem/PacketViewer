@@ -2,7 +2,7 @@ namespace WoWPacketViewer
 {
     public enum CreatureType
     {
-        Beat = 1,
+        Beast = 1,
         Dragonkin = 2,
         Demon = 3,
         Elemental = 4,
