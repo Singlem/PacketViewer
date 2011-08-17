@@ -19,15 +19,10 @@ namespace WoWPacketViewer
         {
             var type = (ChatMessageType)packet.ReadByte();
             WriteLine("Type: " + type);
+            ReadEnum<Language>("Language");
 
-            var lang = (Language)packet.ReadInt32();
-            WriteLine("Language: " + lang);
-
-            var guid = packet.ReadGuid();
-            WriteLine("GUID: " + guid);
-
-            var unkInt = packet.ReadInt32();
-            WriteLine("Unk Int32: " + unkInt);
+            ReadGuid("GUID");
+            UInt32("unk(uint32)");
 
             switch (type)
             {
@@ -55,13 +50,9 @@ namespace WoWPacketViewer
                 case ChatMessageType.GuildAchievement:
                 {
                     if (type == ChatMessageType.Channel)
-                    {
-                        var chanName = packet.ReadCString();
-                        WriteLine("Channel Name: " + chanName);
-                    }
-
-                    var senderGuid = packet.ReadGuid();
-                    WriteLine("Sender GUID: " + senderGuid);
+                        CString("Channel_Name");
+                    
+                    ReadGuid("Sender_GUID");
                     break;
                 }
                 case ChatMessageType.MonsterSay:
@@ -73,32 +64,22 @@ namespace WoWPacketViewer
                 case ChatMessageType.RaidBossWhisper:
                 case ChatMessageType.BattleNet:
                 {
-                    var nameLen = packet.ReadInt32();
-                    WriteLine("Name Length: " + nameLen);
+                    UInt32("Name_Length");
+                    CString("Name");
 
-                    var name = packet.ReadCString();
-                    WriteLine("Name: " + name);
-
-                    var target = packet.ReadGuid();
-                    WriteLine("Receiver GUID: " + guid);
+                    var target = ReadGuid("Receiver_GUID");
 
                     if (target.Full != 0)
                     {
-                        var tNameLen = packet.ReadInt32();
-                        WriteLine("Receiver Name Length: " + tNameLen);
-
-                        var tName = packet.ReadCString();
-                        WriteLine("Receiver Name: " + tName);
+                        UInt32("Receiver Name Length");
+                        CString("Receiver Name");
                     }
                     break;
                 }
             }
 
-            var textLen = packet.ReadInt32();
-            WriteLine("Text Length: " + textLen);
-
-            var text = packet.ReadCString();
-            WriteLine("Text: " + text);
+            UInt32("Text_Length");
+            CString("Text");
 
             var chatTag = (ChatTag)packet.ReadByte();
             WriteLine("Chat Tag: " + chatTag);
@@ -106,8 +87,7 @@ namespace WoWPacketViewer
             if (type != ChatMessageType.Achievement && type != ChatMessageType.GuildAchievement)
                 return;
 
-            var achId = packet.ReadInt32();
-            WriteLine("Achievement ID: " + achId);
+            UInt32("Achievement ID");
         }
 
         [Parser(OpCodes.CMSG_MESSAGECHAT_AFK)]
@@ -130,28 +110,23 @@ namespace WoWPacketViewer
         {
             var type = (ChatMessageType)packet.ReadInt32();
             WriteLine("Type: " + type);
-
-            var lang = (Language)packet.ReadInt32();
-            WriteLine("Language: " + lang);
+            ReadEnum<Language>("Language");
 
             switch (type)
             {
                 case ChatMessageType.Whisper:
                 {
-                    var to = packet.ReadCString();
-                    WriteLine("Recipient: " + to);
+                    CString("Recipient");
                     goto default;
                 }
                 case ChatMessageType.Channel:
                 {
-                    var chan = packet.ReadCString();
-                    WriteLine("Channel: " + chan);
+                    CString("Channel");
                     goto default;
                 }
                 default:
                 {
-                    var msg = packet.ReadCString();
-                    WriteLine("Message: " + msg);
+                    CString("Message");
                     break;
                 }
             }
