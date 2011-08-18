@@ -14,8 +14,8 @@ namespace WoWPacketViewer
             var voiceEnabled = packet.ReadBoolean();
             WriteLine("Voice Enabled: " + voiceEnabled);
 
-            var micEnabled = packet.ReadByte();
-            WriteLine("Microphone Enabled. " + micEnabled);
+            var micEnabled = packet.ReadBoolean();
+            WriteLine("Microphone Enabled: " + micEnabled);
         }
 
         [Parser(OpCodes.SMSG_VOICE_SESSION_ROSTER_UPDATE)]

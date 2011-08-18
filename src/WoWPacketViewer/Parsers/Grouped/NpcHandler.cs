@@ -1,10 +1,6 @@
 using System;
 using WowTools.Core;
 
-
-
-
-
 namespace WoWPacketViewer
 {
     public class NpcHandler : Parser
